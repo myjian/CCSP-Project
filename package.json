@@ -1,0 +1,22 @@
+{
+  "name": "HttpServer",
+  "version": "0.0.0",
+  "description": "CCSP Practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bill8124/CCSP"
+  },
+  "keywords": [
+    "CCSP"
+  ],
+  "author": "bill8124",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bill8124/CCSP/issues"
+  },
+  "homepage": "https://github.com/bill8124/CCSP"
+}
