@@ -7,16 +7,14 @@ var db = new sqlite3.Database(dbfile);
 
 db.serialize(function(){
     if(!exists){
-        db.run("CREATE TABLE DriverRecord (userId INTEGER, plate TEXT, country TEXT, road TEXT, condition TEXT, url TEXT)");
+        db.run("CREATE TABLE DriverRecord (userId INTEGER, plate TEXT, country TEXT, road TEXT, condition TEXT, url TEXT, timestamp INTEGER)");
     }
 });
 exports.list = function(req, res){
-    var newRecord = req.body;
-    console.log(newRecord);
-    var plate = newRecord.param("plate");
-    var country = newRecord.param("country");
-    var road = newRecord.param("road");
-    var condition = newRecord.param("condition");
+    var plate = req.param("plate");
+    var country = req.param("country");
+    var road = req.param("road");
+    var condition = req.param("condition");
     db.all('SELECT * FROM DriverRecord', function(err, rows) {
         res.json(rows);
     });
@@ -24,23 +22,23 @@ exports.list = function(req, res){
 
 exports.add = function(req, res){
     var newRecord = req.body;
-    var timestamp = new Date().value();
     var userId = newRecord.userId;
     var plate = newRecord.plate;
     var country = newRecord.country;
     var road = newRecord.road;
     var condition = newRecord.condition;
     var url = newRecord.url;
+    var timestamp = Date.now();
     console.log(plate, country, road, condition, url);
 
     if (userId != undefined && plate !== undefined && country !== undefined && road !== undefined && condition !== undefined && url !== undefined){
-        db.run('INSERT INTO DriverRecord (userId, plate, country, road, condition, url) VALUES (?, ?, ?, ?, ?, ?)',
-                [plate, country, road, condition, url]);
+        db.run('INSERT INTO DriverRecord (userId, plate, country, road, condition, url, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [userId, plate, country, road, condition, url, timestamp]);
     }
     else {
-        console.log(plate, country, road, condition, url);
+        console.log(userId, plate, country, road, condition, url, timestamp);
     }
-    res.json(newRecord);
+    res.json([userId, plate, country, road, condition, url, timestamp]);
 };
 
 /*

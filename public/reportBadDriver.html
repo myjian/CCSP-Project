@@ -34,6 +34,9 @@
         <a class="btn btn-default col-xs-4 col-xs-offset-1" href="#">登入</a>
     </div>
     <form action="/items" method="post" onsubmit="return validateForm()">
+        <!-- Integrade with Facebook -->
+        <input type="hidden" id="userId" name="userId" value="1234">
+
         <div class="row">
             <input type="text" class="col-xs-10 col-xs-offset-1" id="plate" name="plate" placeholder="車牌">
         </div>
