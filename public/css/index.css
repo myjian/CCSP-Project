@@ -1,3 +1,6 @@
 body {
     text-align: center;
 }
+div.row {
+    margin-bottom: 1em;
+}
