@@ -11,7 +11,7 @@ var user = {};
 function rearrangeuser(){
 
     $(".logininfo").remove();
-    $("#body").prepend('<p><button style="background-color: #5b74a8; color: #FFFFFF; margin-left:33%; " id = "fblogin">FB </br>登入</button></p>');
+    $("#loginbutton").append('<button  id = "fblogin" class="btn btn-primary">FB<br>登入</button>');
     $("#fblogin").on('click', function(){
 
 
@@ -38,8 +38,8 @@ function rearrangeuser(){
 }
 function arrangeuser(){
     $("#fblogin").remove();
-    $("#body").prepend('<div style="display:block; margin-left:33%"><a class="logininfo"  href ="'+user.link+'">'+user.name+'</a><button class="logininfo" style="background-color: #5b74a8; color: #FFFFFF; margin-left:3px; " id="logout">登出</button></div>');
-    $("#body").prepend('<img class="logininfo" src="http://graph.facebook.com/'+ user.id +'/picture" href ="'+user.link+'" style = "margin-left: 33%;">');
+    $("#loginbutton").append();
+    $("#loginbutton").append('<div style=";" class ="logininfo"><img class="logininfo" src="http://graph.facebook.com/'+ user.id +'/picture"><div style="display:block;"><a class="logininfo"  href ="'+user.link+'">'+user.name+'</a><button class="logininfo" style="background-color: #5b74a8; color: #FFFFFF; margin-left:3px; " id="logout">登出</button></div></div>');
 
     $("#logout").on('click', function(){
 
