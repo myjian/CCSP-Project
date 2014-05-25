@@ -1,6 +1,5 @@
 {
     "name": "BadDriver",
-    "version": "0.0.0",
     "description": "Law-Violating Driving Behavior Reporting Application",
     "main": "index.js",
     "dependencies": {
@@ -34,4 +33,5 @@
     "engines": {
         "node": "0.10.x"
     }
+    "version": "0.0.0",
 }
