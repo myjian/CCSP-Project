@@ -1,22 +1,37 @@
 {
-  "name": "HttpServer",
-  "version": "0.0.0",
-  "description": "CCSP Practice",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bill8124/CCSP"
-  },
-  "keywords": [
-    "CCSP"
-  ],
-  "author": "bill8124",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bill8124/CCSP/issues"
-  },
-  "homepage": "https://github.com/bill8124/CCSP"
+    "name": "BadDriver",
+    "version": "0.0.0",
+    "description": "Law-Violating Driving Behavior Reporting Application",
+    "main": "index.js",
+    "dependencies": {
+        "body-parser": ">= 1.0.2",
+        "cookie-parser": ">= 1.1.0",
+        "errorhandler": ">= 1.0.1",
+        "express": ">= 4.1.2",
+        "express-session": ">= 1.2.0",
+        "method-override": ">= 1.0.2",
+        "mongoose": ">= 3.8.11",
+        "morgan": ">= 1.1.1",
+        "passport": ">= 0.2.0",
+        "passport-facebook": "1.0.3"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1";
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bill8124/CCSP"
+    },
+    "keywords": [
+        "CCSP"
+        ],
+    "author": "Ming-Yuan Jian, Natasha Pan, Mitch Tseng",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/bill8124/CCSP/issues"
+    },
+    "homepage": "https://github.com/bill8124/CCSP",
+    "engines": {
+        "node": "0.10.x"
+    }
 }
