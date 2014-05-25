@@ -6,7 +6,8 @@ function rearrangeuser(){
     $("#fblogin").on('click', function(){
       $.ajax({
         type: 'GET',
-        url: "/auth/facebook",
+        url: "/return",
+        data: location.href(),
         dataType: 'text',
         success: function(response) {
 
@@ -26,13 +27,14 @@ function rearrangeuser(){
 function arrangeuser(){
     $("#fblogin").remove();
     $("#loginbutton").append();
-    $("#loginbutton").append('<div style=";" class ="logininfo"><img class="logininfo" src="http://graph.facebook.com/'+ user.id +'/picture"><div style="display:block;"><a class="logininfo"  href ="'+user.link+'">'+user.name+'</a><button class="logininfo" style="background-color: #5b74a8; color: #FFFFFF; margin-left:3px; " id="logout">登出</button></div></div>');
+    $("#loginbutton").append('<div style=";" class ="logininfo"><img class="logininfo" src="http://graph.facebook.com/'+ user.id +'/picture"><div style="display:block;"><a class="logininfo"  href ="'+user.link+'">'+user.name+'</a><a href = "/logout"><button class="logininfo" style="background-color: #5b74a8; color: #FFFFFF; margin-left:3px; " id="logout">登出</button></a></div></div>');
 
     $("#logout").on('click', function(){
 
       $.ajax({
         type: 'GET',
-        url: "/logout",
+        url: "/return",
+        data: location.href(),
         dataType: 'text',
         success: function(response) {
 
@@ -74,7 +76,8 @@ $("#fblogin").on('click', function(){
 
   $.ajax({
         type: 'GET',
-        url: "/auth/facebook",
+        url: "/return",
+        data: location.href(),
         dataType: 'text',
         success: function(response) {
 

@@ -88,7 +88,7 @@ app.get('/auth/facebook',
   });
 
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
 
     res.end();
@@ -110,4 +110,15 @@ app.get('/getfbinfo', function(req, res){
   else{
   	res.end("123");
   };
+});
+
+app.get('/return', function(req, res){
+  var postdata = "";
+  req.addListener("data", function (postDataChunk) {
+
+    postdata += postDataChunk;
+  });
+  console.log(postdata);
+
+
 });
