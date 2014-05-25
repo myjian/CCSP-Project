@@ -5,6 +5,9 @@ var http = require('http');
 var path = require('path');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
+var cookieParser = require('cookie-parser');
+var methodOverride = require('method-override');
+var session = require('express-session');
 
 //var routes = require('./routes');
 var driverRecord = require('./routes/driverRecord');
@@ -26,12 +29,11 @@ app.use(logger('dev'));
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.cookieParser());
-app.use(express.methodOverride());
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(cookieParser());
+app.use(methodOverride());
+app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(app.router);
 
 // development only
 if ('development' == app.get('env')) {
