@@ -91,14 +91,14 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
 
-    res.redirect('/');
+    res.end();
   });
 
 
 app.get('/logout', function(req, res){
   req.logout();
 
-  res.redirect('/');
+  res.end();
 });
 
 app.get('/getfbinfo', function(req, res){
