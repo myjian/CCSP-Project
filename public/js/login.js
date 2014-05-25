@@ -26,7 +26,7 @@ function getfblogininfo()
 {
   $.ajax({
         type: 'GET',
-        url: "//localhost:5000/getfbinfo",
+        url: "/getfbinfo",
         dataType: 'text',
         success: function(response) {
           if(response != "123")
