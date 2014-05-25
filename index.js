@@ -100,7 +100,8 @@ app.get('/auth/facebook/callback',
 
 app.get('/logout', function(req, res){
   req.logout();
-  console.log("123");
+  res.end();
+  //console.log("123");
 });
 
 app.get('/getfbinfo', function(req, res){
