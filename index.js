@@ -53,8 +53,6 @@ app.get('/driverRecord/:id', driverRecord.show);
 app.post('/driverRecord/:id', driverRecord.update);
 
 
-
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -97,24 +95,19 @@ app.get('/auth/facebook/callback',
   });
 
 
-
 app.get('/logout', function(req, res){
   req.logout();
-  res.end();
-  //console.log("123");
+
+  res.redirect('/');
 });
 
 app.get('/getfbinfo', function(req, res){
-  if(req.user)
-  {
+  if(req.user){
   	//console.log(req.user._json);
   	data = JSON.stringify(req.user._json)
   	res.end(data);
   }
-  else
-  {
+  else{
   	res.end("123");
   };
-  
 });
-
