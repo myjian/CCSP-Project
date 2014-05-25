@@ -27,10 +27,7 @@
 
 <hr>
 <div id="body" class="container-fluid">
-    <form action="/items" method="post" onsubmit="return validateForm()">
-        <!-- Integrade with Facebook -->
-        <input type="hidden" id="userId" name="userId" value="1234">
-
+    <form action="/items" method="post" onsubmit="return validateForm()" id="datatable">
         <div class="row">
             <input type="text" class="col-xs-10 col-xs-offset-1" id="plate" name="plate" placeholder="車牌">
         </div>
@@ -54,6 +51,7 @@
     <div class="row">
         <a class="btn btn-default col-xs-10 col-xs-offset-1" href="whichPolice.html">上一頁</a>
     </div>
+    <div id="frame"></div>
 
 </div>
 <hr>
@@ -61,5 +59,6 @@
     CCSP 2014.  Bill Jian, Natasha Pan, Mitch Tseng.
 </footer>
 <script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/filltable.js"></script>
 </body>
 </html>
