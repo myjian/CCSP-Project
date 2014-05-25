@@ -91,14 +91,14 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/' }),
   function(req, res) {
 
-    res.end();
+    res.redirect("/");
   });
 
 
 app.get('/logout', function(req, res){
   req.logout();
 
-  res.end();
+  res.redirect("/");
 });
 
 app.get('/getfbinfo', function(req, res){
@@ -112,13 +112,3 @@ app.get('/getfbinfo', function(req, res){
   };
 });
 
-app.get('/return', function(req, res){
-  var postdata = "";
-  req.addListener("data", function (postDataChunk) {
-
-    postdata += postDataChunk;
-  });
-  console.log(postdata);
-
-
-});
