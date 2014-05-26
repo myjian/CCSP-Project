@@ -1,5 +1,5 @@
 var fbLogin = '<a id="fblogin" class="btn btn-primary" href="/auth/facebook?redirectPath=' + encodeURIComponent(getPath()) + '">FB<br>登入</a>';
-var fbLogout = '<a href="/logout" style="margin-left: 3px"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>';
+var fbLogout = '<a href="/logout?redirectPath=' + encodeURIComponent(getPath()) + '" style="margin-left: 3px"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>';
 
 function getPath(){
     var l = document.createElement("a");
