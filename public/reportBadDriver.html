@@ -26,15 +26,19 @@
 
 <hr>
 <div id="body" class="container-fluid">
-    <form action="/items" method="post" onsubmit="return validateForm();" id="datatable">
-        <div class="row">
-            <input type="text" class="col-xs-10 col-xs-offset-1" id="plate" name="plate" placeholder="車牌">
-        </div>
+    <form action="//www.tcpd.gov.tw/tcpd/cht/index.php?act=traffic&amp;code=add" method="post" onsubmit="return validateForm();" id="datatable">
         <div class="row">
             <input type="text" class="col-xs-10 col-xs-offset-1" id="country" name="country" placeholder="縣市">
         </div>
         <div class="row">
-            <input type="text" class="col-xs-10 col-xs-offset-1" id="road" name="road" placeholder="路段">
+            <input type="text" class="col-xs-10 col-xs-offset-1" id="road" name="road" placeholder="區域和路段">
+        </div>
+        <div class="row">
+            <input type="text" class="col-xs-10 col-xs-offset-1" id="plate" name="plate" placeholder="車牌">
+        </div>
+        <div class="row">
+            <input type="text" class="col-xs-5 col-xs-offset-1" id="date" name="date" placeholder="日期">
+            <input type="text" class="col-xs-5" id="time" name="time" placeholder="時間">
         </div>
         <div class="row">
             <input type="textarea" class="col-xs-10 col-xs-offset-1" id="condition" name="condition" placeholder="情況簡述">
@@ -58,6 +62,5 @@
     CCSP 2014.  Bill Jian, Natasha Pan, Mitch Tseng.
 </footer>
 <script type="text/javascript" src="js/login.js"></script>
-<script type="text/javascript" src="js/filltable.js"></script>
 </body>
 </html>
