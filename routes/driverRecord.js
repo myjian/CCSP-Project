@@ -3,6 +3,10 @@ var DriverRecord = mongoose.model('DriverRecord');
 
 // GET '/driverRecord'
 exports.list = function(req, res){
+    if (!req.user){
+        res.render('message', {title: '安心上路', message: 'not logged in'});
+        return;
+    }
     DriverRecord.find(function(err, driverRecords, count){
         if (err){
             console.error(err);
@@ -15,7 +19,26 @@ exports.list = function(req, res){
 
 // POST '/driverRecord'
 exports.create = function(req, res){
-    var driverRecord = new DriverRecord(req.body);
+    if (!req.user){
+        res.json({error: "not logged in"});
+        return;
+    }
+    var userInfo = req.user._json;
+    var reportInfo = req.body;
+    var newRecord = {userId: userInfo.id, email: userInfo.email};
+    if (userInfo.phone){
+        newRecord.phone = userInfo.phone;
+    }
+    newRecord.carNum = reportInfo.plate;
+    newRecord.country = reportInfo.country;
+    newRecord.address = reportInfo.road;
+    newRecord.happened = new Date(reportInfo.year, reportInfo.month, reportInfo.day,
+            reportInfo.hour, reportInfo.minute);
+    newRecord.condition = reportInfo.condition;
+    if (reportInfo.url)
+        newRecord.url = reportInfo.url;
+
+    var driverRecord = new DriverRecord(newRecord);
     driverRecord.save(function(err, newDriverRecord){
         if (err){
             console.error(err);
@@ -48,7 +71,7 @@ exports.update = function(req, res){
         }
 
         if (req.body.plate){
-            driverRecord.plate = req.body.plate;
+            driverRecord.carNum = req.body.plate;
         }
         if (req.body.happened){
             driverRecord.happened = req.body.happened;
