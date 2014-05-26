@@ -117,5 +117,5 @@ app.get('/getfbinfo', function(req, res){
     else {
         res.json({login: false});
     }
-});
 
+});
