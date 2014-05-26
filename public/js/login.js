@@ -9,6 +9,7 @@ function getPath(){
 
 function displayFB(user){
     var fbArea = $("#fbArea");
+    fbArea.hide();
     if (user){
         fbArea.append('<img src="http://graph.facebook.com/'+ user.id +'/picture"><br>',
                 '<a href="' + user.link + '">' + user.name + '</a>', fbLogout);
@@ -16,6 +17,7 @@ function displayFB(user){
     else {
         fbArea.append(fbLogin);
     }
+    fbArea.fadeIn();
 }
 
 function getfblogininfo(){

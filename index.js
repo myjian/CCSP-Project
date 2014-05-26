@@ -8,6 +8,7 @@ var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var expressLayouts = require('express-ejs-layouts');
 
 //var routes = require('./routes');
 var driverRecord = require('./routes/driverRecord');
@@ -25,6 +26,7 @@ var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
 app.use(logger('dev'));
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -87,7 +89,7 @@ app.get('/auth/facebook',
         });
 
 app.get('/auth/facebook/callback', 
-        passport.authenticate('facebook', { failureRedirect: '/' }),
+        passport.authenticate('facebook', { failureRedirect: '/', scope: ['user_about_me', 'email'] }),
         function(req, res) {
             if (req.session.redirectPath){
                 res.redirect(req.session.redirectPath);
