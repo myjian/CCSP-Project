@@ -81,34 +81,41 @@ passport.use(new FacebookStrategy({
 
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook'),
-  function(req, res){
-    // The request will be redirected to Facebook for authentication, so this
-    // function will not be called.
-  });
+        function(req, res){
+            req.session.redirectPath = req.query.redirectPath;
+            res.redirect('/auth/facebook/callback');
+        });
 
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/' }),
-  function(req, res) {
-
-    res.redirect("/");
-  });
+        passport.authenticate('facebook', { failureRedirect: '/' }),
+        function(req, res) {
+            if (req.session.redirectPath){
+                res.redirect(req.session.redirectPath);
+            }
+            else {
+                res.redirect("/");
+            }
+        });
 
 
 app.get('/logout', function(req, res){
-  req.logout();
-
-  res.redirect("/");
+    req.logout();
+    console.log('/logout');
+    console.log(req.query.redirectPath);
+    if (req.query.redirectPath){
+        res.redirect(req.query.redirectPath);
+    }
+    else {
+        res.redirect("/");
+    }
 });
 
 app.get('/getfbinfo', function(req, res){
-  if(req.user){
-  	//console.log(req.user._json);
-  	data = JSON.stringify(req.user._json)
-  	res.end(data);
-  }
-  else{
-  	res.end("123");
-  };
+    if (req.user){
+        res.json({login: true, user: req.user._json});
+    }
+    else {
+        res.json({login: false});
+    }
 });
 

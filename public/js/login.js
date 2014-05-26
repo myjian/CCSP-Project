@@ -1,66 +1,36 @@
-if(!localStorage.nowaddr)
-{
-  localStorage.nowaddr = "http://baddriver.herokuapp.com/";
-};
+var fbLogin = '<a id="fblogin" class="btn btn-primary" href="/auth/facebook?redirectPath=' + encodeURIComponent(getPath()) + '">FB<br>登入</a>';
+var fbLogout = '<a href="/logout" style="margin-left: 3px"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>';
 
-if(!localStorage.change)
-{
-  localStorage.change = 0;
+function getPath(){
+    var l = document.createElement("a");
+    l.href = document.location;
+    return l.pathname;
 }
 
-function rearrangeuser(){
-
-    $(".logininfo").remove();
-    $("#loginbutton").append('<a href="/auth/facebook"><button  id = "fblogin" class="btn btn-primary">FB<br>登入</button></a>');
-    $("#fblogin").on('click', function(){
-      localStorage.nowaddr = location.href;
-      localStorage.change = 1;   
-    });
-
+function displayFB(user){
+    var fbArea = $("#fbArea");
+    if (user){
+        fbArea.append('<img src="http://graph.facebook.com/'+ user.id +'/picture"><br>',
+                '<a href="' + user.link + '">' + user.name + '</a>', fbLogout);
+    }
+    else {
+        fbArea.append(fbLogin);
+    }
 }
-function arrangeuser(){
-    $("#fblogin").remove();
-    $("#loginbutton").append();
-    $("#loginbutton").append('<div style=";" class ="logininfo"><img class="logininfo" src="http://graph.facebook.com/'+ user.id +'/picture"><div style="display:block;"><a class="logininfo"  href ="'+user.link+'">'+user.name+'</a><a href = "/logout"><button class="logininfo" style="background-color: #5b74a8; color: #FFFFFF; margin-left:3px; " id="logout">登出</button></a></div></div>');
 
-    $("#logout").on('click', function(){
-      localStorage.nowaddr = location.href;
-      localStorage.change = 1;
-      rearrangeuser();
-    });
-
-
-  }
-function getfblogininfo()
-{ 
-  if(localStorage.nowaddr != location.href && localStorage.change == 1)
-  {
-    document.location.href=localStorage.nowaddr;
-    localStorage.change = 0;
-  }
-
-
-  $.ajax({
-        type: 'GET',
-        url: "/getfbinfo",
-        dataType: 'text',
-        success: function(response) {
-          if(response != "123")
-          {
-            data = JSON.parse(response);
+function getfblogininfo(){
+    $.get('/getfbinfo', {},
+        function(data, textStatus, jqXHR){
             console.log(data);
-            user = data;
-            arrangeuser();
-          }
+            if (data.login === true){
+                displayFB(data.user);
+            }
+            else {
+                displayFB(null);
+            }
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-        },
-      });
-} 
-
-$("#fblogin").on('click', function(){
-  localStorage.nowaddr = location.href;
-  localStorage.change = 1;
-});
+        'json'
+    );
+}
 
 getfblogininfo();
