@@ -12,6 +12,7 @@ var expressLayouts = require('express-ejs-layouts');
 
 //var routes = require('./routes');
 var driverRecord = require('./routes/driverRecord');
+var upload = require('./routes/upload');
 
 var passport = require('passport')
 var util = require('util')
@@ -46,6 +47,7 @@ app.listen(app.get('port'), function(){
     console.log('Express server started at port ' + app.get('port'));
 });
 
+// Database operations
 app.get('/driverRecord', driverRecord.list);
 
 app.post('/driverRecord', driverRecord.create);
@@ -54,7 +56,7 @@ app.get('/driverRecord/:id', driverRecord.show);
 
 app.post('/driverRecord/:id', driverRecord.update);
 
-
+// Passport-Facebook
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -121,3 +123,13 @@ app.get('/getfbinfo', function(req, res){
     }
 });
 
+// YouTube Upload Widget
+app.get('/upload', upload.load);
+
+app.post('/emailAttachment', function(req, res){
+    if (!req.user){
+        res.render('message', {title: '安心上路', message: 'not logged in'});
+        return;
+    }
+    res.render('email', {title: '檢舉檔案', userInfo: req.user._json, reportInfo: req.body});
+});

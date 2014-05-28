@@ -10,7 +10,7 @@ exports.list = function(req, res){
     DriverRecord.find(function(err, driverRecords, count){
         if (err){
             console.error(err);
-            res.json({error: err.name}, 500);
+            res.render('message', {title: '安心上路', message: err});
             return;
         }
         res.json({driverRecords: driverRecords});
@@ -20,7 +20,7 @@ exports.list = function(req, res){
 // POST '/driverRecord'
 exports.create = function(req, res){
     if (!req.user){
-        res.json({error: "not logged in"});
+        res.render('message', {title: '安心上路', message: 'not logged in'});
         return;
     }
     var userInfo = req.user._json;
@@ -29,9 +29,9 @@ exports.create = function(req, res){
     if (userInfo.phone){
         newRecord.phone = userInfo.phone;
     }
-    newRecord.carNum = reportInfo.plate;
     newRecord.country = reportInfo.country;
-    newRecord.address = reportInfo.road;
+    newRecord.address = reportInfo.location;
+    newRecord.carNum = reportInfo.carNum;
     newRecord.happened = new Date(reportInfo.year, reportInfo.month, reportInfo.day,
             reportInfo.hour, reportInfo.minute);
     newRecord.condition = reportInfo.condition;
@@ -42,7 +42,7 @@ exports.create = function(req, res){
     driverRecord.save(function(err, newDriverRecord){
         if (err){
             console.error(err);
-            res.json({error: err.name}, 500);
+            res.render('message', {title: '安心上路', message: err});
             return;
         }
         res.json(newDriverRecord);
@@ -54,7 +54,7 @@ exports.show = function(req, res){
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            res.json({error: err.name}, 500);
+            res.render('message', {title: '安心上路', message: err});
             return;
         }
         res.json(driverRecord);
@@ -66,7 +66,7 @@ exports.update = function(req, res){
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            res.json({error: err.name}, 500);
+            res.render('message', {title: '安心上路', message: err});
             return;
         }
 
@@ -92,7 +92,7 @@ exports.update = function(req, res){
         driverRecord.save(function(err, updatedDriverRecord){
             if (err){
                 console.error(err);
-                res.json({error: err.name}, 500);
+                res.render('message', {title: '安心上路', message: err});
                 return;
             }
             res.json(updatedDriverRecord);

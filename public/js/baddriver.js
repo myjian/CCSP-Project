@@ -9,15 +9,25 @@ function isValid(id){
 }
 
 function validateForm(){
-    if (!isValid('plate')) return false;
     if (!isValid("country")) return false;
-    if (!isValid("road")) return false;
+    if (!isValid("location")) return false;
+    if (!isValid('carNum')) return false;
     if (!isValid("condition")) return false;
+    if (!isValid("year")) return false;
+    if (!isValid("month")) return false;
+    if (!isValid("day")) return false;
+    if (!isValid("hour")) return false;
+    if (!isValid("minute")) return false;
     if (!isValid("url")) return false;
     return true;
 }
 
-function fillTable(){
-    var iframe = $('<iframe id="dataframe" name="dataframe" src="//www.tcpd.gov.tw/tcpd/cht/index.php?act=traffic&amp;code=add" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="1100" scrolling="auto"></iframe>');
-    $("#frame").append(iframe);
-}
+$("#emailGen").on('click', function(event){
+    if (!validateForm()) return;
+    /*
+    var mailLink = $('<a class="btn">寄出信件</a>').attr('href', 'mailto:b99902067@ntu.edu.tw?subject=' + encodeURIComponent('交通違規檢舉')+ '&body=' + encodeURIComponent(mailBody));
+    // + '&body=' + encodeURIComponent(mailBody)
+    // + '&attachment=' + '/reportBadDriver.html'
+    $("#mail").html(mailLink).append(mailBody);
+    */
+});
