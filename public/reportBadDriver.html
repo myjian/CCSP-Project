@@ -23,13 +23,39 @@
     <div id="fbArea" class="col-xs-3" style="margin-top: 10px"></div>
 </div>
 
+
 <hr>
 <div id="body" class="container-fluid">
     <form action="/emailAttachment" method="post" onsubmit="return validateForm();" id="datatable">
         <div class="row">
-            <input type="text" class="col-xs-10 col-xs-offset-1" id="country" name="country" placeholder="縣市">
+            <select class="col-xs-10 col-xs-offset-1" id="country" name="country">
+              <option value="請選擇縣市">請選擇縣市</option>
+              <option value="國道">國道</option>
+              <option value="台北市">台北市</option>
+              <option value="新北市">新北市</option>
+              <option value="台中市">台中市</option>
+              <option value="台南市">台南市</option>
+              <option value="高雄市">高雄市</option>
+              <option value="基隆市">基隆市</option>
+              <option value="新竹市">新竹市</option>
+              <option value="嘉義市">嘉義市</option>
+              <option value="桃園縣">桃園縣</option>
+              <option value="新竹縣">新竹縣</option>
+              <option value="苗栗縣">苗栗縣</option>
+              <option value="彰化縣">彰化縣</option>
+              <option value="南投縣">南投縣</option>
+              <option value="雲林縣">雲林縣</option>
+              <option value="嘉義縣">嘉義縣</option>
+              <option value="屏東縣">屏東縣</option>
+              <option value="宜蘭縣">宜蘭縣</option>
+              <option value="花蓮縣">花蓮縣</option>
+              <option value="台東縣">台東縣</option>
+              <option value="金門縣">金門縣</option>
+              <option value="澎湖縣">澎湖縣</option>
+              <option value="連江縣">連江縣</option>
+            </select>
         </div>
-        <div id="reportInfo">
+        <div id="reportInfo" style="display: none">
             <div class="row">
                 <input type="text" class="col-xs-10 col-xs-offset-1" id="location" name="location" placeholder="詳細地點（區域、路段）">
             </div>
@@ -54,13 +80,15 @@
                 <input type="submit" class="btn btn-default col-xs-10 col-xs-offset-1" value="確認送出">
             </div>
         </div>
+        <div id="information">
+        </div>
     </form>
-    <div class="row">
+    <!-- div class="row">
         <a id="fileGen" class="btn btn-default col-xs-10 col-xs-offset-1" href="/emailAttachment">生成檢舉檔案</a>
     </div>
     <div class="row">
         <button id="emailGen" class="btn btn-default col-xs-10 col-xs-offset-1">生成 Email</a>
-    </div>
+    </div -->
     <div id="mail" class="row"></div>
     <div class="row">
         <a class="btn btn-default col-xs-10 col-xs-offset-1" href="whichPolice.html">上一頁</a>
@@ -72,5 +100,6 @@
     CCSP 2014.  Bill Jian, Natasha Pan, Mitch Tseng.
 </footer>
 <script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/filltable.js"></script>
 </body>
 </html>
