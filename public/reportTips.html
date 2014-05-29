@@ -18,19 +18,21 @@
 </head>
 
 <body>
-<div class="row">
-    <h1 class="col-xs-6 col-xs-offset-3">安心上路</h1>
-    <div id="fbArea" class="col-xs-3" style="margin-top: 10px"></div>
+<div class="container-fluid">
+	<div class="row">
+	    <h1 class="col-xs-9">安心上路</h1>
+	    <div id="fbArea" class="col-xs-3" style="margin-top: 10px"></div>
+	</div>
 </div>
 <hr>
 
 <div id="body" class="container-fluid">
     <div class="row">
     	<table class="table table-striped">
-	    	<tr>
+	    	<tr id = "Q1">
 	        	<th>Q1：檢舉違規的流程？</th>
 	     	</tr>
-	     	<tr>
+	     	<tr id = "A1" style="display:none;" class="answer">
 	        	<td>
 	        	利用網路向各轄區警察局報案(「安心上路」會協助大家快速完成此步驟)<br>
 				-->收到報案後，通常都會收到email，部分地區警局會要求點選確認信中的連結才完成檢舉流程，所以一定要記得到信箱收信！<br>
@@ -40,11 +42,11 @@
 				</td>
 	    	</tr>
 
-	    	<tr>
+	    	<tr id = "Q2">
 	        	<th>Q2：拍照、錄影必須注意什麼？</th>
 	     	</tr>
 
-	     	<tr>
+	     	<tr id = "A2" style="display:none;" class="answer">
 	        	<td>
 				．拍照只適用「靜態違規」(Ex： 紅線停車、黃線停車、公車站牌10公尺內停車等)，動態違規(Ex：闖紅燈)請附上連續照片或錄影。<br>
 				．該張照片內，必須入鏡的有①車牌、②駕駛座沒人、③違規環境(eg.地上的紅線)<br>
@@ -52,11 +54,11 @@
 				</td>
 	    	</tr>
 
-	    	<tr>
+	    	<tr id="Q3">
 	        	<th>Q3：如果照片、影片中右下角沒有日期可以檢舉嗎？</th>
 	     	</tr>
 
-	     	<tr>
+	     	<tr id = "A3" style="display:none;" class="answer">
 	        	<td>
 				．可以，但是有退件的可能。因此，盡量打開照相機的日期標示功能。<br>
 				．時間日期可以事後加上去(推薦線上免下載免費軟體 <a href="http://pixlr.com/editor">Pixlr</a>)，但千萬注意，時間必須和原始檔日期相符，否則會構成偽造文書。<br>
@@ -64,11 +66,11 @@
 				</td>
 	    	</tr>
 
-	    	<tr>
+	    	<tr id="Q4">
 	        	<th>Q4：可以匿名檢舉嗎？</th>
 	     	</tr>
 
-	     	<tr>
+	     	<tr id = "A4" style="display:none;" class="answer">
 	        	<td>
 				．根據「道路交通管理事件統一裁罰基準及處理細項」第三章稽查及民眾檢舉，細則第23條規定：<br>
 				民眾檢舉違反道路交通管理事件，有下列情形之一者，公路主管或警察機關應不予舉發：<br>
@@ -80,11 +82,11 @@
 				</td>
 	    	</tr>	    	
 
-	    	<tr>
+	    	<tr id = "Q5">
 	        	<th>Q5：檢舉交通違規對我有甚麼好處？有檢舉獎金嗎？</th>
 	     	</tr>
 
-	     	<tr>
+	     	<tr id ="A5" style="display:none;" class="answer">
 	        	<td>
 				．目前檢舉交通違規沒有檢舉金，但是…<br>
 				．我們可以協助維護社會秩序與交通安全，慣性違規者不再存有僥倖心態。當他們改善開車習慣，也能減低無辜路人飛來橫禍的機率。利己利人，感謝有你！<br>
@@ -92,22 +94,22 @@
 				</td>
 	    	</tr>	    	
 	    		 
-	    	<tr>
+	    	<tr id = "Q6">
 	        	<th>Q6：上傳含有別人車牌的照片/影片可能違法嗎？</th>
 	     	</tr>
 
-	     	<tr>
+	     	<tr id ="A6" style="display:none;" class="answer">
 	        	<td>
 				．關於車牌號碼的個資問題，G0Vbaddriver專案的作者請教了他目前是律師的哥哥，其表示：『車輛之車牌號碼，並無法識別該車輛所屬之個人資料，非屬於本法所稱之個人資料。』<br>
 				．因此若是單純作為搜尋器是沒有個資的考量。<br><br>
 				</td>
 	    	</tr>   	
 
-	    	<tr>
+	    	<tr id="Q7">
 	        	<th>Q7：民眾檢舉交通違規的法源依據是什麼？</th>
 	     	</tr>
 
-	     	<tr>
+	     	<tr id="A7" style="display:none;" class="answer">
 	        	<td>
 				．道路交通管理處罰條例 (同警察開罰單的法律依據)<br>
 				第 7-1 條 對於違反本條例之行為者，民眾得敘明違規事實或檢具違規證據
@@ -128,6 +130,7 @@
 </footer>
 
 <script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/filltips.js"></script>
 
 </body>
 </html>
