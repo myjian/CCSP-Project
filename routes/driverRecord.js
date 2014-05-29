@@ -25,15 +25,20 @@ exports.create = function(req, res){
     }
     var userInfo = req.user._json;
     var reportInfo = req.body;
-    var newRecord = {userId: userInfo.id, email: userInfo.email};
-    if (userInfo.phone){
-        newRecord.phone = userInfo.phone;
-    }
+
+    // Fill User Data
+    var newRecord = {user_id: userInfo.id, user_name: userInfo.name, user_email: userInfo.email};
+    if (userInfo.phone)
+        newRecord.user_phone = userInfo.phone;
+    if (userInfo.address)
+        newRecord.user_address = userInfo.address;
+
+    // Fill Driver Data
     newRecord.country = reportInfo.country;
-    newRecord.address = reportInfo.location;
+    newRecord.location = reportInfo.location;
     newRecord.carNum = reportInfo.carNum;
-    newRecord.happened = new Date(reportInfo.year, reportInfo.month, reportInfo.day,
-            reportInfo.hour, reportInfo.minute);
+    newRecord.happenedDate = reportInfo.date;
+    newRecord.happenedTime = reportInfo.time;
     newRecord.condition = reportInfo.condition;
     if (reportInfo.url)
         newRecord.url = reportInfo.url;
@@ -45,7 +50,7 @@ exports.create = function(req, res){
             res.render('message', {title: '安心上路', message: err});
             return;
         }
-        res.json(newDriverRecord);
+        res.render('reportView', {title: '檢舉檔案', userInfo: req.user._json, reportInfo: newDriverRecord});
     });
 };
 

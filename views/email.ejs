@@ -1,9 +1,0 @@
-<table class="table table-bordered">
-<tr><td>檢舉人姓名</td><td>通訊地址</td><td colspan=2>連絡電話</td><td colspan=2>e-mail</td></tr>
-<tr><td rowspan=2><%= userInfo.name %></td><td rowspan=2><%= userInfo.address %></td><td>O</td><td><%= userInfo.phone %></td><td colspan=2><%= userInfo.email %></td></tr>
-<tr><td>H</td><td>&nbsp;</td><td>檢舉日期</td><td><%= new Date().toLocaleDateString() %></td></tr>
-</table>
-<table class="table table-bordered">
-<tr><td>牌照號碼</td><td>違規發生地點</td><td>日期</td><td>時間</td><td>違規事實內容</td><td>備註</td></tr>
-<tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.location %></td><td><%= reportInfo.year %>-<%= reportInfo.month %>-<%= reportInfo.day %></td><td><%= reportInfo.hour %>:<%= reportInfo.minute %></td><td><%= reportInfo.condition %></td><td><%= reportInfo.url %></td></tr>
-</table>

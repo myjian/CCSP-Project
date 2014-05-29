@@ -1,32 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>交通違規檢舉</title>
-
-<!-- jQuery -->
-<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
-
-<!-- ** Bootstrap ** -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet" href="css/index.css">
-</head>
-
-<body>
-<div class="row">
-    <h1 class="col-xs-6 col-xs-offset-3">交通違規檢舉</h1>
-    <div id="fbArea" class="col-xs-3" style="margin-top: 10px"></div>
-</div>
-
-
-<hr>
 <div id="body" class="container-fluid">
-    <form action="/emailAttachment" method="post" onsubmit="return validateForm();" id="datatable">
+    <form action="/driverRecord" method="post" onsubmit="return validateForm();" id="datatable">
         <div class="row">
             <select class="col-xs-10 col-xs-offset-1" id="country" name="country">
               <option value="請選擇縣市">請選擇縣市</option>
@@ -84,22 +57,15 @@
         </div>
     </form>
     <!-- div class="row">
-        <a id="fileGen" class="btn btn-default col-xs-10 col-xs-offset-1" href="/emailAttachment">生成檢舉檔案</a>
+        <a id="fileGen" class="btn btn-default col-xs-10 col-xs-offset-1" href="/driverRecord">生成檢舉檔案</a>
     </div>
     <div class="row">
         <button id="emailGen" class="btn btn-default col-xs-10 col-xs-offset-1">生成 Email</a>
     </div -->
     <div id="mail" class="row"></div>
     <div class="row">
-        <a class="btn btn-default col-xs-10 col-xs-offset-1" href="whichPolice.html">上一頁</a>
+        <a class="btn btn-warning col-xs-10 col-xs-offset-1" href="whichPolice.html">上一頁</a>
     </div>
 </div>
 <script type="text/javascript" src="js/baddriver.js"></script>
-<hr>
-<footer>
-    CCSP 2014.  Bill Jian, Natasha Pan, Mitch Tseng.
-</footer>
-<script type="text/javascript" src="js/login.js"></script>
 <script type="text/javascript" src="js/filltable.js"></script>
-</body>
-</html>
