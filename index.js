@@ -10,12 +10,12 @@ var methodOverride = require('method-override');
 var session = require('express-session');
 var expressLayouts = require('express-ejs-layouts');
 
-//var routes = require('./routes');
+var routes = require('./routes');
 var driverRecord = require('./routes/driverRecord');
-var upload = require('./routes/upload');
+var facebook = require('./routes/facebook');
 
-var passport = require('passport')
-var util = require('util')
+var passport = require('passport');
+var util = require('util');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var FACEBOOK_APP_ID = "273057782873545";
@@ -49,87 +49,47 @@ app.listen(app.get('port'), function(){
 
 // Database operations
 app.get('/driverRecord', driverRecord.list);
-
 app.post('/driverRecord', driverRecord.create);
-
 app.get('/driverRecord/:id', driverRecord.show);
-
 app.post('/driverRecord/:id', driverRecord.update);
 
 // Passport-Facebook
 passport.serializeUser(function(user, done) {
-  done(null, user);
+    done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+    done(null, obj);
 });
 
 passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      
-      // To keep the example simple, the user's Facebook profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the Facebook account with a user record in your database,
-      // and return that user instead.
-      return done(null, profile);
-    });
-  }
+        clientID: FACEBOOK_APP_ID,
+        clientSecret: FACEBOOK_APP_SECRET,
+        callbackURL: "/auth/facebook/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        // asynchronous verification, for effect...
+        process.nextTick(function () {
+            // To keep the example simple, the user's Facebook profile is returned to
+            // represent the logged-in user.  In a typical application, you would want
+            // to associate the Facebook account with a user record in your database,
+            // and return that user instead.
+            return done(null, profile);
+        });
+    }
 ));
 
+app.get('/auth/facebook', facebook.login);
 
-app.get('/auth/facebook',
-        function(req, res){
-            req.session.redirectPath = req.query.redirectPath;
-            res.redirect('/auth/facebook/callback');
-        });
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    facebook.succeed
+);
 
-app.get('/auth/facebook/callback', 
-        passport.authenticate('facebook', { failureRedirect: '/', scope: ['user_about_me', 'email'] }),
-        function(req, res) {
-            if (req.session.redirectPath){
-                res.redirect(req.session.redirectPath);
-            }
-            else {
-                res.redirect("/");
-            }
-        });
+app.get('/getfbinfo', facebook.show);
+app.get('/logout', facebook.logout);
 
-
-app.get('/logout', function(req, res){
-    req.logout();
-    console.log('/logout');
-    console.log(req.query.redirectPath);
-    if (req.query.redirectPath){
-        res.redirect(req.query.redirectPath);
-    }
-    else {
-        res.redirect("/");
-    }
-});
-
-app.get('/getfbinfo', function(req, res){
-    if (req.user){
-        res.json({login: true, user: req.user._json});
-    }
-    else {
-        res.json({login: false});
-    }
-});
-
-// YouTube Upload Widget
-app.get('/upload', upload.load);
-
-app.post('/emailAttachment', function(req, res){
-    if (!req.user){
-        res.render('message', {title: '安心上路', message: 'not logged in'});
-        return;
-    }
-    res.render('email', {title: '檢舉檔案', userInfo: req.user._json, reportInfo: req.body});
-});
+// Other operations
+app.get('/upload', routes.upload);
+app.get('/tips', routes.tips);
+app.get('/reportBadDriver', routes.reportBadDriver);

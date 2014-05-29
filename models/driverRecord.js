@@ -4,15 +4,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var DriverRecordSchema = new Schema({
-    userId: {type: Number, required: true},
-    phone: {type: String},
-    email: {type: String, required: true},
+    user_id: {type: Number, required: true},
+    user_phone: {type: String},
+    user_email: {type: String, required: true},
+    user_address: {type: String},
+
     country: {type: String, required: true},
-    address: {type: String, required: true},
+    location: {type: String, required: true},
     carNum: {type: String, required: true},
-    happened: {type: Date, required: true},
+    happenedDate: {type: String, required: true},
+    happenedTime: {type: String, required: true},
     condition: {type: String, required: true},
     url: String,
+
     created: {type: Date, default: Date.now},
     updated: Date
 });
