@@ -10,7 +10,7 @@ h1:before {
     content: "";
     display: inline-block;
     border-top: 15px solid #FFF;
-    border-left: 15px solid #0080C1;
+    border-right: 15px solid #0080C1;
     border-bottom: 15px solid #FFF;
     vertical-align: middle;
     margin-right: 0.6em;
