@@ -14,18 +14,7 @@ exports.list = function(req, res){
             res.render('message', {title: '安心上路', message: err});
             return;
         }
-        i = 0;
-        j = 0;
-        while(driverRecords[i])
-        {
-            if (driverRecords[i].user_id === user._json.id)
-            {
-                userRecords[j] =  driverRecords[i];
-                j++;   
-            }
-            i ++;
-        }
-        res.json(userRecord: userRecords);
+        res.json(userRecord: driverRecords);
     });
 };
 
