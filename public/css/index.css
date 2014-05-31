@@ -44,3 +44,11 @@ footer div:first-of-type {
 div#qna {
     text-align: left;
 }
+
+a:link, a:hover, a:active, a:visited {
+    text-decoration: none;
+}
+
+.panel-heading:hover {
+    color: #0080C1;
+}
