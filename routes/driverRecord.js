@@ -14,7 +14,14 @@ exports.list = function(req, res){
             res.render('message', {title: '安心上路', message: err});
             return;
         }
-        res.json({userRecord: driverRecords});
+        for (var i=0; i<driverRecords.length; i++)
+        {
+            if (driverRecords[i].user_id === req.user._json.id)
+            {
+                userRecords.push(driverRecords[i]);
+            }
+        }
+        res.json({userRecord: userRecords});
     });
 };
 
