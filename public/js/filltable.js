@@ -1,7 +1,7 @@
 var info = {taipei: '<br><a class="btn btn-danger col-xs-10 col-xs-offset-1" href="https://www.tcpd.gov.tw/tcpd/cht/index.php?act=traffic&code=add">現在就去檢舉</a><br><br><br><img class="img" style="width:100%;" src="/fig/台北市.jpg">',
 highway: '<br><a class="btn btn-danger col-xs-10 col-xs-offset-1" href="https://services.hpb.gov.tw/WOSWeb/RVDefault.aspx">現在就去檢舉</a><br><br><br><img class="img" style="width:100%;" src="/fig/國道.jpg">'};
 
-$("select[name=country]").on('click',function(){
+/*$("select[name=country]").on('change',function(){
 
 	console.log(this.options[this.selectedIndex].value);
 	$("#information").empty();
@@ -42,4 +42,4 @@ $("select[name=country]").on('click',function(){
 		$("#reportInfo").show();
 	};
 
-});
+});*/
