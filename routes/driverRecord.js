@@ -14,7 +14,7 @@ exports.list = function(req, res){
             res.render('message', {title: '安心上路', message: err});
             return;
         }
-        res.json(userRecord: driverRecords);
+        res.json({userRecord: driverRecords});
     });
 };
 
