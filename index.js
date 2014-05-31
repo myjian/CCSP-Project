@@ -92,4 +92,4 @@ app.get('/logout', facebook.logout);
 // Other operations
 app.get('/upload', routes.upload);
 app.get('/tips', routes.tips);
-app.get('/reportBadDriver', routes.reportBadDriver);
+app.get('/report', routes.report);

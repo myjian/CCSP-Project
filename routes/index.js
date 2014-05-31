@@ -10,6 +10,6 @@ exports.tips = function(req, res){
     res.render('tips', {title: '檢舉撇步、Q & A'});
 };
 
-exports.reportBadDriver = function(req, res){
-    res.render('reportBadDriver', {title: '檢舉交通違規'});
+exports.report = function(req, res){
+    res.render('report', {title: '檢舉交通違規'});
 };
