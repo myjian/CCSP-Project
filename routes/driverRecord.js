@@ -3,7 +3,7 @@ var DriverRecord = mongoose.model('DriverRecord');
 
 // GET '/driverRecord'
 exports.list = function(req, res){
-    userRecord = [];
+    userRecords = [];
     if (!req.user){
         res.render('message', {title: '安心上路', message: 'not logged in'});
         return;
@@ -20,12 +20,12 @@ exports.list = function(req, res){
         {
             if (driverRecords[i].user_id === user._json.id)
             {
-                userRecord[j] =  driverRecords[i];
+                userRecords[j] =  driverRecords[i];
                 j++;   
             }
-            i++;
+            i ++;
         }
-        res.json(userRecord);
+        res.json(userRecord: userRecords);
     });
 };
 
