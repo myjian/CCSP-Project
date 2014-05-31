@@ -25,3 +25,17 @@ table {
     text-align: left;
 }
 
+img.logo {
+    width: 90px;
+    margin-right: 10px;
+}
+
+img.copyleft {
+    width: 15px;
+}
+
+footer div:first-of-type {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+}
