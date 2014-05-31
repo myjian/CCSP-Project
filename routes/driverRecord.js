@@ -21,7 +21,9 @@ exports.list = function(req, res){
                 userRecords.push(driverRecords[i]);
             }
         }
-        res.json({userRecord: userRecords});
+        res.render('userrecord', {title: '檢舉交通違規', userRecords: userRecords});
+
+
     });
 };
 
