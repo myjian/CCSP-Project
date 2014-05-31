@@ -40,3 +40,7 @@ footer div:first-of-type {
     vertical-align: middle;
     text-align: left;
 }
+
+div#qna {
+    text-align: left;
+}
