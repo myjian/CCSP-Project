@@ -33,6 +33,10 @@ $("select[name=country]").on('change',function(){
 			$("#information").append(info.highway);
 		}
 	}
+	else if(this.options[this.selectedIndex].value == "請選擇縣市")
+	{
+		$("#reportInfo").hide();
+	}
 	else
 	{
 		$("#reportInfo").show();
