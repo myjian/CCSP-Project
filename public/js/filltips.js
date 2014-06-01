@@ -1,34 +1,85 @@
 $("#Q1").on('click',function(){
-	$(".answer").hide();
-	$("#A1").show();
+	if($("#A1").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A1").show();
+	}
 });
 
 $("#Q2").on('click',function(){
-	$(".answer").hide();
-	$("#A2").show();
+	if($("#A2").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A2").show();
+	}
 });
 
 $("#Q3").on('click',function(){
-	$(".answer").hide();
-	$("#A3").show();
+	if($("#A3").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A3").show();
+	}
 });
 
 $("#Q4").on('click',function(){
-	$(".answer").hide();
-	$("#A4").show();
+	if($("#A4").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A4").show();
+	}
 });
 
 $("#Q5").on('click',function(){
-	$(".answer").hide();
-	$("#A5").show();
+	if($("#A5").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A5").show();
+	}
 });
 
 $("#Q6").on('click',function(){
-	$(".answer").hide();
-	$("#A6").show();
+	if($("#A6").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A6").show();
+	}
 });
 
 $("#Q7").on('click',function(){
-	$(".answer").hide();
-	$("#A7").show();
+	if($("#A7").is(":visible"))
+	{
+		$(".answer").hide();
+	} 
+	else
+	{
+		$(".answer").hide();
+		$("#A7").show();
+	}
 });
+
+$(".answer").hide();
