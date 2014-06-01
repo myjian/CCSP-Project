@@ -1,8 +1,8 @@
 <div id="body" class="container-fluid">
     <table class="table table-bordered">
         <tr><th>檢舉人姓名</th><th>通訊地址</th><th colspan=2>連絡電話</th><th colspan=2>e-mail</th></tr>
-        <tr><td rowspan=2><%= reportInfo.name %></td><td rowspan=2><%= reportInfo.address %></td><th>O</th><td><%= reportInfo.phone %></td><td colspan=2><%= reportInfo.email %></td></tr>
-        <tr><th>H</th><td>&nbsp;</td><th>檢舉日期</th><td><%= userRecords[i].created.toLocaleDateString() %></td></tr>
+        <tr><td rowspan=2><%= reportInfo.user_name %></td><td rowspan=2><%= reportInfo.user_address %></td><th>O</th><td><%= reportInfo.user_phone %></td><td colspan=2><%= reportInfo.user_email %></td></tr>
+        <tr><th>H</th><td>&nbsp;</td><th>檢舉日期</th><td><%= reportInfo.created %></td></tr>
     </table>
     <table class="table table-bordered">
         <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th><th>備註</th></tr>

@@ -8,7 +8,7 @@ exports.list = function(req, res){
         res.render('message', {title: '安心上路', message: '尚未登入'});
         return;
     }
-    DriverRecord.find({user_id: req.user._json.id}, function(err, userrRecords){
+    DriverRecord.find({user_id: req.user._json.id}, function(err, userRecords){
         if (err){
             console.error(err);
             res.render('message', {title: '安心上路', message: err});
@@ -33,6 +33,12 @@ exports.create = function(req, res){
             res.render('message', {title: '安心上路', message: err});
             return;
         }
+        if (count === 0){
+            console.error(err);
+            res.render('message', {title: '安心上路', message: '請先填寫個人檔案'});
+            return;
+        }
+        userInfo = userInfo[0];
         console.log(userInfo);
 
         // Fill User Data
@@ -73,13 +79,18 @@ exports.show = function(req, res){
         return;
     }
 
-    DriverRecord.find({_id: req.params.id, user_id: req.user._json.id}, function(err, driverRecord){
+    DriverRecord.find({_id: req.params.id, user_id: req.user._json.id}, function(err, driverRecord, count){
         if (err){
             console.error(err);
             res.render('message', {title: '檢舉檔案', message: err});
             return;
         }
-        res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord});
+        if (count === 0){
+            res.render('message', {title: '檢舉檔案', message: '無此記錄'});
+            return;
+        }
+        console.log(driverRecord[0]);
+        res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord[0]});
     });
 };
 
