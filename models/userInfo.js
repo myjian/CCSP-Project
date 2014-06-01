@@ -9,6 +9,8 @@ var UserInfoSchema = new Schema({
     phone: {type: String, required: true},
     email: {type: String, required: true},
     address: {type: String, required: true},
+    gender: {type: String},
+    idCardNumber: {type: String}
 });
 
 var UserInfo = mongoose.model('UserInfo', UserInfoSchema);
