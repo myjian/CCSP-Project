@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var DriverRecord = mongoose.model('DriverRecord');
+var UserInfo = mongoose.model('UserInfo');
 
 // GET '/driverRecord'
 exports.list = function(req, res){
@@ -33,35 +34,48 @@ exports.create = function(req, res){
         res.render('message', {title: '安心上路', message: 'not logged in'});
         return;
     }
-    var userInfo = req.user._json;
+    var userInfo = {};
     var reportInfo = req.body;
 
-    // Fill User Data
-    var newRecord = {user_id: userInfo.id, user_name: userInfo.name, user_email: userInfo.email};
-    if (userInfo.phone)
-        newRecord.user_phone = userInfo.phone;
-    if (userInfo.address)
-        newRecord.user_address = userInfo.address;
+    //get Userinfo
+    UserInfo.find(function(err, userInfos, count){
+            if (err){
+                console.error(err);
+                res.render('message', {title: '安心上路', message: err});
+                return;
+            }
+            for (var i=0; i<userInfos.length; i++)
+            {
+                if (userInfos[i].id === req.user._json.id)
+                {
+                    userInfo = userInfos[i];
+                }
+            }
+            console.log(userInfo);
 
-    // Fill Driver Data
-    newRecord.country = reportInfo.country;
-    newRecord.location = reportInfo.location;
-    newRecord.carNum = reportInfo.carNum;
-    newRecord.happenedDate = reportInfo.date;
-    newRecord.happenedTime = reportInfo.time;
-    newRecord.condition = reportInfo.condition;
-    if (reportInfo.url)
-        newRecord.url = reportInfo.url;
+            // Fill User Data
+            var newRecord = {user_id: userInfo.id, user_name: userInfo.name, user_email: userInfo.email, user_phone: userInfo.phone, user_address: userInfo.address};
 
-    var driverRecord = new DriverRecord(newRecord);
-    driverRecord.save(function(err, newDriverRecord){
-        if (err){
-            console.error(err);
-            res.render('message', {title: '安心上路', message: err});
-            return;
-        }
-        res.render('reportView', {title: '檢舉檔案', userInfo: req.user._json, reportInfo: newDriverRecord});
-    });
+            // Fill Driver Data
+            newRecord.country = reportInfo.country;
+            newRecord.location = reportInfo.location;
+            newRecord.carNum = reportInfo.carNum;
+            newRecord.happenedDate = reportInfo.date;
+            newRecord.happenedTime = reportInfo.time;
+            newRecord.condition = reportInfo.condition;
+            if (reportInfo.url)
+                newRecord.url = reportInfo.url;
+
+            var driverRecord = new DriverRecord(newRecord);
+            driverRecord.save(function(err, newDriverRecord){
+                if (err){
+                    console.error(err);
+                    res.render('message', {title: '安心上路', message: err});
+                    return;
+                }
+                res.render('reportView', {title: '檢舉檔案', userInfo: userInfo, reportInfo: newDriverRecord});
+            });
+        });   
 };
 
 // GET '/driverRecord/:id'
@@ -112,5 +126,35 @@ exports.update = function(req, res){
             }
             res.json(updatedDriverRecord);
         });
+    });
+};
+
+
+// POST '/driverRecord/newuser'
+exports.newuserinfo = function(req,res){
+
+    var userInfo = req.user._json;
+    var reportInfo = req.body;
+
+    // Fill User Data
+    var newUser = {id: userInfo.id, email: userInfo.email, phone: reportInfo.phone, address: reportInfo.address};
+
+    if(reportInfo.name)
+    {
+        newUser.name = reportInfo.name;
+    }
+    else
+    {
+        newUser.name = userInfo.name;
+    }
+
+    var newUserInfo = new UserInfo(newUser);
+    newUserInfo.save(function(err, user){
+        if (err){
+            console.error(err);
+            res.render('message', {title: '安心上路', message: err});
+            return;
+        }
+        res.redirect("/report");
     });
 };

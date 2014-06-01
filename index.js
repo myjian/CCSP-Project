@@ -50,8 +50,10 @@ app.listen(app.get('port'), function(){
 // Database operations
 app.get('/driverRecord', driverRecord.list);
 app.post('/driverRecord', driverRecord.create);
+app.post('/newuser', driverRecord.newuserinfo);
 app.get('/driverRecord/:id', driverRecord.show);
 app.post('/driverRecord/:id', driverRecord.update);
+
 
 // Passport-Facebook
 passport.serializeUser(function(user, done) {
