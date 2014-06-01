@@ -240,12 +240,13 @@ exports.changeuserinfo = function(req,res){
                 console.error(err);
                 res.render('message', {title: '安心上路', message: err});
             }
+            UserInfo.find({id: req.user._json.id}, function(err, userInfos, count){
+                res.render('changeinfomessage', {title: '資料修改完成', message: "使用者資料已修改完成。", userInfo: userInfos[0]});
+            });
         });
     });
     
-    UserInfo.find({id: req.user._json.id}, function(err, userInfos, count){
-        res.render('changeinfomessage', {title: '資料修改完成', message: "使用者資料已修改完成。", userInfo: userInfos[0]});
-    });
+    
     
     
 };
