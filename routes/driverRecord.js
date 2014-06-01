@@ -5,7 +5,7 @@ var UserInfo = mongoose.model('UserInfo');
 // GET '/driverRecord'
 exports.list = function(req, res){
     if (!req.user){
-        res.render('message', {title: '安心上路', message: '尚未登入'});
+        res.render('notloginmessage', {title: '安心上路', message: '尚未登入'});
         return;
     }
     DriverRecord.find({user_id: req.user._json.id}, function(err, userRecords){
@@ -21,7 +21,7 @@ exports.list = function(req, res){
 // POST '/driverRecord'
 exports.create = function(req, res){
     if (!req.user){
-        res.render('message', {title: '安心上路', message: '尚未登入'});
+        res.render('notloginmessage', {title: '安心上路', message: '尚未登入'});
         return;
     }
     var reportInfo = req.body;
@@ -75,7 +75,7 @@ exports.create = function(req, res){
 // GET '/driverRecord/:id'
 exports.show = function(req, res){
     if (!req.user){
-        res.render('message', {title: '檢舉檔案', message: '尚未登入'});
+        res.render('notloginmessage', {title: '檢舉檔案', message: '尚未登入'});
         return;
     }
 
@@ -139,9 +139,12 @@ exports.newuserinfo = function(req,res){
 
     var userInfo = req.user._json;
     var reportInfo = req.body;
-
     // Fill User Data
-    var newUser = {id: userInfo.id, email: userInfo.email, phone: reportInfo.phone, address: reportInfo.address};
+    var newUser = {
+        id: userInfo.id, 
+        phone: reportInfo.phone, 
+        address: reportInfo.address
+    };
 
     if(reportInfo.name)
     {
@@ -150,6 +153,25 @@ exports.newuserinfo = function(req,res){
     else
     {
         newUser.name = userInfo.name;
+    }
+
+    if(reportInfo.email)
+    {
+        newUser.email = reportInfo.email;
+    }
+    else
+    {
+        newUser.email = userInfo.email;   
+    }
+
+    if(reportInfo.gender)
+    {
+        newUser.gender = reportInfo.gender;
+    }
+
+    if(reportInfo.idcardnumber)
+    {
+        newUser.idCardNumber = reportInfo.idcardnumber;
     }
 
     var newUserInfo = new UserInfo(newUser);
@@ -161,4 +183,58 @@ exports.newuserinfo = function(req,res){
         }
         res.redirect("/report");
     });
+};
+
+
+
+// POST '/driverRecord/changeuserinfo'
+exports.changeuserinfo = function(req,res){
+    var userInfo = req.user._json;
+    var reportInfo = req.body;
+
+    var newUser = {
+        id: userInfo.id, 
+        email: userInfo.email, 
+        phone: reportInfo.phone, 
+        address: reportInfo.address
+    };
+
+    if(reportInfo.name)
+    {
+        newUser.name = reportInfo.name;
+    }
+    else
+    {
+        newUser.name = userInfo.name;
+    }
+
+    if(reportInfo.email)
+    {
+        newUser.email = reportInfo.email;
+    }
+
+    if(reportInfo.gender)
+    {
+        newUser.gender = reportInfo.gender;
+    }
+
+    if(reportInfo.idcardnumber)
+    {
+        newUser.idCardNumber = reportInfo.idcardnumber;
+    }
+
+    var newUserInfo = new UserInfo(newUser);
+
+    UserInfo.find({id: req.user._json.id}, function(err, userInfos){
+        console.log(userInfos);
+        UserInfo.update({_id: userInfos[0]._id}, newUser, function(err, user){
+            if (err){
+                console.error(err);
+                res.render('message', {title: '安心上路', message: err});
+                return;
+            }
+            res.render('changeinfomessage', {title: '資料修改完成', message: "使用者資料已修改完成。", userInfo: newUserInfo});
+        });
+    });
+    
 };

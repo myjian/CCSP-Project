@@ -51,6 +51,7 @@ app.listen(app.get('port'), function(){
 app.get('/driverRecord', driverRecord.list);
 app.post('/driverRecord', driverRecord.create);
 app.post('/newuser', driverRecord.newuserinfo);
+app.post('/userinfo', driverRecord.changeuserinfo);
 app.get('/driverRecord/:id', driverRecord.show);
 app.post('/driverRecord/:id', driverRecord.update);
 
@@ -95,3 +96,4 @@ app.get('/logout', facebook.logout);
 app.get('/upload', routes.upload);
 app.get('/tips', routes.tips);
 app.get('/report', routes.report);
+app.get('/userinfo', routes.userpage);
