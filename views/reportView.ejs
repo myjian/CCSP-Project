@@ -1,11 +1,11 @@
 <div id="body" class="container-fluid">
     <table class="table table-bordered">
-        <tr><td>檢舉人姓名</td><td>通訊地址</td><td colspan=2>連絡電話</td><td colspan=2>e-mail</td></tr>
-        <tr><td rowspan=2><%= userInfo.name %></td><td rowspan=2><%= userInfo.address %></td><td>O</td><td><%= userInfo.phone %></td><td colspan=2><%= userInfo.email %></td></tr>
-        <tr><td>H</td><td>&nbsp;</td><td>檢舉日期</td><td><%= new Date().toLocaleDateString() %></td></tr>
+        <tr><th>檢舉人姓名</th><th>通訊地址</th><th colspan=2>連絡電話</th><th colspan=2>e-mail</th></tr>
+        <tr><td rowspan=2><%= reportInfo.name %></td><td rowspan=2><%= reportInfo.address %></td><th>O</th><td><%= reportInfo.phone %></td><td colspan=2><%= reportInfo.email %></td></tr>
+        <tr><th>H</th><td>&nbsp;</td><th>檢舉日期</th><td><%= userRecords[i].created.toLocaleDateString() %></td></tr>
     </table>
     <table class="table table-bordered">
-        <tr><td>牌照號碼</td><td>違規發生地點</td><td>日期</td><td>時間</td><td>違規事實內容</td><td>備註</td></tr>
+        <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th><th>備註</th></tr>
         <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.condition %></td><td><%= reportInfo.url %></td></tr>
     </table>
 </div>

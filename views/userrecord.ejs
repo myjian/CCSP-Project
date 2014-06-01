@@ -1,18 +1,19 @@
 <table class="table table-striped">
     <% for (var i=userRecords.length-1; i>=0; i--){ %>
     <tr>
-        <th>第 <%= i+1 %> 筆
+        <th>
+            <a href="/driverRecord/<%= userRecords[i]._id %>">第 <%= i+1 %> 筆</a><br>
+            檢舉時間：<%= userRecords[i].created %>
         </th>
     </tr>
     <tr>
         <td>
-            <a class="btn btn-default" href=<%= userRecords[i].url %>>影片/照片</a><br>
+            <a class="btn btn-default" href="<%= userRecords[i].url %>">影片/照片</a><br>
         	縣市：<%= userRecords[i].country %><br>
         	地點：<%= userRecords[i].location %><br>
         	車牌：<%= userRecords[i].carNum %><br>
             事發時間：<%= userRecords[i].happenedDate %>
         	<%= userRecords[i].happenedTime %><br>
-        	檢舉時間：<%= userRecords[i].created %>
         	<blockquote>簡述：<%= userRecords[i].condition %></blockquote>
         </td>
     </tr>
