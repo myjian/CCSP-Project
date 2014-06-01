@@ -194,9 +194,7 @@ exports.changeuserinfo = function(req,res){
 
     var newUser = {
         id: userInfo.id, 
-        email: userInfo.email, 
-        phone: reportInfo.phone, 
-        address: reportInfo.address
+        email: userInfo.email
     };
 
     if(reportInfo.name)
@@ -206,6 +204,16 @@ exports.changeuserinfo = function(req,res){
     else
     {
         newUser.name = userInfo.name;
+    }
+    if(reportInfo.address)
+
+    {
+        newUser.address = reportInfo.address;
+    }
+
+    if(reportInfo.phone)
+    {
+        newUser.phone = reportInfo.phone;
     }
 
     if(reportInfo.email)
