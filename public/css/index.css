@@ -3,16 +3,8 @@ body {
 }
 
 h1 {
-    text-align: left;
-}
-
-a.back {
-    display: inline-block;
-    border-top: 15px solid #FFF;
-    border-right: 15px solid #0080C1;
-    border-bottom: 15px solid #FFF;
-    vertical-align: middle;
-    margin-right: 0.6em;
+    display: block;
+    width: 100%;
 }
 
 div.row {
@@ -24,9 +16,37 @@ table {
     text-align: left;
 }
 
+#head td {
+    vertical-align: middle;   
+}
+
+#head h1 {
+    text-align: center;
+    margin: 0;
+}
+
+#head, #head tr, #head td {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
 img.logo {
-    width: 90px;
-    margin-right: 10px;
+    max-width: 200px;
+    max-height: 80px;
+}
+
+#back {
+    width: 60px;
+}
+
+img.back {
+    max-width: 40px;
+}
+
+#fbArea {
+    width: 100px;
 }
 
 img.copyleft {
@@ -68,12 +88,22 @@ blockquote {
 }
 
 div.function-row {
-    display: inline-block;
-    position: relative;
+    display: block;
+    /*display: inline-block;*/
+    /*position: absolute;*/
 }
+
 img.function {
     width: 100px;
 }
+
 img.function:hover {
     opacity: 0.8;
+}
+
+form > img {
+    border: 3px solid blue;
+    min-width: 100px;
+    min-height: 100px;
+    display: block;
 }

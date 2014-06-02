@@ -11,8 +11,7 @@ exports.succeed = function(req, res){
 
 exports.show = function(req, res){
     if (req.user){
-        res.json({login: true, user: req.user._json});
-        return;
+        return res.json({login: true, user: req.user._json});
     }
     res.json({login: false});
 };
@@ -22,8 +21,7 @@ exports.logout = function(req, res){
     console.log('/logout');
     console.log(req.query.redirectPath);
     if (req.query.redirectPath){
-        res.redirect(req.query.redirectPath);
-        return;
+        return res.redirect(req.query.redirectPath);
     }
     res.redirect("/");
 }

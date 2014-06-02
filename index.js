@@ -8,10 +8,10 @@ var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
-var expressLayouts = require('express-ejs-layouts');
 var favicon = require('serve-favicon');
 
 var routes = require('./routes');
+var userInfo = require('./routes/userInfo');
 var driverRecord = require('./routes/driverRecord');
 var facebook = require('./routes/facebook');
 
@@ -28,7 +28,6 @@ var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(expressLayouts);
 app.use(logger('dev'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyParser());
@@ -42,24 +41,37 @@ app.use(passport.session());
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(errorHandler());
+    app.use(errorHandler());
 }
 
 app.listen(app.get('port'), function(){
     console.log('Express server started at port ' + app.get('port'));
 });
 
-// Database operations
-app.get('/driverRecord', driverRecord.list);
-app.post('/driverRecord', driverRecord.create);
-app.post('/newuser', driverRecord.newuserinfo);
-app.post('/userinfo', driverRecord.changeuserinfo);
-app.get('/driverRecord/:id', driverRecord.show);
-app.post('/driverRecord/:id', driverRecord.update);
+// Main operations
+app.get('/', routes.index);
+app.get('/tips', routes.tips);
+app.get('/report', routes.report);
+app.get('/trafficLaws', routes.trafficLaws);
+app.get('/contactUs', routes.contactUs);
+
+// TODO: upload functionality
+app.get('/upload', routes.upload);
 app.get('/imgupload', routes.imgupload);
 app.get('/imgsend', driverRecord.imgsend);
 app.post('/imgupload/:part', driverRecord.imgaccept);
 
+// Database operations - UserInfo
+app.post('/newuser', userInfo.newuserinfo);
+app.get('/userinfo', userInfo.userpage);
+app.post('/userinfo', userInfo.changeuserinfo);
+
+// Database operations - DriverRecord
+app.get('/userRecords', driverRecord.listUserRecords);
+app.get('/driverRecords', driverRecord.list);
+app.post('/driverRecords', driverRecord.create);
+app.get('/driverRecords/:id', driverRecord.show);
+app.post('/driverRecords/:id', driverRecord.update);
 
 // Passport-Facebook
 passport.serializeUser(function(user, done) {
@@ -91,15 +103,7 @@ app.get('/auth/facebook', facebook.login);
 
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/' }),
-    facebook.succeed
-);
+    facebook.succeed);
 
 app.get('/getfbinfo', facebook.show);
 app.get('/logout', facebook.logout);
-
-// Other operations
-app.get('/upload', routes.upload);
-app.get('/tips', routes.tips);
-app.get('/report', routes.report);
-app.get('/userinfo', routes.userpage);
-app.get('/trafficLaws', routes.trafficLaws);

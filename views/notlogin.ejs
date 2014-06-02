@@ -1,5 +1,10 @@
+<% include _header %>
 <div id="body" class="container-fluid">
-    <p class="text-danger"><%= message %></p>
+    <% if (messages.length) { %>
+    <p class="text-info">
+    <%- messages.join('<br>') %>
+    </p>
+    <% } %>
     <p>利用FB登入，</p>
     <p>系統會自動填入您的email等冗長資料，</p>
     <p>協助您更快速的填寫檢舉表單。</p>
@@ -7,3 +12,4 @@
     <br>
     <p>【請點選右上角的登入以繼續】</p>
 </div>
+<% include _footer %>

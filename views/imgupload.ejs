@@ -1,15 +1,4 @@
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <style>
-        form>img
-        {
-            border: 3px solid blue;
-            min-width: 100px;
-            min-height: 100px;
-            display: block;
-        }
-    </style>
-</head>
-<body>
+<% include _header %>
     <form>
             
             <input name='file' type="file" accept="image/*" />
@@ -21,5 +10,5 @@
             </div>      
     </form>
 
-
 <script src="js/imgupload.js"></script>
+<% include _footer %>

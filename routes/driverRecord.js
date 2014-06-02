@@ -4,41 +4,47 @@ var UserInfo = mongoose.model('UserInfo');
 var Img = mongoose.model('Img');
 var fs = require("fs");
 
-// GET '/driverRecord'
-exports.list = function(req, res){
+// GET '/userRecords'
+exports.listUserRecords = function(req, res){
     if (!req.user){
-        res.render('notloginmessage', {title: '安心上路', message: '尚未登入'});
-        return;
+        return res.render('notlogin', {title: '我的檢舉記錄', messages: ['尚未登入']});
     }
-    DriverRecord.find({user_id: req.user._json.id}, function(err, userRecords){
+    DriverRecord.find({user_id: req.user.id}, function(err, userRecords){
         if (err){
             console.error(err);
-            res.render('message', {title: '安心上路', message: err});
-            return;
+            return res.render('messages', {title: '我的檢舉記錄', messages: [err]});
         }
-        res.render('userrecord', {title: '我的檢舉記錄', userRecords: userRecords});
+        res.render('userRecords', {title: '我的檢舉記錄', userRecords: userRecords});
     });
 };
 
-// POST '/driverRecord'
+// GET '/driverRecords'
+exports.list = function(req, res){
+    DriverRecord.find({}, function(err, driverRecords){
+        if (err){
+            console.error(err);
+            return res.render('messages', {title: '檢舉資料庫', messages: [err]});
+        }
+        res.render('driverRecords', {title: '檢舉資料庫', driverRecords: driverRecords});
+    });
+};
+
+// POST '/driverRecords'
 exports.create = function(req, res){
     if (!req.user){
-        res.render('notloginmessage', {title: '安心上路', message: '尚未登入'});
-        return;
+        return res.render('notlogin', {title: '新檢舉案件', messages: ['尚未登入']});
     }
     var reportInfo = req.body;
 
-    // get Userinfo
-    UserInfo.find({id: req.user._json.id}, function(err, userInfo, count){
+    // get UserInfo
+    UserInfo.find({id: req.user.id}, function(err, userInfo, count){
         if (err){
             console.error(err);
-            res.render('message', {title: '安心上路', message: err});
-            return;
+            return res.render('messages', {title: '新檢舉案件', messages: [err]});
         }
         if (count === 0){
             console.error(err);
-            res.render('message', {title: '安心上路', message: '請先填寫個人檔案'});
-            return;
+            return res.render('messages', {title: '新檢舉案件', messages: ['請先填寫個人檔案']});
         }
         userInfo = userInfo[0];
         console.log(userInfo);
@@ -62,36 +68,33 @@ exports.create = function(req, res){
         if (reportInfo.url)
             newRecord.url = reportInfo.url;
 
-        var driverRecord = new DriverRecord(newRecord);
-        driverRecord.save(function(err, newDriverRecord){
+        var newDriverRecord = new DriverRecord(newRecord);
+        newDriverRecord.save(function(err, newDriverRecord){
             if (err){
                 console.error(err);
-                res.render('message', {title: '安心上路', message: err});
-                return;
+                return res.render('messages', {title: '新檢舉案件', messages: [err]});
             }
-            res.redirect("/imgupload");
             req.session.recordid = newDriverRecord._id;
-            //res.redirect('/driverRecord/' + newDriverRecord._id);
+            res.redirect("/imgupload");
+            //res.redirect('/driverRecords/' + newDriverRecord._id);
         });
     });
 };
 
-// GET '/driverRecord/:id'
+// GET '/driverRecords/:id'
 exports.show = function(req, res){
     if (!req.user){
-        res.render('notloginmessage', {title: '檢舉檔案', message: '尚未登入'});
-        return;
+        return res.render('notlogin', {title: '檢舉檔案', messages: ['尚未登入']});
     }
 
-    DriverRecord.find({_id: req.params.id, user_id: req.user._json.id}, function(err, driverRecord, count){
+    DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            res.render('message', {title: '檢舉檔案', message: err});
-            return;
+            return res.render('messages', {title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
-        if (count === 0){
-            res.render('message', {title: '檢舉檔案', message: '無此記錄'});
-            return;
+        if (driverRecord.user_id !== req.user.id){
+            console.log(driverRecord);
+            return res.render('driverRecords', {title: '檢舉檔案', driverRecords: [driverRecord]});
         }
         id = driverRecord[0].imgid;
         parts = driverRecord[0].imgpart;
@@ -117,105 +120,31 @@ exports.show = function(req, res){
                 }
             }
         });
+        //return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord});
     });
 };
 
-// POST '/driverRecord/:id'
+// POST '/driverRecords/:id'
 exports.update = function(req, res){
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            res.render('message', {title: '安心上路', message: err});
-            return;
+            return res.render('messages', {title: '檢舉進度修改', messages: [err + '<br>（不存在此筆記錄？）']});
         }
+        if (driverRecord.user_id !== req.user.id){
+            return res.render('messages', {title: '檢舉進度修改', messages: ['權限不符。這是你的檢舉記錄嗎？']});
+        }
+        console.log(driverRecord);
 
-        if (req.body.plate){
-            driverRecord.carNum = req.body.plate;
-        }
-        if (req.body.happened){
-            driverRecord.happened = req.body.happened;
-        }
-        if (req.body.country){
-            driverRecord.country = req.body.country;
-        }
-        if (req.body.road){
-            driverRecord.road = req.body.road;
-        }
-        if (req.body.condition){
-            driverRecord.condition = req.body.condition;
-        }
-        if (req.body.url){
-            driverRecord.url = req.body.url;
-        }
+        driverRecord.status = req.body.status;
         driverRecord.updated = Date.now();
+        console.log(driverRecord)
         driverRecord.save(function(err, updatedDriverRecord){
             if (err){
                 console.error(err);
-                res.render('message', {title: '安心上路', message: err});
-                return;
+                return res.render('messages', {title: '檢舉進度修改', messages: [err]});
             }
-            res.json(updatedDriverRecord);
-        });
-    });
-};
-
-
-// POST '/driverRecord/newuser'
-exports.newuserinfo = function(req,res){
-
-    var userInfo = req.user._json;
-    var reportInfo = req.body;
-    // Fill User Data
-    var newUser = {
-        id: userInfo.id,
-        name: reportInfo.name,
-        address: reportInfo.address,
-        phone: reportInfo.phone,
-        email: reportInfo.email,
-        gender: reportInfo.gender,
-        idCardNumber: reportInfo.idcardnumber
-    };
-
-    var newUserInfo = new UserInfo(newUser);
-    newUserInfo.save(function(err, user){
-        if (err){
-            console.error(err);
-            res.render('message', {title: '安心上路', message: err});
-            return;
-        }
-        res.redirect("/report");
-    });
-};
-
-
-
-// POST '/driverRecord/changeuserinfo'
-exports.changeuserinfo = function(req,res){
-    var userInfo = req.user._json;
-    var reportInfo = req.body;
-
-    var newUser = {
-        id: userInfo.id,
-        name: reportInfo.name,
-        address: reportInfo.address,
-        phone: reportInfo.phone,
-        email: reportInfo.email,
-        gender: reportInfo.gender,
-        idCardNumber: reportInfo.idcardnumber
-    };
-
-    var newUserInfo = new UserInfo(newUser);
-
-    UserInfo.find({id: req.user._json.id}, function(err, userInfos){
-        console.log(userInfos);
-        UserInfo.update({_id: userInfos[0]._id}, newUser, function(err, user){
-            if (err){
-                console.error(err);
-                res.render('message', {title: '安心上路', message: err});
-            }
-            UserInfo.find({id: req.user._json.id}, function(err, userInfos, count){
-                res.render('changeinfomessage', {title: '資料修改完成', message: "使用者資料已修改完成。", userInfo: userInfos[0]});
-            });
+            res.redirect('/driverRecords/' + updatedDriverRecord._id);
         });
     });    
 };
@@ -237,7 +166,6 @@ exports.imgaccept = function(req, res){
         res.redirect("/imgupload");
 
     });
-  
 };
 
 exports.imgsend = function(req, res){

@@ -1,0 +1,23 @@
+<% include _header %>
+<table class="table table-striped">
+    <% for (var i=driverRecords.length-1; i>=0; i--){ %>
+    <tr>
+        <th>
+            <a href="/driverRecords/<%= driverRecords[i]._id %>">第 <%= i+1 %> 筆</a><br>
+            檢舉時間：<%= driverRecords[i].created %>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <a class="btn btn-default" href="<%= driverRecords[i].url %>">影片/照片</a><br>
+        	縣市：<%= driverRecords[i].country %><br>
+        	地點：<%= driverRecords[i].location %><br>
+        	車牌：<%= driverRecords[i].carNum %><br>
+            事發時間：<%= driverRecords[i].happenedDate %>
+        	<%= driverRecords[i].happenedTime %><br>
+        	<blockquote>簡述：<%= driverRecords[i].condition %></blockquote>
+        </td>
+    </tr>
+    <% } %>
+</table>
+<% include _footer %>

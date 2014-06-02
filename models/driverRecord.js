@@ -1,14 +1,14 @@
-// DriverSchema in models/driverRecord.js
+// [models/driverRecord.js] DriverRecord Schema 
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var DriverRecordSchema = new Schema({
+var DriverRecordSchema = new mongoose.Schema({
     user_id: {type: String, required: true},
-    user_phone: {type: String},
+    user_name: {type: String, required: true},
+    user_phone: {type: String, required: true},
     user_email: {type: String, required: true},
     user_address: {type: String},
-    user_name: {type: String},
+    user_ssn: {type: String},
 
     country: {type: String, required: true},
     location: {type: String, required: true},
@@ -21,7 +21,8 @@ var DriverRecordSchema = new Schema({
     url: {type: String},
 
     created: {type: Date, default: Date.now},
-    updated: Date
+    updated: Date,
+    status: {type: String, default: 'sent'}
 });
 
 var DriverRecord = mongoose.model('DriverRecord', DriverRecordSchema);

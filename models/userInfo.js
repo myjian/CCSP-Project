@@ -1,9 +1,8 @@
-// DriverSchema in models/driverRecord.js
+// [models/userInfo.js] UserInfo Schema
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
-var UserInfoSchema = new Schema({
+var UserInfoSchema = new mongoose.Schema({
     id: {type: String, required: true},
     name: {type: String, required: true},
     phone: {type: String, required: true},

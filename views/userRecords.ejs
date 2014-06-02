@@ -1,8 +1,9 @@
+<% include _header %>
 <table class="table table-striped">
     <% for (var i=userRecords.length-1; i>=0; i--){ %>
     <tr>
         <th>
-            <a href="/driverRecord/<%= userRecords[i]._id %>">第 <%= i+1 %> 筆</a><br>
+            <a href="/driverRecords/<%= userRecords[i]._id %>">第 <%= i+1 %> 筆</a><br>
             檢舉時間：<%= userRecords[i].created %>
         </th>
     </tr>
@@ -19,3 +20,4 @@
     </tr>
     <% } %>
 </table>
+<% include _footer %>
