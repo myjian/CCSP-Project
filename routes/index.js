@@ -72,3 +72,7 @@ exports.userpage = function(req, res){
 	}
 
 };
+
+exports.trafficLaws = function(req, res){
+    res.render('trafficLaws', {title: '交通法規'});
+}

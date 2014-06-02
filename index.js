@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var expressLayouts = require('express-ejs-layouts');
+var favicon = require('serve-favicon');
 
 var routes = require('./routes');
 var driverRecord = require('./routes/driverRecord');
@@ -29,6 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(logger('dev'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -97,3 +99,4 @@ app.get('/upload', routes.upload);
 app.get('/tips', routes.tips);
 app.get('/report', routes.report);
 app.get('/userinfo', routes.userpage);
+app.get('/trafficLaws', routes.trafficLaws);
