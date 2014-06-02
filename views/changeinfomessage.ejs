@@ -1,6 +1,10 @@
 <% include _header %>
 <div id="body" class="container-fluid">
-    <p class="text-danger"><%= message %></p>
+    <% if (messages.length) { %>
+    <p class="text-info">
+    <%- messages.join('<br>') %>
+    </p>
+    <% } %>
     <a class="btn btn-default" href="/">回首頁</a>
     <br>
     <br>

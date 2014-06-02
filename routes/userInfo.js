@@ -72,7 +72,7 @@ exports.changeuserinfo = function(req,res){
                 res.render('messages', {title: '安心上路', messages: err});
             }
             UserInfo.find({id: req.user.id}, function(err, userInfos, count){
-                res.render('changeinfomessage', {title: '資料修改完成', messages: "使用者資料已修改完成。", userInfo: userInfos[0]});
+                res.render('changeinfomessage', {title: '資料修改完成', messages: ["使用者資料已修改完成。"], userInfo: userInfos[0]});
             });
         });
     });

@@ -96,8 +96,8 @@ exports.show = function(req, res){
             console.log(driverRecord);
             return res.render('driverRecords', {title: '檢舉檔案', driverRecords: [driverRecord]});
         }
-        id = driverRecord[0].imgid;
-        parts = driverRecord[0].imgpart;
+        id = driverRecord.imgid;
+        parts = driverRecord.imgpart;
 
         var imgdata = "";
         Img.find({id: id},function(err, imgs){
@@ -114,8 +114,8 @@ exports.show = function(req, res){
                 if(i === parts)
                 {
                     console.log(imgdata.length);
-                    console.log(driverRecord[0]);
-                    res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord[0], image: imgdata});
+                    console.log(driverRecord);
+                    res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
                     //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
                 }
             }
