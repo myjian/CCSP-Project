@@ -141,38 +141,14 @@ exports.newuserinfo = function(req,res){
     var reportInfo = req.body;
     // Fill User Data
     var newUser = {
-        id: userInfo.id, 
-        phone: reportInfo.phone, 
-        address: reportInfo.address
+        id: userInfo.id,
+        name: reportInfo.name,
+        address: reportInfo.address,
+        phone: reportInfo.phone,
+        email: reportInfo.email,
+        gender: reportInfo.gender,
+        idCardNumber: reportInfo.idcardnumber
     };
-
-    if(reportInfo.name)
-    {
-        newUser.name = reportInfo.name;
-    }
-    else
-    {
-        newUser.name = userInfo.name;
-    }
-
-    if(reportInfo.email)
-    {
-        newUser.email = reportInfo.email;
-    }
-    else
-    {
-        newUser.email = userInfo.email;   
-    }
-
-    if(reportInfo.gender)
-    {
-        newUser.gender = reportInfo.gender;
-    }
-
-    if(reportInfo.idcardnumber)
-    {
-        newUser.idCardNumber = reportInfo.idcardnumber;
-    }
 
     var newUserInfo = new UserInfo(newUser);
     newUserInfo.save(function(err, user){
@@ -193,43 +169,14 @@ exports.changeuserinfo = function(req,res){
     var reportInfo = req.body;
 
     var newUser = {
-        id: userInfo.id, 
-        email: userInfo.email
+        id: userInfo.id,
+        name: reportInfo.name,
+        address: reportInfo.address,
+        phone: reportInfo.phone,
+        email: reportInfo.email,
+        gender: reportInfo.gender,
+        idCardNumber: reportInfo.idcardnumber
     };
-
-    if(reportInfo.name)
-    {
-        newUser.name = reportInfo.name;
-    }
-    else
-    {
-        newUser.name = userInfo.name;
-    }
-    if(reportInfo.address)
-
-    {
-        newUser.address = reportInfo.address;
-    }
-
-    if(reportInfo.phone)
-    {
-        newUser.phone = reportInfo.phone;
-    }
-
-    if(reportInfo.email)
-    {
-        newUser.email = reportInfo.email;
-    }
-
-    if(reportInfo.gender)
-    {
-        newUser.gender = reportInfo.gender;
-    }
-
-    if(reportInfo.idcardnumber)
-    {
-        newUser.idCardNumber = reportInfo.idcardnumber;
-    }
 
     var newUserInfo = new UserInfo(newUser);
 
