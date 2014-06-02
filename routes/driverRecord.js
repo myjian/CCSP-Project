@@ -89,10 +89,6 @@ exports.show = function(req, res){
             console.error(err);
             return res.render('messages', {title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
-        if (!req.user || driverRecord.user_id !== req.user.id){
-            console.log(driverRecord);
-            return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord});
-        }
         
         id = driverRecord.imgid;
         parts = driverRecord.imgpart;
@@ -113,7 +109,12 @@ exports.show = function(req, res){
                 {
                     console.log(imgdata.length);
                     console.log(driverRecord);
-                    res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                    if (!req.user || driverRecord.user_id !== req.user.id){
+                        console.log(driverRecord);
+                        return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                    } else {
+                        return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                    }
                     //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
                 }
             }
