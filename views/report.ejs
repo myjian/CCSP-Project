@@ -1,8 +1,8 @@
 <div id="body" class="container-fluid">
-    <form action="/driverRecord" method="post" onsubmit="return validateForm()">
+    <form action="/driverRecord" method="post" onsubmit="return validateForm()"  id="tryitForm" class="form-horizontal">
         <div class="form-group">
-            <select class="form-control" name="country">
-                <option value="請選擇縣市">請選擇縣市</option>
+            <select class="form-control" name="country" id="country">
+                <option value="">請選擇縣市</option>
                 <option value="基隆市">基隆市</option>
                 <option value="台北市">台北市</option>
                 <option value="新北市">新北市</option>
@@ -30,29 +30,29 @@
         </div>
         <div id="reportInfo">
             <div class="form-group">
-                <label>詳細地點（區域、路段）</label>
-                <input class="form-control" type="text" name="location" placeholder="詳細地點（區域、路段）">
+                <label class="control-label">詳細地點（區域、路段）</label>
+                <input class="form-control" type="text" name="location" id="location" placeholder="詳細地點（區域、路段）">
             </div>
             <div class="form-group">
-                <label>車牌</label>
-                <input class="form-control" type="text" name="carNum" placeholder="車牌">
+                <label class="control-label">車牌</label>
+                <input class="form-control" type="text" name="carNum" id="carNum" placeholder="車牌">
             </div>
             <div class="form-group">
-                <label>發生日期</label>
-                <input class="form-control" type="date" name="date" placeholder="發生日期">
+                <label class="control-label">發生日期</label>
+                <input class="form-control" type="date" name="date" id="date" placeholder="發生日期">
             </div>
             <div class="form-group">
-                <label>發生時間</label>
-                <input class="form-control" type="time" name="time" placeholder="發生時間">
+                <label class="control-label">發生時間</label>
+                <input class="form-control" type="time" name="time" id="time" placeholder="發生時間">
                 <!-- a id="now" class="btn btn-info btn-block">現在</a -->
             </div>
             <div class="form-group">
-                <label>佐證影片或照片</label>
-                <input class="form-control" type="url" name="url" placeholder="影片或照片網址">
+                <label class="control-label">佐證影片或照片</label>
+                <input class="form-control" type="url" name="url" id="url" placeholder="影片或照片網址">
             </div>
             <div class="form-group">
-                <label>情況簡述</label>
-                <textarea class="form-control" name="condition" placeholder="情況簡述"></textarea>
+                <label class="control-label">情況簡述</label>
+                <textarea class="form-control" name="condition" id="condition" placeholder="情況簡述"></textarea>
             </div>
             <div class="form-group">
                 <input class="form-control btn-success" type="submit" value="確認送出">
@@ -73,5 +73,6 @@
     <div id="mail" class="row">
     </div -->
 </div>
+<script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="js/baddriver.js"></script>
 <script type="text/javascript" src="js/filltable.js"></script>

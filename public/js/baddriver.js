@@ -1,7 +1,6 @@
 function isValid(id){
     var item = document.getElementById(id);
     if (item.value === ''){
-        alert(item.placeholder + '不可空白');
         item.focus();
         return false;
     }
@@ -9,15 +8,13 @@ function isValid(id){
 }
 
 function validateForm(){
+
     if (!isValid('country')) return false;
     if (!isValid('location')) return false;
     if (!isValid('carNum')) return false;
     if (!isValid('condition')) return false;
-    if (!isValid('year')) return false;
-    if (!isValid('month')) return false;
-    if (!isValid('day')) return false;
-    if (!isValid('hour')) return false;
-    if (!isValid('minute')) return false;
+    if (!isValid('date')) return false;
+    if (!isValid('time')) return false;
     if (!isValid('url')) return false;
     return true;
 }
@@ -34,3 +31,64 @@ $('#now').on('click', function(event){
     */
     return false;
 });
+
+
+$(document).ready(function() {
+    $('#tryitForm').bootstrapValidator({
+        fields: {
+            country: {
+                validators: {
+                    notEmpty: {
+                        message: '請選擇縣市'
+                    }
+                }
+            },
+            location: {
+                validators: {
+                    notEmpty: {
+                        message: '請填入詳細地點'
+                    }
+                }
+            },
+            carNum: {
+                validators: {
+                    notEmpty: {
+                        message: '請填入違規車牌'
+                    }
+                }
+            },
+            date: {
+                validators: {
+                    notEmpty: {
+                        message: '請選擇日期'
+                    }
+                }
+            },
+            time: {
+                validators: {
+                    notEmpty: {
+                        message: '請輸入時間'
+                    }
+                }
+            },
+            url: {
+                validators: {
+                    notEmpty: {
+                        message: '請輸入網址'
+                    },
+                    uri:{
+                        message: '不正確網址格式'
+                    }
+                }
+            },
+            condition: {
+                validators: {
+                    notEmpty: {
+                        message: '請簡述案發時情況'
+                    }
+                }
+            }
+        }
+    });
+});
+
