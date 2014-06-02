@@ -14,6 +14,9 @@ exports.trafficLaws = function(req, res){
 };
 
 exports.imgupload = function(req, res){
+    if (!req.user){
+        return res.render('notlogin', {title: '安心上路', messages: ['尚未登入']});
+    }
     res.render('imgupload', {title: '上傳檔案'});
 };
 
