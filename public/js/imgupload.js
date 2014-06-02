@@ -1,5 +1,8 @@
 var reader;
 var imgdata;
+var getcount = 0;
+
+$("#send").hide();
 
 $(function(){
 	$("[type=file]").change(function(){
@@ -33,6 +36,12 @@ function uploadimg(i, times, send){
 			data: {data: senddata, id: send, max: times},
 			dataType: 'text',
 			success: function(response) {
+				//alert(response);
+				getcount = getcount + 1;
+				if(getcount >= times)
+				{
+					$("#send").show();
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert(i);

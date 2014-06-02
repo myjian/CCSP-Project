@@ -86,7 +86,7 @@ exports.show = function(req, res){
     if (!req.user){
         return res.render('notlogin', {title: '檢舉檔案', messages: ['尚未登入']});
     }
-
+    console.log(req.params.id);
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
@@ -96,6 +96,7 @@ exports.show = function(req, res){
             console.log(driverRecord);
             return res.render('driverRecords', {title: '檢舉檔案', driverRecords: [driverRecord]});
         }
+        
         id = driverRecord.imgid;
         parts = driverRecord.imgpart;
 
@@ -161,17 +162,13 @@ exports.imgaccept = function(req, res){
             console.error(err);
             return;
         }
-        console.log(nowimg.number);
-
-        res.redirect("/imgupload");
-
+        res.end("get");
     });
 };
 
 exports.imgsend = function(req, res){
 
     DriverRecord.update({_id: req.session.recordid}, {imgid: req.session.imgid, imgpart: req.session.imgparts},function(err,newDriverRecord){
-        
         res.redirect('/driverRecords/' + req.session.recordid);
         delete req.session.imgparts, req.session.recordid, req.session.imgparts;
         console.log(newDriverRecord); 
