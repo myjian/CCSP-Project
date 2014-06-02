@@ -13,17 +13,16 @@
         <tr><th>H</th><td>&nbsp;</td><th>檢舉日期</th><td><%= reportInfo.created %></td></tr>
     </table>
     <table class="table table-bordered">
-
-        <tr><td>牌照號碼</td><td>違規發生地點</td><td>日期</td><td>時間</td><td>違規事實內容</td></tr>
-        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %>&nbsp<%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.condition %></td></tr>
+        <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th></tr>
+        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %><%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.description %></td></tr>
     </table>
 
     <table class="table table-bordered">
-    	<tr><th>備註</th></tr><tr><th><img src=<%= image %>>
+    	<tr><th>備註</th></tr><tr><th><img src="<%= image %>">
         <video id="movie" preload controls loop poster="poster.png" width="640" height="360">
-          <source src=<%= image %> type="video/mp4" />
-          <source src=<%= image %> type="video/ogg" />
-          <source src=<%= image %> type="video/web" />
+          <source src="<%= image %>" type="video/mp4" />
+          <source src="<%= image %>" type="video/ogg" />
+          <source src="<%= image %>" type="video/web" />
           您的瀏覽器不支援HTML 5影片播放標籤<video>格式。
           Your browser doesn't support the <video> tag.
         </video>

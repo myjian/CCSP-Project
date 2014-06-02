@@ -83,18 +83,15 @@ exports.create = function(req, res){
 
 // GET '/driverRecords/:id'
 exports.show = function(req, res){
-    if (!req.user){
-        return res.render('notlogin', {title: '檢舉檔案', messages: ['尚未登入']});
-    }
     console.log(req.params.id);
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
             return res.render('messages', {title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
-        if (driverRecord.user_id !== req.user.id){
+        if (!req.user || driverRecord.user_id !== req.user.id){
             console.log(driverRecord);
-            return res.render('driverRecords', {title: '檢舉檔案', driverRecords: [driverRecord]});
+            return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord});
         }
         
         id = driverRecord.imgid;

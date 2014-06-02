@@ -1,0 +1,12 @@
+<% include _header %>
+<div id="body" class="container-fluid">
+    <table class="table table-bordered">
+        <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th></tr>
+        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %><%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.description %></td></tr>
+    </table>
+
+    <table class="table table-bordered">
+    	<tr><th>備註</th></tr><tr><th><img src="<%= image %>"></th></tr>
+    </table>
+</div>
+<% include _footer %>
