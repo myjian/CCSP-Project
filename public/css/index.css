@@ -6,7 +6,6 @@ h1 {
     text-align: left;
 }
 
-
 a.back {
     display: inline-block;
     border-top: 15px solid #FFF;
@@ -51,4 +50,8 @@ a:link, a:hover, a:active, a:visited {
 
 .panel-heading:hover {
     color: #0080C1;
+}
+blockquote {
+	font-family: 標楷體, Sans Serif;
+	font-size: 14px;
 }
