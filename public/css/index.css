@@ -66,3 +66,14 @@ blockquote {
     font-family: 標楷體, Sans-Serif;
     font-size: 14px;
 }
+
+div.function-row {
+    display: inline-block;
+    position: relative;
+}
+img.function {
+    width: 100px;
+}
+img.function:hover {
+    opacity: 0.8;
+}
