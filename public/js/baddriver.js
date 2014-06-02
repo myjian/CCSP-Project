@@ -15,7 +15,6 @@ function validateForm(){
     if (!isValid('condition')) return false;
     if (!isValid('date')) return false;
     if (!isValid('time')) return false;
-    if (!isValid('url')) return false;
     return true;
 }
 
@@ -68,16 +67,6 @@ $(document).ready(function() {
                 validators: {
                     notEmpty: {
                         message: '請輸入時間'
-                    }
-                }
-            },
-            url: {
-                validators: {
-                    notEmpty: {
-                        message: '請輸入網址'
-                    },
-                    uri:{
-                        message: '不正確網址格式'
                     }
                 }
             },

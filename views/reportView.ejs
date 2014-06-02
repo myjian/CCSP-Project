@@ -6,7 +6,11 @@
     </table>
     <table class="table table-bordered">
 
-        <tr><td>牌照號碼</td><td>違規發生地點</td><td>日期</td><td>時間</td><td>違規事實內容</td><td>備註</td></tr>
-        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %>&nbsp<%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.condition %></td><td><%= reportInfo.url %></td></tr>
+        <tr><td>牌照號碼</td><td>違規發生地點</td><td>日期</td><td>時間</td><td>違規事實內容</td></tr>
+        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %>&nbsp<%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.condition %></td></tr>
+    </table>
+
+    <table class="table table-bordered">
+    	<tr><th>備註</th></tr><tr><th><img src=<%= image %>></th></tr>
     </table>
 </div>

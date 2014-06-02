@@ -41,9 +41,6 @@ exports.report = function(req, res){
 	}
 };
 
-
-
-
 exports.userpage = function(req, res){
 
 	if(!req.user)
@@ -75,4 +72,10 @@ exports.userpage = function(req, res){
 
 exports.trafficLaws = function(req, res){
     res.render('trafficLaws', {title: '交通法規'});
-}
+};
+
+exports.imgupload = function(req, res){
+
+	res.render('imgupload', {title: '上傳檔案'});
+
+};

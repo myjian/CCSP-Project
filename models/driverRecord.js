@@ -16,7 +16,9 @@ var DriverRecordSchema = new Schema({
     happenedDate: {type: String, required: true},
     happenedTime: {type: String, required: true},
     condition: {type: String, required: true},
-    url: String,
+    imgid: {type: String},
+    imgpart: {type: Number},
+    url: {type: String},
 
     created: {type: Date, default: Date.now},
     updated: Date

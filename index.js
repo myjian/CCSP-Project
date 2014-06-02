@@ -56,6 +56,9 @@ app.post('/newuser', driverRecord.newuserinfo);
 app.post('/userinfo', driverRecord.changeuserinfo);
 app.get('/driverRecord/:id', driverRecord.show);
 app.post('/driverRecord/:id', driverRecord.update);
+app.get('/imgupload', routes.imgupload);
+app.get('/imgsend', driverRecord.imgsend);
+app.post('/imgupload/:part', driverRecord.imgaccept);
 
 
 // Passport-Facebook

@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var DriverRecord = mongoose.model('DriverRecord');
 var UserInfo = mongoose.model('UserInfo');
+var Img = mongoose.model('Img');
+var fs = require("fs");
 
 // GET '/driverRecord'
 exports.list = function(req, res){
@@ -67,7 +69,9 @@ exports.create = function(req, res){
                 res.render('message', {title: '安心上路', message: err});
                 return;
             }
-            res.redirect('/driverRecord/' + newDriverRecord._id);
+            res.redirect("/imgupload");
+            req.session.recordid = newDriverRecord._id;
+            //res.redirect('/driverRecord/' + newDriverRecord._id);
         });
     });
 };
@@ -89,8 +93,30 @@ exports.show = function(req, res){
             res.render('message', {title: '檢舉檔案', message: '無此記錄'});
             return;
         }
-        console.log(driverRecord[0]);
-        res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord[0]});
+        id = driverRecord[0].imgid;
+        parts = driverRecord[0].imgpart;
+
+        var imgdata = "";
+        Img.find({id: id},function(err, imgs){
+            
+            for(var i = 0; i <= parts; i++)
+            {
+                for(var j = 0; j < parts; j++)
+                {
+                    if(imgs[j].part === i)
+                    {
+                        imgdata = imgdata + imgs[j].data;
+                    }
+                }
+                if(i === parts)
+                {
+                    console.log(imgdata.length);
+                    console.log(driverRecord[0]);
+                    res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord[0], image: imgdata});
+                    //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
+                }
+            }
+        });
     });
 };
 
@@ -191,9 +217,63 @@ exports.changeuserinfo = function(req,res){
                 res.render('changeinfomessage', {title: '資料修改完成', message: "使用者資料已修改完成。", userInfo: userInfos[0]});
             });
         });
-    });
-    
-    
-    
-    
+    });    
 };
+
+exports.imgaccept = function(req, res){
+    var imgInfo = req.body;
+    nowpart = parseInt(req.params.part);
+    req.session.imgid = imgInfo.id;
+    req.session.imgparts = parseInt(imgInfo.max)+1;
+
+    var newImg = new Img({id: imgInfo.id, part: nowpart, data: imgInfo.data});
+    newImg.save(function(err, nowimg){
+        if (err){
+            console.error(err);
+            return;
+        }
+        console.log(nowimg.number);
+
+        res.redirect("/imgupload");
+
+    });
+  
+};
+
+exports.imgsend = function(req, res){
+
+    DriverRecord.update({_id: req.session.recordid}, {imgid: req.session.imgid, imgpart: req.session.imgparts},function(err,newDriverRecord){
+        
+        res.redirect('/driverRecord/' + req.session.recordid);
+        delete req.session.imgparts, req.session.recordid, req.session.imgparts;
+        console.log(newDriverRecord); 
+    });
+
+};
+
+function imgshow(id, parts){
+    var imgdata = "";
+    console.log(parts);
+    console.log(id);
+
+    Img.find({id: id},function(err, imgs){
+        
+        for(var i = 0; i <= parts; i++)
+        {
+            for(var j = 0; j < parts; j++)
+            {
+                if(imgs[j].part === i)
+                {
+                    imgdata = imgdata + imgs[j].data;
+                }
+            }
+            if(i === parts)
+            {
+                console.log(imgdata.length);
+                return imgdata;
+                //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
+            }
+        }
+    });
+
+}

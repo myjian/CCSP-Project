@@ -10,7 +10,7 @@ var UserInfoSchema = new Schema({
     email: {type: String, required: true},
     address: {type: String, required: true},
     gender: {type: String},
-    idCardNumber: {type: String}
+    ssn: {type: String}
 });
 
 var UserInfo = mongoose.model('UserInfo', UserInfoSchema);
