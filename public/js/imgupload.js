@@ -17,6 +17,7 @@ $(function(){
 			var i = 0;
 			var send = new Date();
 			uploadimg(i, times, send);
+			alert(imgdata.slice(5,10));
 
 		}
 		reader.readAsDataURL(file);

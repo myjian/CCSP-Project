@@ -111,9 +111,23 @@ exports.show = function(req, res){
                     console.log(driverRecord);
                     if (!req.user || driverRecord.user_id !== req.user.id){
                         console.log(driverRecord);
-                        return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                        if(imgdata.slice(5,10) === "video")
+                        {
+                            return res.render('publicReportViewVideo', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                        }
+                        else
+                        {
+                            return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                        }
                     } else {
-                        return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                        if(imgdata.slice(5,10) === "video")
+                        {
+                            return res.render('reportViewVideo', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                        }
+                        else
+                        {
+                            return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                        }
                     }
                     //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
                 }

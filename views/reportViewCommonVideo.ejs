@@ -5,7 +5,15 @@
 
     <table class="table table-bordered">
 
-    	<tr><th>備註</th></tr><tr><th style="text-align: center;"><img style="width: 80%; " src="<%= image %>">
+    	<tr><th>備註</th></tr><tr><th style="text-align: center;">
+
+        <video id="movie" preload controls loop poster="poster.png" width="60%">
+          <source src="<%= image %>" type="video/mp4" />
+          <source src="<%= image %>" type="video/ogg" />
+          <source src="<%= image %>" type="video/web" />
+          您的瀏覽器不支援HTML 5影片播放標籤<video>格式。
+          Your browser doesn't support the <video> tag.
+        </video>
 
         </th></tr>
     </table>
