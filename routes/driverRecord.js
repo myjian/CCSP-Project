@@ -14,7 +14,7 @@ exports.listUserRecords = function(req, res){
             console.error(err);
             return res.render('messages', {title: '我的檢舉記錄', messages: [err]});
         }
-        res.render('userRecords', {title: '我的檢舉記錄', userRecords: userRecords});
+        res.render('driverRecords', {title: '我的檢舉記錄', driverRecords: userRecords});
     });
 };
 
