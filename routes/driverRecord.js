@@ -166,7 +166,7 @@ exports.imgaccept = function(req, res){
     var imgInfo = req.body;
     nowpart = parseInt(req.params.part);
     req.session.imgid = imgInfo.id;
-    req.session.imgparts = parseInt(imgInfo.max)+1;
+    req.session.imgparts = imgInfo.max;
 
     var newImg = new Img({id: imgInfo.id, part: nowpart, data: imgInfo.data});
     newImg.save(function(err, nowimg){

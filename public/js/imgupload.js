@@ -13,7 +13,7 @@ $(function(){
 			img.attr('src', e.target.result);
 			imgdata = e.target.result;
 			len = imgdata.length;
-			times = len/50000;
+			times = Math.ceil(len/50000);
 			var i = 0;
 			var send = new Date();
 			uploadimg(i, times, send);
