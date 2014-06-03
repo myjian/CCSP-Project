@@ -17,7 +17,6 @@ var DriverRecordSchema = new mongoose.Schema({
     happenedTime: {type: String, required: true},
     description: {type: String, required: true},
     condition: {type: String},
-    imgid: {type: String},
     imgpart: {type: Number},
     url: {type: String},
 

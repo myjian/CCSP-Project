@@ -33,7 +33,8 @@ exports.report = function(req, res){
             console.error(err);
             return res.render('messages', {title: '安心上路', messages: [err]});
         }
-        if (count === 0){
+        console.log(userInfos.length);
+        if (userInfos.length === 0){
             return res.render('userinfo', {title: '初次登入', userInfo: req.user._json});
         }
         return res.render('report', {title: '檢舉交通違規'});
