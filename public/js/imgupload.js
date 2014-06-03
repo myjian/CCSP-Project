@@ -20,7 +20,7 @@ $("#upload").click(function(){
 	len = imgdata.length;
 	times = Math.ceil(len/50000);
 	uploadimg(0, times);
-	alert(imgdata.slice(5,10));
+	//alert(imgdata.slice(5,10));
 });
 
 
@@ -45,7 +45,7 @@ function uploadimg(i, times){
 			}
 		});
 	i++;
-	if(i <= times)
+	if(i < times)
 	{
 		setTimeout(uploadimg(i, times, send), 1000);
 	}
