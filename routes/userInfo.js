@@ -30,7 +30,7 @@ exports.newuserinfo = function(req,res){
 // GET /userinfo
 exports.userpage = function(req, res){
     if (!req.user){
-        return res.redirect('/');
+        return res.render('notlogin', {title: '安心上路', messages: ['尚未登入']});
     }
     UserInfo.find({id: req.user.id}, function(err, userInfos){
         if (err){
