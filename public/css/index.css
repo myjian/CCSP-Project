@@ -34,7 +34,7 @@ table {
 
 img.logo {
     max-width: 200px;
-    max-height: 80px;
+    max-height: 60px;
 }
 
 #back {
@@ -98,7 +98,7 @@ form > img {
 .hex {
     float: left;
     margin-right: -26px;
-    margin-bottom: -50px;
+    margin-bottom: -52px;
 }
 .hex .left {
     float: left;
@@ -109,7 +109,7 @@ form > img {
 }
 .hex .middle {
     float: left;
-    width: 60px;
+    width: 58px;
     height: 104px;
     background: transparent;
 }
@@ -130,10 +130,19 @@ form > img {
 
 img.function {
     position: absolute;
-    width: 100px;
-    margin-left: -30px;
+    width: 110px;
+    margin-left: -70px;
 }
 
 img.function:hover {
     opacity: 0.8;
+}
+
+/* contactUs */
+img.photo {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+h2 {
+    margin-top: 0;
 }
