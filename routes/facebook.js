@@ -1,7 +1,7 @@
 var passport = require('passport');
 
 exports.login = function(req, res){
-    req.session.redirectPath = req.query.redirectPath;
+    req.session.redirectPath = req.get('Referrer');
     return res.redirect('/auth/facebook/callback');
 };
 
@@ -18,10 +18,5 @@ exports.show = function(req, res){
 
 exports.logout = function(req, res){
     req.logout();
-    console.log('/logout');
-    console.log(req.query.redirectPath);
-    if (req.query.redirectPath){
-        return res.redirect(req.query.redirectPath);
-    }
-    res.redirect("/");
+    res.redirect('back');
 }

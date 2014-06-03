@@ -1,11 +1,11 @@
 <% include _header %>
-<div id="body" class="container-fluid">
-    <p>有*的欄位為必填</p>
-    <form action="/newuser" method="post" onsubmit="return validateForm()" id="tryitForm" class="form-horizontal">
+<div class="container-fluid">
+    <p class="text-danger" style="text-align: left;">有*的欄位為必填</p>
+    <form action="/newuser" method="post" onsubmit="return validateForm()" id="tryitForm" class="container-fluid form-horizontal">
         <div id="reportInfo">
             <div class="form-group">
                 <label class="control-label">*真實姓名（真實姓名可提高檢舉成功機率）</label>
-                <input class="form-control" type="text" name="name" id="name" value = "<%= userInfo.name %>" placeholder="姓名">
+                <input class="form-control" type="text" name="name" id="name" value="<%= userInfo.name %>" placeholder="姓名">
             </div>
             <div class="form-group">
                 <label class="control-label">*電話（電話真實性會影響檢舉是否成功）</label>
@@ -17,14 +17,14 @@
             </div>
             <div class="form-group">
                 <label class="control-label">*電子郵件信箱（期望收到回信的信箱）</label>
-                <input class="form-control" type="text" name="email" id="email" value = "<%= userInfo.email %>" placeholder="電子郵件信箱">
+                <input class="form-control" type="text" name="email" id="email" value="<%= userInfo.email %>" placeholder="電子郵件信箱">
             </div>
             <div class="form-group">
-                <label>性別</label>
-                <input class="form-control" type="text" name="gender" value = "<%= userInfo.gender %>" placeholder="性別">
+                <label class="control-label">性別</label>
+                <input class="form-control" type="text" name="gender" value="<%= userInfo.gender %>" placeholder="性別">
             </div>
             <div class="form-group">
-                <label>身分證字號（檢舉發生在新竹市的案件需要身分證字號）</label>
+                <label class="control-label">身分證字號（檢舉發生在新竹市的案件需要身分證字號）</label>
                 <input class="form-control" type="text" name="ssn" placeholder="身分證字號（可填可不填）">
             </div>
             <div class="form-group">
@@ -32,21 +32,10 @@
             </div>
         </div>
     </form>
-    <div id="information">
-    </div>
-    <!-- div class="row">
-    <div class="col-xs-12">
-        <a id="fileGen" class="btn btn-default" href="/driverRecord/newuser">生成檢舉檔案</a>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <button id="emailGen" class="btn btn-default">生成 Email</a>
-        </div>
-    </div>
-    <div id="mail" class="row">
-    </div -->
+    <a class="btn btn-default btn-block" href="/logout?redirectPath=/">取消</a>
 </div>
-<script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
-<script type="text/javascript" src="js/userinfo.js"></script>
-<script type="text/javascript" src="js/filltable.js"></script>
+<br><br>
+
+<script type="text/javascript" src="/js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="/js/userinfo.js"></script>
 <% include _footer %>

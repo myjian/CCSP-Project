@@ -1,31 +1,70 @@
 <% include _header %>
-<div id="body" class="container-fluid" style="position: absolute">
-    <div class="function-row">
-        <a href="/driverRecords" style="margin-right: 10px">
+<div style="width: 400px; margin-left: auto; margin-right: auto; margin-top: -40px">
+    <div class="hex-row">
+        <div class="hex" style="opacity: 0">
+            <div class="left"></div>
+            <div class="middle"></div>
+            <div class="right"></div>
+        </div>
+        <a class="hex even" href="/driverRecords">
+            <div class="left"></div>
+            <div class="middle">
             <img class="function" src="img/badDriverVideos.png" alt="影片資料庫">
+            </div>
+            <div class="right"></div>
         </a>
-        <a href="/tips">
+        <div class="hex" style="opacity: 0">
+            <div class="left"></div>
+            <div class="middle"></div>
+            <div class="right"></div>
+        </div>
+    </div>
+    <div class="hex-row">
+        <a class="hex" href="/tips">
+            <div class="left"></div>
+            <div class="middle">
             <img class="function" src="img/tips.png" alt="檢舉撇步、Q &amp; A">
+            </div>
+            <div class="right"></div>
         </a>
-    </div>
-    <div class="function-row" style="top: -30px; z-index: 1">
-        <a href="/report">
+        <a class="hex even" href="/report">
+            <div class="left"></div>
+            <div class="middle">
             <img class="function" src="img/report.png" alt="我要檢舉！">
+            </div>
+            <div class="right"></div>
         </a>
-    </div>
-    <div class="function-row" style="top: -90px">
-        <a href="/trafficLaws" style="margin-right: 74px">
-            <img class="function" src="img/trafficLaws.png" alt="交通法規">
-        </a>
-        <a href="/userRecords">
+        <a class="hex" href="/userRecords">
+            <div class="left"></div>
+            <div class="middle">
             <img class="function" src="img/driverRecord.png" alt="管理案件">
+            </div>
+            <div class="right"></div>
         </a>
     </div>
-    <div class="function-row" style="top: -120px">
-        <a href="/contactUs">
+    <div class="hex-row">
+        <a class="hex" href="/trafficLaws">
+            <div class="left"></div>
+            <div class="middle">
+            <img class="function" src="img/trafficLaws.png" alt="交通法規">
+            </div>
+            <div class="right"></div>
+        </a>
+        <a class="hex even" href="/contactUs">
+            <div class="left"></div>
+            <div class="middle">
             <img class="function" src="img/contactUs.png" alt="聯絡我們">
+            </div>
+            <div class="right"></div>
+        </a>
+        <a class="hex" href="/userRecords">
+            <div class="left"></div>
+            <div class="middle">
+            <img class="function" src="img/driverRecord.png" alt="管理案件">
+            </div>
+            <div class="right"></div>
         </a>
     </div>
 </div>
-<div id="space" style="height: 260px"></div>
+<div id="space" style="height: 180px"></div>
 <% include _footer %>

@@ -1,11 +1,5 @@
-var fbLogin = '<a id="fblogin" class="btn btn-primary" href="/auth/facebook?redirectPath=' + encodeURIComponent(getPath()) + '">FB<br>登入</a>';
-var fbLogout = '<a href="/userinfo"><button style="background-color: #5b74a8; color: #FFFFFF">資料</button></a><a href="/logout?redirectPath=' + encodeURIComponent(getPath()) + '"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>';
-
-function getPath(){
-    var l = document.createElement("a");
-    l.href = document.location;
-    return l.pathname;
-}
+var fbLogin = '<a id="fblogin" class="btn btn-primary" href="/auth/facebook">FB<br>登入</a>';
+var fbLogout = '<a href="/userinfo"><button style="background-color: #5b74a8; color: #FFFFFF">資料</button></a><a href="/logout"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>';
 
 function displayFB(user){
     var fbArea = $("#fbArea");

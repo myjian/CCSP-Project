@@ -21,7 +21,7 @@ exports.newuserinfo = function(req,res){
     newUserInfo.save(function(err, user){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '安心上路', messages: err});
+            return res.render('messages', {title: '安心上路', messages: [err]});
         }
         res.redirect("/report");
     });
@@ -30,12 +30,12 @@ exports.newuserinfo = function(req,res){
 // GET /userinfo
 exports.userpage = function(req, res){
     if (!req.user){
-        return res.render('notlogin', {title: '安心上路', messages: 'not logged in'});
+        return res.render('notlogin', {title: '安心上路', messages: ['尚未登入']});
     }
     UserInfo.find({id: req.user.id}, function(err, userInfos, count){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '安心上路', messages: err});
+            return res.render('messages', {title: '安心上路', messages: [err]});
         }
         if (count === 0){
             return res.render('userinfo', {title: '初次登入', userInfo: req.user._json});
@@ -69,7 +69,7 @@ exports.changeuserinfo = function(req,res){
         UserInfo.update({_id: userInfos[0]._id}, newUser, function(err, user){
             if (err){
                 console.error(err);
-                res.render('messages', {title: '安心上路', messages: err});
+                res.render('messages', {title: '安心上路', messages: [err]});
             }
             UserInfo.find({id: req.user.id}, function(err, userInfos, count){
                 res.render('changeinfomessage', {title: '資料修改完成', messages: ["使用者資料已修改完成。"], userInfo: userInfos[0]});
