@@ -64,7 +64,7 @@ exports.create = function(req, res){
         newRecord.carNum = reportInfo.carNum;
         newRecord.happenedDate = reportInfo.date;
         newRecord.happenedTime = reportInfo.time;
-        newRecord.condition = reportInfo.condition;
+        newRecord.description = reportInfo.condition;
         if (reportInfo.url)
             newRecord.url = reportInfo.url;
 
