@@ -28,12 +28,11 @@ exports.report = function(req, res){
     if (!req.user){
         return res.render('notlogin', {title: '安心上路', messages: ['尚未登入']});
     }
-    UserInfo.find({id: req.user.id}, function(err, userInfos, count){
+    UserInfo.find({id: req.user.id}, function(err, userInfos){
         if (err){
             console.error(err);
             return res.render('messages', {title: '安心上路', messages: [err]});
         }
-        console.log(userInfos.length);
         if (userInfos.length === 0){
             return res.render('userinfo', {title: '初次登入', userInfo: req.user._json});
         }

@@ -178,13 +178,11 @@ exports.imgaccept = function(req, res){
 };
 
 exports.imgsend = function(req, res){
-
-    DriverRecord.update({_id: req.session.recordid}, {imgid: req.session.imgid, imgpart: req.session.imgparts},function(err,newDriverRecord){
+    DriverRecord.update({_id: req.session.recordid}, {imgpart: req.session.imgparts}, function(err, newDriverRecord){
         res.redirect('/driverRecords/' + req.session.recordid);
         delete req.session.imgparts, req.session.recordid, req.session.imgparts;
         console.log(newDriverRecord); 
     });
-
 };
 
 function imgshow(id, parts){
