@@ -36,10 +36,23 @@
                 <h1><img class="logo" src="/img/logo-no-blue.png" alt="安心上路"></h1>
             </td>
             <% } else { %>
-            <td id="back" style="margin: 0; padding: 0"><a href="/" style="margin: 0; padding: 0"><img class="back" src="/img/back.png" alt="&lt;" style="margin: 0; padding: 0"></a></td>
+            <td id="back">
+                <a href="javascript: void(0)" onclick="goBack()">
+                    <img class="back" src="/img/back.png" alt="&lt;">
+                </a>
+            </td>
             <td><h1><%= title %></h1></td>
             <% } %>
-            <td id="fbArea"></td>
+            <% if (user){ %>
+            <td id="fbArea">
+                <a href="/userinfo"><img class="img-thumbnail" src="http://graph.facebook.com/<%= user.id %>/picture" alt="<%= user.displayName %>"></a>
+                <a href="/logout" style="display: inline-block; margin-top: 5px"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>
+            </td>
+            <% } else { %>
+            <td id="fbArea">
+                <a id="fblogin" class="btn btn-primary" href="/auth/facebook">FB<br>登入</a>
+            </td>
+            <% } %>
         </tr>
     </table>
     <hr>

@@ -7,14 +7,14 @@ var fs = require("fs");
 // GET '/userRecords'
 exports.listUserRecords = function(req, res){
     if (!req.user){
-        return res.render('notlogin', {title: '我的檢舉記錄', messages: ['尚未登入']});
+        return res.render('notlogin', {user: req.user, title: '我的檢舉記錄', messages: ['尚未登入']});
     }
     DriverRecord.find({user_id: req.user.id}, function(err, userRecords){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '我的檢舉記錄', messages: [err]});
+            return res.render('messages', {user: req.user, title: '我的檢舉記錄', messages: [err]});
         }
-        res.render('driverRecords', {title: '我的檢舉記錄', driverRecords: userRecords});
+        res.render('driverRecords', {user: req.user, title: '我的檢舉記錄', driverRecords: userRecords});
     });
 };
 
@@ -23,16 +23,16 @@ exports.list = function(req, res){
     DriverRecord.find({}, function(err, driverRecords){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '檢舉資料庫', messages: [err]});
+            return res.render('messages', {user: req.user, title: '檢舉資料庫', messages: [err]});
         }
-        res.render('driverRecords', {title: '檢舉資料庫', driverRecords: driverRecords});
+        res.render('driverRecords', {user: req.user, title: '檢舉資料庫', driverRecords: driverRecords});
     });
 };
 
 // POST '/driverRecords'
 exports.create = function(req, res){
     if (!req.user){
-        return res.render('notlogin', {title: '新檢舉案件', messages: ['尚未登入']});
+        return res.render('notlogin', {user: req.user, title: '新檢舉案件', messages: ['尚未登入']});
     }
     var reportInfo = req.body;
 
@@ -40,11 +40,11 @@ exports.create = function(req, res){
     UserInfo.find({id: req.user.id}, function(err, userInfo, count){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '新檢舉案件', messages: [err]});
+            return res.render('messages', {user: req.user, title: '新檢舉案件', messages: [err]});
         }
         if (count === 0){
             console.error(err);
-            return res.render('messages', {title: '新檢舉案件', messages: ['請先填寫個人檔案']});
+            return res.render('messages', {user: req.user, title: '新檢舉案件', messages: ['請先填寫個人檔案']});
         }
         userInfo = userInfo[0];
         console.log(userInfo);
@@ -72,7 +72,7 @@ exports.create = function(req, res){
         newDriverRecord.save(function(err, newDriverRecord){
             if (err){
                 console.error(err);
-                return res.render('messages', {title: '新檢舉案件', messages: [err]});
+                return res.render('messages', {user: req.user, title: '新檢舉案件', messages: [err]});
             }
             req.session.recordid = newDriverRecord._id;
             res.redirect("/imgupload");
@@ -83,11 +83,10 @@ exports.create = function(req, res){
 
 // GET '/driverRecords/:id'
 exports.show = function(req, res){
-    console.log(req.params.id);
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '檢舉檔案', messages: [err, '（無此記錄？）']});
+            return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
         
         id = driverRecord._id;
@@ -113,27 +112,27 @@ exports.show = function(req, res){
                         console.log(driverRecord);
                         if(imgdata.slice(5,10) === "video")
                         {
-                            return res.render('publicReportViewVideo', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                            return res.render('publicReportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
                         }
                         else
                         {
-                            return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                            return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
                         }
                     } else {
                         if(imgdata.slice(5,10) === "video")
                         {
-                            return res.render('reportViewVideo', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                            return res.render('reportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
                         }
                         else
                         {
-                            return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
+                            return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
                         }
                     }
-                    //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
+                    //res.render('imgshow', {user: req.user, title: '顯示上傳圖檔', img: imgdata});
                 }
             }
         });
-        //return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord});
+        //return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord});
     });
 };
 
@@ -142,10 +141,10 @@ exports.update = function(req, res){
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            return res.render('messages', {title: '檢舉進度修改', messages: [err + '<br>（不存在此筆記錄？）']});
+            return res.render('messages', {user: req.user, title: '檢舉進度修改', messages: [err, '（無此記錄？）']});
         }
         if (driverRecord.user_id !== req.user.id){
-            return res.render('messages', {title: '檢舉進度修改', messages: ['權限不符。這是你的檢舉記錄嗎？']});
+            return res.render('messages', {user: req.user, title: '檢舉進度修改', messages: ['權限不符，這是你的檢舉記錄嗎？']});
         }
         console.log(driverRecord);
 
@@ -155,7 +154,7 @@ exports.update = function(req, res){
         driverRecord.save(function(err, updatedDriverRecord){
             if (err){
                 console.error(err);
-                return res.render('messages', {title: '檢舉進度修改', messages: [err]});
+                return res.render('messages', {user: req.user, title: '檢舉進度修改', messages: [err]});
             }
             res.redirect('/driverRecords/' + updatedDriverRecord._id);
         });
@@ -205,7 +204,7 @@ function imgshow(id, parts){
             {
                 console.log(imgdata.length);
                 return imgdata;
-                //res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});         
+                //res.render('imgshow', {user: req.user, title:'顯示上傳圖檔', img: imgdata});
             }
         }
     });

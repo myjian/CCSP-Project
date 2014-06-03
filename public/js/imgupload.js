@@ -37,7 +37,7 @@ function uploadimg(i, times){
 				getcount = getcount + 1;
 				if(getcount >= times)
 				{
-					document.location="/imgsend";
+					window.location.assign('/imgsend');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
