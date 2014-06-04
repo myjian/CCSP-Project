@@ -42,13 +42,3 @@ exports.upload = function(req, res){
     }
     return res.render('upload', {user: req.user, title: '上傳影片'});
 };
-
-exports.imguploadjs = function(req, res){
-
-    fs.readFile('./public/js/imgupload.js', 'utf8', function (err, data) {
-        if (err) { throw err; }
-        res.setHeader('Content-Type', 'text/javascripts');
-        res.end(data);
-    });
-
-};
