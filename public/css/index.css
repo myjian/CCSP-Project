@@ -104,7 +104,7 @@ form > img {
 .hex {
     float: left;
     margin-right: -26px;
-    margin-bottom: -52px;
+    margin-bottom: -50px;
 }
 .hex .left {
     float: left;
@@ -112,12 +112,21 @@ form > img {
     border-right: 30px solid transparent;
     border-top: 52px solid transparent;
     border-bottom: 52px solid transparent;
+    opacity: 0.3;
+}
+img.function {
+    float: left;
+    width: 110px;
+    height: 104px;
+    margin-left: -26px;
+    margin-right: -26px;
 }
 .hex .middle {
     float: left;
     width: 58px;
     height: 104px;
     background: transparent;
+    opacity: 0.3;
 }
 .hex .right {
     float: left;
@@ -125,20 +134,17 @@ form > img {
     border-left: 30px solid transparent;
     border-top: 52px solid transparent;
     border-bottom: 52px solid transparent;
+    opacity: 0.3;
 }
 .hex-row {
     clear: left;
+    margin-left: -26px;
 }
 .hex.even {
     margin-top: 53px;
 }
 /* Hexagonal styles END */
 
-img.function {
-    position: absolute;
-    width: 110px;
-    margin-left: -70px;
-}
 
 img.function:hover {
     opacity: 0.8;
