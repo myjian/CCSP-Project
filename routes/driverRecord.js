@@ -186,7 +186,7 @@ exports.imgupload = function(req, res){
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
-    res.render('imgupload', {user: req.user, title: '上傳檔案'});
+    res.render('imgupload', {user: req.user, title: '上傳檔案', first: req.session.first});
 };
 
 // POST '/driverRecords/:id/imgupload'

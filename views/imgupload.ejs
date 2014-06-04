@@ -18,10 +18,18 @@
 
         <br><br>
         <div id="send">
-            <button type="button" class="btn btn-primary btn-block" data-loading-text="上傳中..." id="upload" style="display: none">確認送出</a>
+            <button type="button" class="btn btn-primary btn-block" data-loading-text="上傳中..." id="upload" style="display: none">確認送出</button>
         </div>
     </div>
 </form>
+
+<% if(!first){ %>
+
+<br>
+<a class="btn btn-default btn-block" href="javascript: void(0)" onclick="goBack()">取消</a><br>
+
+<% } %>
+
 <progress id="progress" value="0" max="100" style="display: none; width:100%;"></progress><br><br>
 
 <script type="text/javascript" src="/js/imgupload.js"></script>
