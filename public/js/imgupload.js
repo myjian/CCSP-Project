@@ -1,8 +1,6 @@
 var reader;
 var imgdata;
 var sent_parts = 0;
-var postURL = window.location.toString().replace(/userRecords/, 'file');
-var targetURL = window.location.toString() + '/success';
 
 $("#loadfile").on('click', function(){
     $("#upload").fadeOut();
@@ -16,14 +14,14 @@ $("[name=file]").change(function(){
         //img.attr('src', e.target.result);
         imgdata = e.target.result;
         //$("#submit").fadeIn();
-        $("#upload").fadeIn();
-        if(imgdata.slice(5,10) === "video")
+        $("#upload").fadeIn().button('reset');
+        if (imgdata.slice(5,10) === "video")
         {
             $("#previewImg").hide();
             $("#movie").attr('src', e.target.result);
             $("#movie").show();
         }
-        else if(imgdata.slice(5,10) === "image")
+        else if (imgdata.slice(5,10) === "image")
         {
             $("#movie").hide();
             $("#previewImg").attr('src', e.target.result);
@@ -42,8 +40,8 @@ $("#upload").click(function(){
     $("#progress").attr("max", num_parts);
     $.ajax({
         type: 'POST',
-        url: postURL,
-        data: {data: 0, part: 0, num_parts: num_parts},
+        url: window.location,
+        data: {data: '', part: -1, num_parts: num_parts},
         dataType: 'text',
         success: function(response){
             uploadimg(0, num_parts);
@@ -52,24 +50,22 @@ $("#upload").click(function(){
             console.warning('failed');
         }
     });
-    //alert(imgdata.slice(5,10));
 });
 
 
 function uploadimg(i, num_parts){
-    senddata = imgdata.slice(0 + i*50000, 50000 + i*50000);
+    senddata = imgdata.slice(50000 * i, 50000 * (i + 1));
     $.ajax({
         type: 'POST',
-        url: postURL,
-        data: {data: senddata, part: i+1, num_parts: num_parts},
+        url: window.location,
+        data: {data: senddata, part: i, num_parts: num_parts},
         dataType: 'text',
         success: function(response){
             sent_parts = sent_parts + 1;
-            
+            console.log(sent_parts + '/' + num_parts + ' sent');
             $("#progress").attr("value", sent_parts);
-            if (sent_parts >= num_parts)
-            {
-                window.location.assign(targetURL);
+            if (sent_parts >= num_parts){
+                window.location.assign(response);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {

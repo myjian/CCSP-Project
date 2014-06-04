@@ -66,17 +66,17 @@ app.post('/userinfo', userInfo.changeuserinfo);
 // Database operations - DriverRecord
 app.get('/driverRecords', driverRecord.list);
 app.get('/driverRecords/:id', driverRecord.show);
+app.get('/driverRecords/:id/file', driverRecord.getFile);
+app.get('/userRecords/:id/file', driverRecord.getFile);
 app.get('/userRecords', driverRecord.listUserRecords);
 app.post('/userRecords', driverRecord.create);
 app.get('/userRecords/:id', driverRecord.show);
 app.post('/userRecords/:id', driverRecord.update);
 app.get('/userRecords/:id/success', driverRecord.success);
-app.get('/driverRecords/:id/success', driverRecord.success);
 
 // Database operations - Upload
-app.get('/files/:id/upload', driverRecord.fileUpload);
-app.post('/files/:id/upload', driverRecord.fileAccept);
-app.get('/files/:id', driverRecord.getFile);
+app.get('/userRecords/:id/upload', driverRecord.fileUpload);
+app.post('/userRecords/:id/upload', driverRecord.fileAccept);
 
 // Passport-Facebook
 passport.serializeUser(function(user, done) {

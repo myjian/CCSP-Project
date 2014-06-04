@@ -31,12 +31,12 @@
                     Your browser doesn't support the &lt;video&gt; tag.
                 </video>
                 <% } else if (reportInfo.url) {%>
-                <a class="btn btn-default" href="/file/<%= reportInfo.url %>" target="_blank">附件</a>
+                <a class="btn btn-default" href="<%= reportInfo.url %>" target="_blank">附件</a>
                 <% } else { %>
                 <p style="text-align: left;">沒有附檔</p>
                 <% } %>
                 <% if (user && user.id === reportInfo.user_id){ %>
-                <a class="btn btn-default" href="/file/<%= reportInfo._id %>/upload">重新上傳檔案</a>
+                <a class="btn btn-default" href="/userRecords/<%= reportInfo._id %>/upload">重新上傳檔案</a>
                 <% } %>
             </td>
         </tr>
