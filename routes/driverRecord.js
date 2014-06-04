@@ -69,8 +69,6 @@ exports.create = function(req, res){
         newRecord.happenedDate = reportInfo.date;
         newRecord.happenedTime = reportInfo.time;
         newRecord.description = reportInfo.description;
-        if (reportInfo.url)
-            newRecord.url = reportInfo.url;
 
         var newDriverRecord = new DriverRecord(newRecord);
         newDriverRecord.save(function(err, newDriverRecord){
@@ -92,36 +90,7 @@ exports.show = function(req, res){
             console.error(err);
             return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
-        Img.find({id: driverRecord._id}, function(err, imgs){
-            imgs.sort(compareFunction);
-            var imgData = '';
-            imgs.forEach(function(img, idx, array){
-                imgData += img.data;
-            });
-
-            if (!req.user || driverRecord.user_id !== req.user.id){
-                if (!imgData){
-                    return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: '/img/logo.jpg'});
-                }
-                else if (imgData.slice(5,10) === "video"){
-                    return res.render('publicReportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
-                }
-                else {
-                    return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
-                }
-            }
-            else {
-                if (!imgData){
-                    return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: '/img/logo.jpg'});
-                }
-                else if (imgData.slice(5,10) === "video"){
-                    return res.render('reportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
-                }
-                else {
-                    return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
-                }
-            }
-        });
+        return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord});
     });
 };
 
@@ -147,9 +116,8 @@ exports.update = function(req, res){
             }
             res.redirect('/driverRecords/' + updatedDriverRecord._id);
         });
-    });    
+    });
 };
-
 
 // GET '/driverRecords/:id/success'
 exports.success = function(req, res){
@@ -171,15 +139,28 @@ exports.success = function(req, res){
     }
 };
 
-
-
 // GET '/driverRecords/:id/imgupload'
 exports.imgupload = function(req, res){
-    
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
-    res.render('imgupload', {user: req.user, title: '上傳檔案', first: req.session.first});
+    DriverRecord.findById(req.params.id, function(err, driverRecord){
+        if (err){
+            console.error(err);
+            return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
+        }
+        if (driverRecord.user_id !== req.user.id){
+            return res.render('messages', {user: req.user, title: '上傳檔案', messages: ['權限不符，這是你的檢舉記錄嗎？']});
+        }
+        Img.find({id: driverRecord.id}, function(err, imgs){
+            imgs.forEach(function(img, idx, array){
+                img.remove(function(err, removedImg){
+                    if (err) console.error(err);
+                });
+            });
+        });
+        res.render('imgupload', {user: req.user, title: '上傳檔案', first: req.session.first});
+    });
 };
 
 // POST '/driverRecords/:id/imgupload'
@@ -187,49 +168,82 @@ exports.imgaccept = function(req, res){
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
-    var imgInfo = req.body;
+    DriverRecord.findById(req.params.id, function(err, driverRecord){
+        if (err){
+            console.error(err);
+            return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
+        }
+        if (driverRecord.user_id !== req.user.id){
+            return res.render('messages', {user: req.user, title: '上傳檔案', messages: ['權限不符，這是你的檢舉記錄嗎？']});
+        }
 
-    if(imgInfo.part === "0")
-    {
-        Img.find({id: req.params.id},function(err, imgs){ 
-            if(imgs.length === 0)
-            {
-                res.end(req.params.id);
-            }
-            else
-            {
+        var imgInfo = req.body;
+        if (imgInfo.part === "0") {
+            Img.find({id: req.params.id}, function(err, imgs){ 
+                if (err) console.error(err);
                 imgs.forEach(function(img, idx, array){
-                    //console.log(idx);
-                    //console.log(array.length);
                     img.remove(function(err, removedImg){
-                        if(err) console.error(err);
+                        if (err) console.error(err);
                     });
-                    if(idx === array.length - 1)
-                    {
-                        //console.log("123123");    
-                        res.end(req.params.id);
-                    }
                 });
-            }
-        });
-    }
-    else
-    {
-    
-        //console.log(imgInfo.part);
-        var newImg = new Img({id: req.params.id, part: imgInfo.part, data: imgInfo.data});
-        newImg.save(function(err, newImg){
-            if (err){
-                console.error(err);
-                return res.render('messages', {user: req.user, title: '上傳檔案', messages: [err]});
-            }
-            DriverRecord.update({_id: newImg.id}, {imgpart: imgInfo.num_parts}, function(err, theDriverRecord){
-
                 res.end(req.params.id);
-                //res.redirect('/driverRecords/' + theDriverRecord._id);
             });
+        }
+        else {
+            console.log(imgInfo.part);
+            var newImg = new Img({id: driverRecord._id, part: imgInfo.part, data: imgInfo.data});
+            newImg.save(function(err, newImg){
+                if (err) return res.send(err);
+                if (newImg.part === 0){
+                    console.log(newImg.data);
+                    var type = newImg.data.slice(5,10);
+                    type = (type === 'video' || type === 'image')? type: 'link';
+                    DriverRecord.findById(newImg.id, function(err, theDriverRecord){
+                        if (err) return res.send(err);
+                        theDriverRecord.type = type;
+                        theDriverRecord.url = '/driverRecords/' + theDriverRecord._id + '/file';
+                        theDriverRecord.save(function(err, theDriverRecord){
+                            if (err) return res.send(err);
+                            console.log(theDriverRecord.type);
+                            console.log(theDriverRecord.url);
+                            res.send(theDriverRecord._id);
+                        });
+                    });
+                }
+                res.send(newImg.id);
+            });
+        }
+    });
+};
+
+// GET '/driverRecords/:id/file'
+exports.getFile = function(req, res){
+    var referrer = req.get('Referrer');
+    console.log('Referrer: ' + referrer);
+    /*if (!fs.existsSync(fileName)){
+        fs.writeFileSync(fileName, JSON.stringify({next_id: 1, items: []}));
+    }*/
+    Img.find({id: req.params.id}, function(err, parts){
+        var file = '';
+        console.log('parts.length: ' + parts.length);
+        parts.sort(compareFunction);
+        parts.forEach(function(part, idx, array){
+            file += part.data;
         });
-    }
+        console.log('file.length: ' + file.length);
+
+        var extStart = file.indexOf('/') + 1;
+        var extEnd = file.indexOf(';');
+        var extension = file.substring(extStart, extEnd);
+        console.log('extension: ' + extension);
+
+        var fileStart = file.indexOf(',') + 1;
+        var fileContent = file.slice(fileStart);
+        var fileName = req.params.id + '.' + extension;
+        console.log('fileName: ' + fileName);
+        fs.writeFileSync(fileName, fileContent, 'base64', function(err){ console.log(err); });
+        res.sendfile(fileName);
+    });
 };
 
 function compareFunction(a, b){

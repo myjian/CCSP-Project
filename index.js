@@ -73,9 +73,10 @@ app.get('/userRecords/:id', driverRecord.show);
 app.post('/driverRecords/:id', driverRecord.update);
 app.get('/userRecords/:id/success', driverRecord.success);
 
-// Database operations - Img
+// Database operations - Upload
 app.get('/driverRecords/:id/imgupload', driverRecord.imgupload);
 app.post('/driverRecords/:id/imgupload', driverRecord.imgaccept);
+app.get('/driverRecords/:id/file', driverRecord.getFile);
 
 // Passport-Facebook
 passport.serializeUser(function(user, done) {

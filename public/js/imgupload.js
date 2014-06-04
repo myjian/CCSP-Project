@@ -69,11 +69,7 @@ function uploadimg(i, num_parts){
             $("#progress").attr("value", sent_parts);
             if (sent_parts >= num_parts)
             {
-                document.location="/userRecords/"+response+"/success";
-            }
-            else
-            {
-            	
+                window.location.assign(window.location.toString().replace(/imgupload/, 'success'));
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {

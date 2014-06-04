@@ -106,6 +106,9 @@ form > img {
     margin-right: -26px;
     margin-bottom: -50px;
 }
+.hex:hover {
+    opacity: 0.8;
+}
 .hex .left {
     float: left;
     width: 0;
@@ -144,11 +147,6 @@ img.function {
     margin-top: 53px;
 }
 /* Hexagonal styles END */
-
-
-img.function:hover {
-    opacity: 0.8;
-}
 
 /* contactUs */
 img.photo {
