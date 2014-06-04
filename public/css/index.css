@@ -54,6 +54,12 @@ img.copyleft {
     height: 15px;
 }
 
+footer {
+    background-color: #d8f2f6;
+    padding: 10px;
+    margin-top: 20px;
+}
+
 footer div:first-of-type {
     display: inline-block;
     vertical-align: middle;
