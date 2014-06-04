@@ -16,7 +16,7 @@ exports.listUserRecords = function(req, res){
             console.error(err);
             return res.render('messages', {user: req.user, title: '我的檢舉記錄', messages: [err]});
         }
-        req.session.userRecord = "userRecord";
+        req.session.userRecord = true;
         res.render('userRecords', {user: req.user, title: '我的檢舉記錄', driverRecords: userRecords});
     });
 };
@@ -78,7 +78,7 @@ exports.create = function(req, res){
                 console.error(err);
                 return res.render('messages', {user: req.user, title: '新檢舉案件', messages: [err]});
             }
-            req.session.first = "first";
+            req.session.first = true;
             res.redirect('/driverRecords/' + newDriverRecord._id + '/imgupload');
         });
     });
