@@ -42,7 +42,7 @@ function uploadimg(i, num_parts){
             $("#progress").attr("value", sent_parts);
             if (sent_parts >= num_parts)
             {
-                goBack();
+                document.location="/driverRecords/"+response+"/success";
             }
             else
             {

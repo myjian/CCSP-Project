@@ -43,7 +43,7 @@
             </td>
             <td><h1><%= title %></h1></td>
             <% } %>
-            <% if (user.id !== "NotLogin"){ %>
+            <% if (user){ %>
             <td id="fbArea">
                 <a href="/userinfo"><img class="img-thumbnail" src="http://graph.facebook.com/<%= user.id %>/picture" alt="<%= user.displayName %>"></a>
                 <a href="/logout" style="display: inline-block; margin-top: 5px"><button style="background-color: #5b74a8; color: #FFFFFF">登出</button></a>
