@@ -49,8 +49,6 @@ $("#check").on('click', function(event){
             .find('.modal-time').html('發生時間：'+document.getElementById("time").value).end()
             .find('.modal-description').html('情況簡述：'+document.getElementById("description").value).end()
             .modal();
-
-        $(".submitbtn").attr("disabled","false");
     }
 })
 

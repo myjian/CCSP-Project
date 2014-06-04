@@ -76,6 +76,7 @@ exports.create = function(req, res){
                 console.error(err);
                 return res.render('messages', {user: req.user, title: '新檢舉案件', messages: [err]});
             }
+            req.session.first = "first";
             res.redirect('/driverRecords/' + newDriverRecord._id + '/imgupload');
         });
     });
@@ -150,7 +151,15 @@ exports.update = function(req, res){
 
 // GET '/driverRecords/:id/success'
 exports.success = function(req, res){
-    res.render('successmessages', {user: req.user, title: '檢舉完成', recordid: req.params.id});
+    if(req.session.first)
+    {
+        res.render('successmessages', {user: req.user, title: '檢舉完成', recordid: req.params.id});
+        delete req.session.first;
+    }
+    else
+    {
+        res.redirect('/driverRecords/'+req.params.id);
+    }
 };
 
 
