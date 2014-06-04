@@ -31,6 +31,10 @@ $('#now').on('click', function(event){
     return false;
 });
 
+$("#backto").on('click', function(event){
+            console.log("123");            
+            $('#helloModal').modal('hide');
+});
 
 $("#check").on('click', function(event){
 
@@ -46,9 +50,10 @@ $("#check").on('click', function(event){
             .find('.modal-description').html('情況簡述：'+document.getElementById("description").value).end()
             .modal();
 
-        $(".btn").attr("disabled","false");
+        $(".submitbtn").attr("disabled","false");
     }
 })
+
 
 
 $(document).ready(function() {
