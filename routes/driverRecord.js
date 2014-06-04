@@ -16,7 +16,8 @@ exports.listUserRecords = function(req, res){
             console.error(err);
             return res.render('messages', {user: req.user, title: '我的檢舉記錄', messages: [err]});
         }
-        res.render('driverRecords', {user: req.user, title: '我的檢舉記錄', driverRecords: userRecords});
+        req.session.userRecord = "userRecord";
+        res.render('userRecords', {user: req.user, title: '我的檢舉記錄', driverRecords: userRecords});
     });
 };
 
@@ -27,6 +28,7 @@ exports.list = function(req, res){
             console.error(err);
             return res.render('messages', {user: req.user, title: '檢舉資料庫', messages: [err]});
         }
+        delete req.session.userRecord;
         res.render('driverRecords', {user: req.user, title: '檢舉資料庫', driverRecords: driverRecords});
     });
 };
@@ -158,7 +160,14 @@ exports.success = function(req, res){
     }
     else
     {
-        res.redirect('/driverRecords/'+req.params.id);
+        if(req.session.userRecord)
+        {
+            res.redirect('/userRecords/'+req.params.id);
+        }
+        else
+        {
+            res.redirect('/driverRecords/'+req.params.id);    
+        }
     }
 };
 

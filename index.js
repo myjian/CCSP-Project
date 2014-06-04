@@ -65,12 +65,13 @@ app.post('/userinfo', userInfo.changeuserinfo);
 
 // Database operations - DriverRecord
 app.get('/userRecords', driverRecord.listUserRecords);
+app.get('/userRecords/:id', driverRecord.show);
 app.get('/driverRecords', driverRecord.list);
 app.post('/driverRecords', driverRecord.create);
 app.get('/driverRecords/:id', driverRecord.show);
 app.get('/userRecords/:id', driverRecord.show);
 app.post('/driverRecords/:id', driverRecord.update);
-app.get('/driverRecords/:id/success', driverRecord.success);
+app.get('/userRecords/:id/success', driverRecord.success);
 
 // Database operations - Img
 app.get('/driverRecords/:id/imgupload', driverRecord.imgupload);
