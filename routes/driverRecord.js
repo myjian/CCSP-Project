@@ -207,17 +207,8 @@ exports.imgshow = function(req, res){
                     }         
                 }
             }
-<<<<<<< HEAD
-            if(i === parts)
-            {
-                console.log(imgdata.length);
-                return imgdata;
-                //res.render('imgshow', {user: req.user, title:'顯示上傳圖檔', img: imgdata});
-            }
-        }
-=======
+
         });
->>>>>>> 更改顯示圖檔方式
     });
 }
 
