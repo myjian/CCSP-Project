@@ -199,14 +199,14 @@ exports.imgaccept = function(req, res){
             else
             {
                 imgs.forEach(function(img, idx, array){
-                    console.log(idx);
-                    console.log(array.length);
+                    //console.log(idx);
+                    //console.log(array.length);
                     img.remove(function(err, removedImg){
                         if(err) console.error(err);
                     });
                     if(idx === array.length - 1)
                     {
-                        console.log("123123");    
+                        //console.log("123123");    
                         res.end(req.params.id);
                     }
                 });
@@ -216,7 +216,7 @@ exports.imgaccept = function(req, res){
     else
     {
     
-        console.log(imgInfo.part);
+        //console.log(imgInfo.part);
         var newImg = new Img({id: req.params.id, part: imgInfo.part, data: imgInfo.data});
         newImg.save(function(err, newImg){
             if (err){
