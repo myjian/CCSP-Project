@@ -38,7 +38,7 @@ function uploadimg(i, num_parts){
         dataType: 'text',
         success: function(response){
             sent_parts = sent_parts + 1;
-            i++;
+            
             $("#progress").attr("value", sent_parts);
             if (sent_parts >= num_parts)
             {
@@ -46,11 +46,16 @@ function uploadimg(i, num_parts){
             }
             else
             {
-            	uploadimg(i, num_parts);
+            	
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.warning('part ' + i + ' of ' + num_parts + 'failed');
         }
     });
+    i++;
+    if(i < num_parts)
+    {
+        setTimeout(uploadimg(i, num_parts), 1000);
+    }
 }
