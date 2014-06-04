@@ -146,3 +146,9 @@ img.photo {
 h2 {
     margin-top: 0;
 }
+
+#congrats{
+    color: red;
+    font-family: 標楷體, Sans-Serif;
+    font-size: 20px;
+}
