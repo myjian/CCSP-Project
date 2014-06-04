@@ -175,14 +175,7 @@ exports.success = function(req, res){
 
 // GET '/driverRecords/:id/imgupload'
 exports.imgupload = function(req, res){
-    Img.find({id: req.params.id},function(err, imgs){
-
-        imgs.forEach(function(img, idx, array){
-            img.remove(function(err, removedImg){
-                if(err) console.error(err);
-            });
-        });
-    });
+    
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
@@ -195,18 +188,48 @@ exports.imgaccept = function(req, res){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
     var imgInfo = req.body;
-    console.log(imgInfo.part);
-    var newImg = new Img({id: req.params.id, part: imgInfo.part, data: imgInfo.data});
-    newImg.save(function(err, newImg){
-        if (err){
-            console.error(err);
-            return res.render('messages', {user: req.user, title: '上傳檔案', messages: [err]});
-        }
-        DriverRecord.update({_id: newImg.id}, {imgpart: imgInfo.num_parts}, function(err, theDriverRecord){
-            res.end(req.params.id)
-            //res.redirect('/driverRecords/' + theDriverRecord._id);
+
+    if(imgInfo.part === "0")
+    {
+        Img.find({id: req.params.id},function(err, imgs){ 
+            if(imgs.length === 0)
+            {
+                res.end(req.params.id);
+            }
+            else
+            {
+                imgs.forEach(function(img, idx, array){
+                    console.log(idx);
+                    console.log(array.length);
+                    img.remove(function(err, removedImg){
+                        if(err) console.error(err);
+                    });
+                    if(idx === array.length - 1)
+                    {
+                        console.log("123123");    
+                        res.end(req.params.id);
+                    }
+                });
+            }
         });
-    });
+    }
+    else
+    {
+    
+        console.log(imgInfo.part);
+        var newImg = new Img({id: req.params.id, part: imgInfo.part, data: imgInfo.data});
+        newImg.save(function(err, newImg){
+            if (err){
+                console.error(err);
+                return res.render('messages', {user: req.user, title: '上傳檔案', messages: [err]});
+            }
+            DriverRecord.update({_id: newImg.id}, {imgpart: imgInfo.num_parts}, function(err, theDriverRecord){
+
+                res.end(req.params.id);
+                //res.redirect('/driverRecords/' + theDriverRecord._id);
+            });
+        });
+    }
 };
 
 function compareFunction(a, b){

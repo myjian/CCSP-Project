@@ -39,7 +39,19 @@ $("#upload").click(function(){
     num_parts = Math.ceil(len/50000);
     $("#progress").show();
     $("#progress").attr("max", num_parts);
-    uploadimg(0, num_parts);
+    $.ajax({
+        type: 'POST',
+        url: window.location,
+        data: {data: 0, part: 0, num_parts: num_parts},
+        dataType: 'text',
+        success: function(response){
+            uploadimg(0, num_parts);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.warning('failed');
+        }
+    });
+    
     //alert(imgdata.slice(5,10));
 });
 
@@ -49,7 +61,7 @@ function uploadimg(i, num_parts){
     $.ajax({
         type: 'POST',
         url: window.location,
-        data: {data: senddata, part: i, num_parts: num_parts},
+        data: {data: senddata, part: i+1, num_parts: num_parts},
         dataType: 'text',
         success: function(response){
             sent_parts = sent_parts + 1;
