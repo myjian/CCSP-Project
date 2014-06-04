@@ -110,11 +110,11 @@ exports.show = function(req, res){
                     if (!req.user || driverRecord.user_id !== req.user.id){
                         console.log(driverRecord);
 
-                        return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord});
+                        return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord,user: req.user});
 
                     } else {
                         
-                        return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord});
+                        return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord,user: req.user});
 
                     }
                     //res.render('imgshow', {user: req.user, title: '顯示上傳圖檔', img: imgdata});
