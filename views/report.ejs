@@ -51,11 +51,36 @@
                 <label class="control-label">情況簡述</label>
                 <input class="form-control" type="text" name="description" id="description" placeholder="情況簡述">
             </div>
+            <br>
             <div class="form-group">
-                <input class="form-control btn-success btn-block" type="submit" value="確認送出">
+                <button id="check" class="btn btn-success btn-block">送出</button>
             </div>
+            <div class="modal fade" id="helloModal" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4 class="modal-country"></h4>
+                            <h4 class="modal-location"></h4>
+                            <h4 class="modal-carNum"></h4>
+                            <h4 class="modal-date"></h4>
+                            <h4 class="modal-time"></h4>
+                            <h4 class="modal-description"></h4>
+                            <div class="form-group">
+                                <input class="form-control btn-success btn-block" type="submit" value="確認">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </form>
+    
+
 </div>
 <br>
 <script type="text/javascript" src="js/bootstrapValidator.min.js"></script>

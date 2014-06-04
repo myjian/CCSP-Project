@@ -12,9 +12,9 @@ function validateForm(){
     if (!isValid('country')) return false;
     if (!isValid('location')) return false;
     if (!isValid('carNum')) return false;
-    if (!isValid('description')) return false;
     if (!isValid('date')) return false;
     if (!isValid('time')) return false;
+    if (!isValid('description')) return false;
     return true;
 }
 
@@ -30,6 +30,25 @@ $('#now').on('click', function(event){
     */
     return false;
 });
+
+
+$("#check").on('click', function(event){
+
+    if(validateForm())
+    {
+        $('#helloModal')
+            .find('.modal-title').html('請確認案件資料').end()
+            .find('.modal-country').html('縣市：'+document.getElementById("country").value).end()
+            .find('.modal-location').html('詳細地點：'+document.getElementById("location").value).end()
+            .find('.modal-carNum').html('車牌：'+document.getElementById("carNum").value).end()
+            .find('.modal-date').html('發生日期：'+document.getElementById("date").value).end()
+            .find('.modal-time').html('發生時間：'+document.getElementById("time").value).end()
+            .find('.modal-description').html('情況簡述：'+document.getElementById("description").value).end()
+            .modal();
+
+        $(".btn").attr("disabled","false");
+    }
+})
 
 
 $(document).ready(function() {
