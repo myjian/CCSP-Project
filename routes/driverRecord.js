@@ -83,6 +83,7 @@ exports.create = function(req, res){
 
 // GET '/driverRecords/:id'
 exports.show = function(req, res){
+    req.session.recordid = req.params.id;
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
@@ -173,47 +174,6 @@ exports.imgaccept = function(req, res){
         });
     });
 };
-
-/*function str2bin(str) {
-    n = str.length;
-    bin = "";
-    for (var i = 0 ; i< n ; i++) {
-        s = str.substr(i, 1);
-        bin += str_pad(s.charCodeAt(0).toString(2), 8, "0", "left");
-    }
-    return bin;
-}*/
- 
-/*function str_pad(str, len, chr, dir)
-{/*{{{
-    str = str.toString();
-    len = (typeof len == "number") ? len : 0;
-    chr = (typeof chr == "string") ? chr : " ";
-    dir = (/left|right|both/i).test(dir) ? dir : "right";
-    var repeat = function(c, l) {
- 
-        var repeat = "";
-        while (repeat.length < l) {
-            repeat += c;
-        }
-        return repeat.substr(0, l);
-    }
-    var diff = len - str.length;
-    if (diff > 0) {
-        switch (dir) {
-            case "left":
-                str = "" + repeat(chr, diff) + str;
-                break;
-            case "both":
-                var half = repeat(chr, Math.ceil(diff / 2));
-                str = (half + str + half).substr(1, len);
-                break;
-            default:
-                str = "" + str + repeat(chr, diff);
-        }
-    }
-    return str;
-}/*}}}*/
 
 function compareFunction(a, b){
     if (a.part < b.part){

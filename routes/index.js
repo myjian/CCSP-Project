@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var UserInfo = mongoose.model('UserInfo');
+var fs = require("fs");
+
 
 exports.index = function(req, res){
     res.render('index', {user: req.user, title: '安心上路'});
@@ -39,4 +41,14 @@ exports.upload = function(req, res){
         return res.render('notlogin', {user: req.user, title: '上傳影片', messages: ['尚未登入']});
     }
     return res.render('upload', {user: req.user, title: '上傳影片'});
+};
+
+exports.imguploadjs = function(req, res){
+
+    fs.readFile('./public/js/imgupload.js', 'utf8', function (err, data) {
+        if (err) { throw err; }
+        res.setHeader('Content-Type', 'text/javascripts');
+        res.end(data);
+    });
+
 };
