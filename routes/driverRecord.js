@@ -90,7 +90,7 @@ exports.show = function(req, res){
         }
         
         id = driverRecord._id;
-        parts = driverRecord.imgpart;
+        parts = 1;
 
         var imgdata = "";
         Img.find({id: id},function(err, imgs){
@@ -106,27 +106,16 @@ exports.show = function(req, res){
                 }
                 if(i === parts)
                 {
-                    console.log(imgdata.length);
                     console.log(driverRecord);
                     if (!req.user || driverRecord.user_id !== req.user.id){
                         console.log(driverRecord);
-                        if(imgdata.slice(5,10) === "video")
-                        {
-                            return res.render('publicReportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
-                        else
-                        {
-                            return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
+
+                        return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord});
+
                     } else {
-                        if(imgdata.slice(5,10) === "video")
-                        {
-                            return res.render('reportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
-                        else
-                        {
-                            return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
+                        
+                        return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord});
+
                     }
                     //res.render('imgshow', {user: req.user, title: '顯示上傳圖檔', img: imgdata});
                 }
@@ -184,22 +173,41 @@ exports.imgsend = function(req, res){
     });
 };
 
-function imgshow(id, parts){
+exports.imgshow = function(req, res){
     var imgdata = "";
-    console.log(parts);
-    console.log(id);
-
-    Img.find({id: id},function(err, imgs){
+    console.log("image");
+    DriverRecord.findById(req.params.id, function(err, driverRecord){
         
-        for(var i = 0; i <= parts; i++)
-        {
-            for(var j = 0; j < parts; j++)
+        //console.log(driverRecord);
+        id = driverRecord._id;
+        parts = driverRecord.imgpart;
+
+        Img.find({id: id},function(err, imgs){
+            
+            for(var i = 0; i <= parts; i++)
             {
-                if(imgs[j].part === i)
+                for(var j = 0; j < parts; j++)
                 {
-                    imgdata = imgdata + imgs[j].data;
+                    if(imgs[j].part === i)
+                    {
+                        imgdata = imgdata + imgs[j].data;
+                    }
+                }
+                if(i === parts)
+                {
+                    if(imgdata.slice(5,10) === "image")
+                    {
+                        res.setHeader('Content-Type', 'text/html');
+                        res.end('<img style="width:100%;" src="'+imgdata+'">');
+                    }//res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});
+                    else if(imgdata.slice(5,10) === "video")
+                    {
+                        res.setHeader('Content-Type', 'text/html');
+                        res.end('<video id="movie" preload controls loop poster="poster.png" width="100%"><source src="'+imgdata+'"" type="'+imgdata.slice(5,14)+'" /></video>');
+                    }         
                 }
             }
+<<<<<<< HEAD
             if(i === parts)
             {
                 console.log(imgdata.length);
@@ -207,12 +215,14 @@ function imgshow(id, parts){
                 //res.render('imgshow', {user: req.user, title:'顯示上傳圖檔', img: imgdata});
             }
         }
+=======
+        });
+>>>>>>> 更改顯示圖檔方式
     });
-
 }
 
 
-/*function str2bin(str) {
+function str2bin(str) {
     n = str.length;
     bin = "";
     for (var i = 0 ; i< n ; i++) {
@@ -220,10 +230,10 @@ function imgshow(id, parts){
         bin += str_pad(s.charCodeAt(0).toString(2), 8, "0", "left");
     }
     return bin;
-}*/
+}
  
-/*function str_pad(str, len, chr, dir)
-{/*{{{
+function str_pad(str, len, chr, dir)
+{
     str = str.toString();
     len = (typeof len == "number") ? len : 0;
     chr = (typeof chr == "string") ? chr : " ";
@@ -251,4 +261,4 @@ function imgshow(id, parts){
         }
     }
     return str;
-}/*}}}*/
+}

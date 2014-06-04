@@ -71,6 +71,7 @@ app.get('/userRecords', driverRecord.listUserRecords);
 app.get('/driverRecords', driverRecord.list);
 app.post('/driverRecords', driverRecord.create);
 app.get('/driverRecords/:id', driverRecord.show);
+app.get('/driverRecordsimg/:id', driverRecord.imgshow);
 app.post('/driverRecords/:id', driverRecord.update);
 
 // Passport-Facebook
