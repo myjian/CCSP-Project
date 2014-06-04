@@ -5,12 +5,15 @@
 
 <% if (image){ %>
 <table class="table table-bordered">
-    <tr><th>備註</th></tr>
+    <tr><th>備註<br><a class="btn btn-default" 
+
+    <% if (user.id === reportInfo.user_id){ %>
+        <a class="btn btn-default" href="/driverRecords/<%= reportInfo._id %>/imgupload" >重新上傳檔案</a></th></tr>
+    <% } %>
+    
     <tr><th style="text-align: center;">
             <video id="movie" preload controls width="60%">
-                <source src="<%= image %>" type="video/mp4" />
-                <source src="<%= image %>" type="video/ogg" />
-                <source src="<%= image %>" type="video/web" />
+                <source src="<%= image %>"  />
                 您的瀏覽器不支援 HTML5 影片播放標籤 &lt;video&gt; 格式。
                 Your browser doesn't support the &lt;video&gt; tag.
             </video>

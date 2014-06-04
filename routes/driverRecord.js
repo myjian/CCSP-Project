@@ -95,7 +95,20 @@ exports.show = function(req, res){
             imgs.forEach(function(img, idx, array){
                 imgData += img.data;
             });
-            if (!req.user || driverRecord.user_id !== req.user.id){
+            
+            if(!req.user)
+            {
+                if (!imgData){
+                    return res.render('publicReportView', {user: {id: "NotLogin"}, title: '檢舉檔案', reportInfo: driverRecord, image: '/img/logo.jpg'});
+                }
+                else if (imgData.slice(5,10) === "video"){
+                    return res.render('publicReportViewVideo', {user: {id: "NotLogin"}, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
+                }
+                else {
+                    return res.render('publicReportView', {user: {id: "NotLogin"}, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
+                }   
+            }
+            else if (driverRecord.user_id !== req.user.id){
                 if (!imgData){
                     return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: '/img/logo.jpg'});
                 }
@@ -148,7 +161,14 @@ exports.update = function(req, res){
 
 // GET '/driverRecords/:id/imgupload'
 exports.imgupload = function(req, res){
-    Img.remove({id: req.params.id});
+    Img.find({id: req.params.id},function(err, imgs){
+
+        imgs.forEach(function(img, idx, array){
+            img.remove(function(err, removedImg){
+                if(err) console.error(err);
+            });
+        });
+    });
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }

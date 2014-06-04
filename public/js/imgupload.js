@@ -3,7 +3,6 @@ var imgdata;
 var sent_parts = 0;
 
 
-$("#progress").hide();
 
 $("[name=file]").change(function(){
     var file = this.files[0];
@@ -23,6 +22,8 @@ $("#upload").click(function(){
     $(this).button('loading');
     len = imgdata.length;
     num_parts = Math.ceil(len/50000);
+    $("#progress").show();
+    $("#progress").attr("max", num_parts);
     uploadimg(0, num_parts);
     //alert(imgdata.slice(5,10));
 });
@@ -38,6 +39,7 @@ function uploadimg(i, num_parts){
         success: function(response){
             sent_parts = sent_parts + 1;
             i++;
+            $("#progress").attr("value", sent_parts);
             if (sent_parts >= num_parts)
             {
                 goBack();
