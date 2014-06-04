@@ -3,6 +3,9 @@ var imgdata;
 var sent_parts = 0;
 
 
+$("#loadfile").on('click', function(){
+    $("#upload").fadeOut();
+});
 
 $("[name=file]").change(function(){
     var file = this.files[0];
@@ -13,6 +16,18 @@ $("[name=file]").change(function(){
         imgdata = e.target.result;
         //$("#submit").fadeIn();
         $("#upload").fadeIn();
+        if(imgdata.slice(5,10) === "video")
+        {
+            $("#previewImg").hide();
+            $("#movie").attr('src', e.target.result);
+            $("#movie").show();
+        }
+        else if(imgdata.slice(5,10) === "image")
+        {
+            $("#movie").hide();
+            $("#previewImg").attr('src', e.target.result);
+            $("#previewImg").show();
+        }
     }
     reader.readAsDataURL(file);
 });
