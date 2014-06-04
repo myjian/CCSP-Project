@@ -72,6 +72,7 @@ app.get('/driverRecords/:id', driverRecord.show);
 app.get('/userRecords/:id', driverRecord.show);
 app.post('/driverRecords/:id', driverRecord.update);
 app.get('/userRecords/:id/success', driverRecord.success);
+app.get('/driverRecords/:id/success', driverRecord.success);
 
 // Database operations - Upload
 app.get('/driverRecords/:id/imgupload', driverRecord.imgupload);
