@@ -1,16 +1,13 @@
 <% include _header %>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 <div id="body" class="container-fluid">
-	<div>
-	<br>【恭喜你完成一筆檢舉，請記得到email信箱收<b>"確認信"</b>，以確保檢舉成功】<br>
-	安心上路還有許多實用的功能:<br>
-	達人提供的<a href="/tips">檢舉撇步</a> &nbsp;管理您檢舉過的所有 <a href="/userRecords">案件紀錄</a> &nbsp; <a href="/trafficLaws">違規罰鍰金額查詢</a><br>
-	快來體驗看看吧!<br>
-	</div>
     <table class="table table-bordered">
         <tr><th>檢舉人姓名</th><th>通訊地址</th><th colspan=2>連絡電話</th><th colspan=2>e-mail</th></tr>
         <tr><td rowspan=2><%= reportInfo.user_name %></td><td rowspan=2><%= reportInfo.user_address %></td><th>O</th><td><%= reportInfo.user_phone %></td><td colspan=2><%= reportInfo.user_email %></td></tr>
         <tr><th>H</th><td>&nbsp;</td><th>檢舉日期</th><td><%= reportInfo.created %></td></tr>
     </table>
-    <% include reportViewCommon %>
+    <% include reportViewCommonVideo %>
 </div>
 <% include _footer %>
