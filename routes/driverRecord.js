@@ -83,44 +83,27 @@ exports.create = function(req, res){
 
 // GET '/driverRecords/:id'
 exports.show = function(req, res){
+    req.session.recordid = req.params.id;
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
             return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
         
-        id = driverRecord._id;
-        parts = 1;
+        
+        console.log(driverRecord);
+        if (!req.user || driverRecord.user_id !== req.user.id){
+            console.log(driverRecord);
 
-        var imgdata = "";
-        Img.find({id: id},function(err, imgs){
-            
-            for(var i = 0; i <= parts; i++)
-            {
-                for(var j = 0; j < parts; j++)
-                {
-                    if(imgs[j].part === i)
-                    {
-                        imgdata = imgdata + imgs[j].data;
-                    }
-                }
-                if(i === parts)
-                {
-                    console.log(driverRecord);
-                    if (!req.user || driverRecord.user_id !== req.user.id){
-                        console.log(driverRecord);
+            return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord,user: req.user});
 
-                        return res.render('publicReportView', {title: '檢舉檔案', reportInfo: driverRecord,user: req.user});
+        } else {
 
-                    } else {
-                        
-                        return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord,user: req.user});
+            return res.render('reportView', {title: '檢舉檔案', reportInfo: driverRecord,user: req.user});
 
-                    }
+        }
                     //res.render('imgshow', {user: req.user, title: '顯示上傳圖檔', img: imgdata});
-                }
-            }
-        });
+
         //return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord});
     });
 };
@@ -179,77 +162,59 @@ exports.imgshow = function(req, res){
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         
         //console.log(driverRecord);
-        id = driverRecord._id;
-        parts = driverRecord.imgpart;
 
-        Img.find({id: id},function(err, imgs){
-            
-            for(var i = 0; i <= parts; i++)
-            {
-                for(var j = 0; j < parts; j++)
+        if (driverRecord.imgpart)
+        {
+            id = driverRecord._id;
+            parts = driverRecord.imgpart;
+
+            Img.find({id: id},function(err, imgs){
+                
+                for(var i = 0; i <= parts; i++)
                 {
-                    if(imgs[j].part === i)
+                    for(var j = 0; j < parts; j++)
                     {
-                        imgdata = imgdata + imgs[j].data;
+                        if(imgs[j].part === i)
+                        {
+                            imgdata = imgdata + imgs[j].data;
+                        }
+                    }
+                    if(i === parts)
+                    {
+                        if(imgdata.slice(5,10) === "image")
+                        {
+                            res.setHeader('Content-Type', 'text/html');
+                            res.end('<img style="width:100%;" src="'+imgdata+'">');
+                        }//res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});
+                        else if(imgdata.slice(5,10) === "video")
+                        {
+                            res.setHeader('Content-Type', 'text/html');
+                            res.end('<video id="movie" preload controls loop poster="poster.png" width="100%"><source src="'+imgdata+'"" type="'+imgdata.slice(5,14)+'" /></video>');
+                        }         
                     }
                 }
-                if(i === parts)
+
+            });
+        }
+        else{
+
+            if(req.user)
+            {
+                if(req.user._json.id === driverRecord.user_id)
                 {
-                    if(imgdata.slice(5,10) === "image")
-                    {
-                        res.setHeader('Content-Type', 'text/html');
-                        res.end('<img style="width:100%;" src="'+imgdata+'">');
-                    }//res.render('imgshow', {img: imgdata, title:'顯示上傳圖檔'});
-                    else if(imgdata.slice(5,10) === "video")
-                    {
-                        res.setHeader('Content-Type', 'text/html');
-                        res.end('<video id="movie" preload controls loop poster="poster.png" width="100%"><source src="'+imgdata+'"" type="'+imgdata.slice(5,14)+'" /></video>');
-                    }         
+                    res.render('imgupload', {user: req.user, title: '上傳檔案'});
+                }
+                else
+                {
+                    res.setHeader('Content-Type', 'text/html');
+                    res.end('<h1>沒有附檔</h1>');
                 }
             }
-
-        });
+            else
+            {
+                res.setHeader('Content-Type', 'text/html');
+                res.end('<h1>沒有附檔</h1>');
+            }
+        }
     });
-}
-
-
-function str2bin(str) {
-    n = str.length;
-    bin = "";
-    for (var i = 0 ; i< n ; i++) {
-        s = str.substr(i, 1);
-        bin += str_pad(s.charCodeAt(0).toString(2), 8, "0", "left");
-    }
-    return bin;
-}
- 
-function str_pad(str, len, chr, dir)
-{
-    str = str.toString();
-    len = (typeof len == "number") ? len : 0;
-    chr = (typeof chr == "string") ? chr : " ";
-    dir = (/left|right|both/i).test(dir) ? dir : "right";
-    var repeat = function(c, l) {
- 
-        var repeat = "";
-        while (repeat.length < l) {
-            repeat += c;
-        }
-        return repeat.substr(0, l);
-    }
-    var diff = len - str.length;
-    if (diff > 0) {
-        switch (dir) {
-            case "left":
-                str = "" + repeat(chr, diff) + str;
-                break;
-            case "both":
-                var half = repeat(chr, Math.ceil(diff / 2));
-                str = (half + str + half).substr(1, len);
-                break;
-            default:
-                str = "" + str + repeat(chr, diff);
-        }
-    }
-    return str;
 }
