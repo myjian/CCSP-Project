@@ -2,6 +2,9 @@ var reader;
 var imgdata;
 var sent_parts = 0;
 
+
+$("#progress").hide();
+
 $("[name=file]").change(function(){
     var file = this.files[0];
     //var img = $(this).siblings('img');
@@ -34,18 +37,18 @@ function uploadimg(i, num_parts){
         dataType: 'text',
         success: function(response){
             sent_parts = sent_parts + 1;
+            i++;
             if (sent_parts >= num_parts)
             {
                 goBack();
+            }
+            else
+            {
+            	uploadimg(i, num_parts);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.warning('part ' + i + ' of ' + num_parts + 'failed');
         }
     });
-    i++;
-    if (i < num_parts)
-    {
-        setTimeout(uploadimg(i, num_parts), 1000);
-    }
 }
