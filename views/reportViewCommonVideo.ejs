@@ -1,19 +1,19 @@
-    <table class="table table-bordered">
-        <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th></tr>
-        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %><%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.description %></td></tr>
-    </table>
+<table class="table table-bordered">
+    <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th></tr>
+    <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %><%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.description %></td></tr>
+</table>
 
-    <table class="table table-bordered">
-
-    	<tr><th>備註</th></tr><tr><th style="text-align: center;">
-
-        <video id="movie" preload controls loop poster="poster.png" width="60%">
-          <source src="<%= image %>" type="video/mp4" />
-          <source src="<%= image %>" type="video/ogg" />
-          <source src="<%= image %>" type="video/web" />
-          您的瀏覽器不支援HTML 5影片播放標籤<video>格式。
-          Your browser doesn't support the <video> tag.
-        </video>
-
-        </th></tr>
-    </table>
+<% if (image){ %>
+<table class="table table-bordered">
+    <tr><th>備註</th></tr>
+    <tr><th style="text-align: center;">
+            <video id="movie" preload controls width="60%">
+                <source src="<%= image %>" type="video/mp4" />
+                <source src="<%= image %>" type="video/ogg" />
+                <source src="<%= image %>" type="video/web" />
+                您的瀏覽器不支援 HTML5 影片播放標籤 &lt;video&gt; 格式。
+                Your browser doesn't support the &lt;video&gt; tag.
+            </video>
+    </th></tr>
+</table>
+<% } %>

@@ -57,9 +57,6 @@ app.get('/contactUs', routes.contactUs);
 
 // TODO: upload functionality
 app.get('/upload', routes.upload);
-app.get('/imgupload', routes.imgupload);
-app.get('/imgsend', driverRecord.imgsend);
-app.post('/imgupload/:part', driverRecord.imgaccept);
 
 // Database operations - UserInfo
 app.post('/newuser', userInfo.newuserinfo);
@@ -72,6 +69,10 @@ app.get('/driverRecords', driverRecord.list);
 app.post('/driverRecords', driverRecord.create);
 app.get('/driverRecords/:id', driverRecord.show);
 app.post('/driverRecords/:id', driverRecord.update);
+
+// Database operations - Img
+app.get('/driverRecords/:id/imgupload', driverRecord.imgupload);
+app.post('/driverRecords/:id/imgupload', driverRecord.imgaccept);
 
 // Passport-Facebook
 passport.serializeUser(function(user, done) {

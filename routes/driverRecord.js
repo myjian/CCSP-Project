@@ -3,6 +3,8 @@ var DriverRecord = mongoose.model('DriverRecord');
 var UserInfo = mongoose.model('UserInfo');
 var Img = mongoose.model('Img');
 var fs = require("fs");
+var multiparty = require('multiparty');
+var util = require('util');
 
 // GET '/userRecords'
 exports.listUserRecords = function(req, res){
@@ -64,7 +66,7 @@ exports.create = function(req, res){
         newRecord.carNum = reportInfo.carNum;
         newRecord.happenedDate = reportInfo.date;
         newRecord.happenedTime = reportInfo.time;
-        newRecord.description = reportInfo.condition;
+        newRecord.description = reportInfo.description;
         if (reportInfo.url)
             newRecord.url = reportInfo.url;
 
@@ -74,9 +76,7 @@ exports.create = function(req, res){
                 console.error(err);
                 return res.render('messages', {user: req.user, title: '新檢舉案件', messages: [err]});
             }
-            req.session.recordid = newDriverRecord._id;
-            res.redirect("/imgupload");
-            //res.redirect('/driverRecords/' + newDriverRecord._id);
+            res.redirect('/driverRecords/' + newDriverRecord._id + '/imgupload');
         });
     });
 };
@@ -88,51 +88,35 @@ exports.show = function(req, res){
             console.error(err);
             return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
-        
-        id = driverRecord._id;
-        parts = driverRecord.imgpart;
-
-        var imgdata = "";
-        Img.find({id: id},function(err, imgs){
-            
-            for(var i = 0; i <= parts; i++)
-            {
-                for(var j = 0; j < parts; j++)
-                {
-                    if(imgs[j].part === i)
-                    {
-                        imgdata = imgdata + imgs[j].data;
-                    }
+        Img.find({id: driverRecord._id}, function(err, imgs){
+            imgs.sort(compareFunction);
+            var imgData = '';
+            imgs.forEach(function(img, idx, array){
+                imgData += img.data;
+            });
+            if (!req.user || driverRecord.user_id !== req.user.id){
+                if (!imgData){
+                    return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: '/img/logo.jpg'});
                 }
-                if(i === parts)
-                {
-                    console.log(imgdata.length);
-                    console.log(driverRecord);
-                    if (!req.user || driverRecord.user_id !== req.user.id){
-                        console.log(driverRecord);
-                        if(imgdata.slice(5,10) === "video")
-                        {
-                            return res.render('publicReportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
-                        else
-                        {
-                            return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
-                    } else {
-                        if(imgdata.slice(5,10) === "video")
-                        {
-                            return res.render('reportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
-                        else
-                        {
-                            return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgdata});
-                        }
-                    }
-                    //res.render('imgshow', {user: req.user, title: '顯示上傳圖檔', img: imgdata});
+                else if (imgData.slice(5,10) === "video"){
+                    return res.render('publicReportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
+                }
+                else {
+                    return res.render('publicReportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
+                }
+            }
+            else {
+                if (!imgData){
+                    return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: '/img/logo.jpg'});
+                }
+                else if (imgData.slice(5,10) === "video"){
+                    return res.render('reportViewVideo', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
+                }
+                else {
+                    return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord, image: imgData});
                 }
             }
         });
-        //return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord});
     });
 };
 
@@ -161,56 +145,34 @@ exports.update = function(req, res){
     });    
 };
 
-exports.imgaccept = function(req, res){
-    var imgInfo = req.body;
-    nowpart = parseInt(req.params.part);
-    req.session.imgparts = imgInfo.max;
+// GET '/driverRecords/:id/imgupload'
+exports.imgupload = function(req, res){
+    Img.remove({id: req.params.id});
+    if (!req.user){
+        return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
+    }
+    res.render('imgupload', {user: req.user, title: '上傳檔案'});
+};
 
-    var newImg = new Img({id: req.session.recordid, part: nowpart, data: imgInfo.data});
-    newImg.save(function(err, nowimg){
+// POST '/driverRecords/:id/imgupload'
+exports.imgaccept = function(req, res){
+    if (!req.user){
+        return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
+    }
+    var imgInfo = req.body;
+    console.log(imgInfo.part);
+    var newImg = new Img({id: req.params.id, part: imgInfo.part, data: imgInfo.data});
+    newImg.save(function(err, newImg){
         if (err){
             console.error(err);
-            return;
+            return res.render('messages', {user: req.user, title: '上傳檔案', messages: [err]});
         }
-        res.end("get");
+        DriverRecord.update({_id: newImg.id}, {imgpart: imgInfo.num_parts}, function(err, theDriverRecord){
+            res.end(imgInfo.part)
+            //res.redirect('/driverRecords/' + theDriverRecord._id);
+        });
     });
 };
-
-exports.imgsend = function(req, res){
-    DriverRecord.update({_id: req.session.recordid}, {imgpart: req.session.imgparts}, function(err, newDriverRecord){
-        res.redirect('/driverRecords/' + req.session.recordid);
-        delete req.session.imgparts, req.session.recordid, req.session.imgparts;
-        console.log(newDriverRecord); 
-    });
-};
-
-function imgshow(id, parts){
-    var imgdata = "";
-    console.log(parts);
-    console.log(id);
-
-    Img.find({id: id},function(err, imgs){
-        
-        for(var i = 0; i <= parts; i++)
-        {
-            for(var j = 0; j < parts; j++)
-            {
-                if(imgs[j].part === i)
-                {
-                    imgdata = imgdata + imgs[j].data;
-                }
-            }
-            if(i === parts)
-            {
-                console.log(imgdata.length);
-                return imgdata;
-                //res.render('imgshow', {user: req.user, title:'顯示上傳圖檔', img: imgdata});
-            }
-        }
-    });
-
-}
-
 
 /*function str2bin(str) {
     n = str.length;
@@ -252,3 +214,13 @@ function imgshow(id, parts){
     }
     return str;
 }/*}}}*/
+
+function compareFunction(a, b){
+    if (a.part < b.part){
+        return -1;
+    }
+    if (a.part > b.part){
+        return 1;
+    }
+    return 0;
+}

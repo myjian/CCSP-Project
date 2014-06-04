@@ -1,53 +1,51 @@
 var reader;
 var imgdata;
-var getcount = 0;
+var sent_parts = 0;
 
-
-$("[type=file]").change(function(){
-	var file = this.files[0];
-	var img = $(this).siblings('img');
-	reader = new FileReader();
-	reader.onload = function (e) {
-		img.attr('src', e.target.result);
-		imgdata = e.target.result;
-	}
-	reader.readAsDataURL(file);
+$("[name=file]").change(function(){
+    var file = this.files[0];
+    //var img = $(this).siblings('img');
+    reader = new FileReader();
+    reader.onload = function (e){
+        //img.attr('src', e.target.result);
+        imgdata = e.target.result;
+        //$("#submit").fadeIn();
+        $("#upload").fadeIn();
+    }
+    reader.readAsDataURL(file);
 });
 
 
 $("#upload").click(function(){
-	$(this).button('loading');
-	len = imgdata.length;
-	times = Math.ceil(len/50000);
-	uploadimg(0, times);
-	//alert(imgdata.slice(5,10));
+    $(this).button('loading');
+    len = imgdata.length;
+    num_parts = Math.ceil(len/50000);
+    uploadimg(0, num_parts);
+    //alert(imgdata.slice(5,10));
 });
 
 
-function uploadimg(i, times){
-		senddata = imgdata.slice(0 + i*50000, 50000 + i*50000);
-		//alert(senddata.length);
-		$.ajax({
-			type: 'POST',
-			url: "/imgupload/"+(i+1),
-			data: {data: senddata, max: times},
-			dataType: 'text',
-			success: function(response) {
-				//alert(response);
-				getcount = getcount + 1;
-				if(getcount >= times)
-				{
-					window.location.assign('/imgsend');
-				}
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				alert(i);
-			}
-		});
-	i++;
-	if(i < times)
-	{
-		setTimeout(uploadimg(i, times, send), 1000);
-	}
-
+function uploadimg(i, num_parts){
+    senddata = imgdata.slice(0 + i*50000, 50000 + i*50000);
+    $.ajax({
+        type: 'POST',
+        url: window.location,
+        data: {data: senddata, part: i, num_parts: num_parts},
+        dataType: 'text',
+        success: function(response){
+            sent_parts = sent_parts + 1;
+            if (sent_parts >= num_parts)
+            {
+                goBack();
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.warning('part ' + i + ' of ' + num_parts + 'failed');
+        }
+    });
+    i++;
+    if (i < num_parts)
+    {
+        setTimeout(uploadimg(i, num_parts), 1000);
+    }
 }

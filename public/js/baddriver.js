@@ -12,7 +12,7 @@ function validateForm(){
     if (!isValid('country')) return false;
     if (!isValid('location')) return false;
     if (!isValid('carNum')) return false;
-    if (!isValid('condition')) return false;
+    if (!isValid('description')) return false;
     if (!isValid('date')) return false;
     if (!isValid('time')) return false;
     return true;
@@ -70,7 +70,7 @@ $(document).ready(function() {
                     }
                 }
             },
-            condition: {
+            description: {
                 validators: {
                     notEmpty: {
                         message: '請簡述案發時情況'

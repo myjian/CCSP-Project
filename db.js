@@ -10,7 +10,7 @@ mongoose.connection.on('error', function(err){
 
 // Connection established
 mongoose.connection.once('open', function(){
-    console.log('database connection established');
+    console.log('database connection established at ' + mongoURI);
 });
 
 // Require schema

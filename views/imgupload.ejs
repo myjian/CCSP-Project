@@ -1,14 +1,18 @@
 <% include _header %>
-    <form>
-            
-            <input name='file' type="file" accept="image/*,video/*">
-             <!-- cute but only works in some browsers-->
-            <img style="width:100%;">
-            <br>    
-            <div id="send">
-                <button type="button" class="btn btn-primary btn-block" data-loading-text="上傳中..." id="upload">確認送出</a>
-            </div><br>      
-    </form>
+<!-- form enctype="multipart/form-data" method="post" action="http://form-example.herokuapp.com/multipart">
+    <input type="file" name="upload">
+    <input type="submit" value="送出">
+</form -->
+<form enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <input type="file" name='file' accept="image/*,video/*">
+        <input type="submit" class="form-control btn-info" id="submit" value="確認送出" style="display: none">
+        <br>
+        <div id="send">
+            <button type="button" class="btn btn-primary btn-block" data-loading-text="上傳中..." id="upload" style="display: none">確認送出</a>
+        </div>
+    </div>
+</form>
 
-<script src="js/imgupload.js"></script>
+<script type="text/javascript" src="/js/imgupload.js"></script>
 <% include _footer %>

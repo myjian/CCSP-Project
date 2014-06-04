@@ -13,13 +13,6 @@ exports.trafficLaws = function(req, res){
     res.render('trafficLaws', {user: req.user, title: '交通法規'});
 };
 
-exports.imgupload = function(req, res){
-    if (!req.user){
-        return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
-    }
-    res.render('imgupload', {user: req.user, title: '上傳檔案'});
-};
-
 exports.contactUs = function(req, res){
     res.render('contactUs', {user: req.user, title: '聯絡我們'});
 };
