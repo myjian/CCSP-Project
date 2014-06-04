@@ -7,8 +7,10 @@
 <table class="table table-bordered">
     <tr><th>備註<br><a class="btn btn-default" 
 
-    <% if (user.id === reportInfo.user_id){ %>
-        <a class="btn btn-default" href="/driverRecords/<%= reportInfo._id %>/imgupload" >重新上傳檔案</a></th></tr>
+    <% if (user){ %>
+        <% if (user.id === reportInfo.user_id){ %>
+            <a class="btn btn-default" href="/driverRecords/<%= reportInfo._id %>/imgupload" >重新上傳檔案</a></th></tr>
+        <% } %>
     <% } %>
     
     <tr><th style="text-align: center;">
