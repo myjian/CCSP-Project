@@ -1,7 +1,8 @@
 var reader;
 var imgdata;
 var sent_parts = 0;
-
+var postURL = window.location.toString().replace(/userRecords/, 'file');
+var targetURL = window.location.toString() + '/success';
 
 $("#loadfile").on('click', function(){
     $("#upload").fadeOut();
@@ -41,7 +42,7 @@ $("#upload").click(function(){
     $("#progress").attr("max", num_parts);
     $.ajax({
         type: 'POST',
-        url: window.location,
+        url: postURL,
         data: {data: 0, part: 0, num_parts: num_parts},
         dataType: 'text',
         success: function(response){
@@ -51,7 +52,6 @@ $("#upload").click(function(){
             console.warning('failed');
         }
     });
-    
     //alert(imgdata.slice(5,10));
 });
 
@@ -60,7 +60,7 @@ function uploadimg(i, num_parts){
     senddata = imgdata.slice(0 + i*50000, 50000 + i*50000);
     $.ajax({
         type: 'POST',
-        url: window.location,
+        url: postURL,
         data: {data: senddata, part: i+1, num_parts: num_parts},
         dataType: 'text',
         success: function(response){
@@ -69,7 +69,7 @@ function uploadimg(i, num_parts){
             $("#progress").attr("value", sent_parts);
             if (sent_parts >= num_parts)
             {
-                window.location.assign(window.location.toString().replace(/imgupload/, 'success'));
+                window.location.assign(targetURL);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {

@@ -33,7 +33,7 @@ exports.list = function(req, res){
     });
 };
 
-// POST '/driverRecords'
+// POST '/userRecords'
 exports.create = function(req, res){
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '新檢舉案件', messages: ['尚未登入']});
@@ -77,7 +77,7 @@ exports.create = function(req, res){
                 return res.render('messages', {user: req.user, title: '新檢舉案件', messages: [err]});
             }
             req.session.first = true;
-            res.redirect('/driverRecords/' + newDriverRecord._id + '/imgupload');
+            res.redirect('/files/' + newDriverRecord._id + '/upload');
         });
     });
 };
@@ -94,7 +94,7 @@ exports.show = function(req, res){
     });
 };
 
-// POST '/driverRecords/:id'
+// POST '/userRecords/:id'
 exports.update = function(req, res){
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
@@ -114,12 +114,12 @@ exports.update = function(req, res){
                 console.error(err);
                 return res.render('messages', {user: req.user, title: '檢舉進度修改', messages: [err]});
             }
-            res.redirect('/driverRecords/' + updatedDriverRecord._id);
+            res.redirect('/userRecords/' + updatedDriverRecord._id);
         });
     });
 };
 
-// GET '/driverRecords/:id/success'
+// GET '/userRecords/:id/success'
 exports.success = function(req, res){
     if(req.session.first)
     {
@@ -134,13 +134,13 @@ exports.success = function(req, res){
         }
         else
         {
-            res.redirect('/driverRecords/'+req.params.id);    
+            res.redirect('/driverRecords/'+req.params.id);
         }
     }
 };
 
-// GET '/driverRecords/:id/imgupload'
-exports.imgupload = function(req, res){
+// GET '/files/:id/upload'
+exports.fileUpload = function(req, res){
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
@@ -152,9 +152,9 @@ exports.imgupload = function(req, res){
         if (driverRecord.user_id !== req.user.id){
             return res.render('messages', {user: req.user, title: '上傳檔案', messages: ['權限不符，這是你的檢舉記錄嗎？']});
         }
-        Img.find({id: driverRecord.id}, function(err, imgs){
-            imgs.forEach(function(img, idx, array){
-                img.remove(function(err, removedImg){
+        Img.find({id: driverRecord.id}, function(err, parts){
+            parts.forEach(function(part, idx, array){
+                part.remove(function(err, removedPart){
                     if (err) console.error(err);
                 });
             });
@@ -163,8 +163,8 @@ exports.imgupload = function(req, res){
     });
 };
 
-// POST '/driverRecords/:id/imgupload'
-exports.imgaccept = function(req, res){
+// POST '/files/:id/upload'
+exports.fileAccept = function(req, res){
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
@@ -177,12 +177,12 @@ exports.imgaccept = function(req, res){
             return res.render('messages', {user: req.user, title: '上傳檔案', messages: ['權限不符，這是你的檢舉記錄嗎？']});
         }
 
-        var imgInfo = req.body;
-        if (imgInfo.part === "0") {
-            Img.find({id: req.params.id}, function(err, imgs){ 
+        var partInfo = req.body;
+        if (partInfo.part === "0") {
+            Img.find({id: req.params.id}, function(err, parts){
                 if (err) console.error(err);
-                imgs.forEach(function(img, idx, array){
-                    img.remove(function(err, removedImg){
+                parts.forEach(function(part, idx, array){
+                    part.remove(function(err, removedPart){
                         if (err) console.error(err);
                     });
                 });
@@ -190,18 +190,18 @@ exports.imgaccept = function(req, res){
             });
         }
         else {
-            console.log(imgInfo.part);
-            var newImg = new Img({id: driverRecord._id, part: imgInfo.part, data: imgInfo.data});
-            newImg.save(function(err, newImg){
+            console.log(partInfo.part);
+            var newPart = new Img({id: driverRecord._id, part: partInfo.part, data: partInfo.data});
+            newPart.save(function(err, newPart){
                 if (err) return res.send(err);
-                if (newImg.part === 0){
-                    console.log(newImg.data);
-                    var type = newImg.data.slice(5,10);
+                if (newPart.part === 0){
+                    console.log(newPart.data);
+                    var type = newPart.data.slice(5,10);
                     type = (type === 'video' || type === 'image')? type: 'link';
-                    DriverRecord.findById(newImg.id, function(err, theDriverRecord){
+                    DriverRecord.findById(newPart.id, function(err, theDriverRecord){
                         if (err) return res.send(err);
                         theDriverRecord.type = type;
-                        theDriverRecord.url = '/driverRecords/' + theDriverRecord._id + '/file';
+                        theDriverRecord.url = '/files/' + theDriverRecord._id;
                         theDriverRecord.save(function(err, theDriverRecord){
                             if (err) return res.send(err);
                             console.log(theDriverRecord.type);
@@ -210,13 +210,13 @@ exports.imgaccept = function(req, res){
                         });
                     });
                 }
-                res.send(newImg.id);
+                res.send(newPart.id);
             });
         }
     });
 };
 
-// GET '/driverRecords/:id/file'
+// GET '/files/:id'
 exports.getFile = function(req, res){
     var referrer = req.get('Referrer');
     console.log('Referrer: ' + referrer);
