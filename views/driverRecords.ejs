@@ -3,7 +3,8 @@
     <% for (var i=driverRecords.length-1; i>=0; i--){ %>
     <tr>
         <th>
-            <a href="/driverRecords/<%= driverRecords[i]._id %>">第 <%= i+1 %> 筆</a><br>
+            <a href="/driverRecords/<%= driverRecords[i]._id %>">第 <%= i+1 %> 筆</a>
+            (<%= driverRecords[i].ext %>)<br>
             檢舉時間：<%= driverRecords[i].created %>
         </th>
     </tr>
