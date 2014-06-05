@@ -16,7 +16,7 @@ var DriverRecordSchema = new mongoose.Schema({
     happenedDate: {type: String, required: true},
     happenedTime: {type: String, required: true},
     description: {type: String, required: true},
-    type: {type: String, default: 'image'}, // image, video, or link (external link)
+    ext: {type: String, default: 'image'}, // image, video, or link (external link)
     url: {type: String, default: ''},
 
     created: {type: Date, default: Date.now},

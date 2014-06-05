@@ -189,16 +189,16 @@ exports.fileAccept = function(req, res){
                 if (err) return res.send(err);
                 console.log(newPart.part);
                 if (newPart.part === 0){
-                    var type = newPart.data.slice(5,10);
-                    type = (type === 'video' || type === 'image')? type: 'link';
-                    console.log('type: ' + type);
+                    var ext = newPart.data.slice(5,10);
+                    ext = (ext === 'video' || ext === 'image')? ext: 'link';
+                    console.log('ext: ' + ext);
                     DriverRecord.findById(newPart.id, function(err, theDriverRecord){
                         if (err) return res.send(err);
-                        theDriverRecord.type = type;
+                        theDriverRecord.ext = ext;
                         theDriverRecord.url = '/driverRecords/' + theDriverRecord._id + '/file';
                         theDriverRecord.save(function(err, theDriverRecord){
                             if (err) return res.send(err);
-                            console.log(theDriverRecord.type);
+                            console.log(theDriverRecord.ext);
                             console.log(theDriverRecord.url);
                             return res.send('/userRecords/' + theDriverRecord._id + '/success');
                         });
