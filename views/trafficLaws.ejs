@@ -88,13 +88,13 @@
     }
 </style>
 
-
-<!-- 這裡提供交通法令的原文與重點標記，以及搜尋功能 -->
+<!-- 提供交通法令的原文與重點標記 -->
 <div id="law" class="container-fluid">
-    <input class="search" placeholder="Search" />
-    <button class="sort" data-sort="condition">
-        Sort by condition
-    </button>
+    <div class="form-inline">
+    <input id="text" class="search form-control" placeholder="Search" style="margin-bottom: 0"/>
+    <button id="search" class="form-control btn-primary">搜尋</button>
+    </div>
+    <br>
     <!-- table class="list table table-striped">
         <li><h3 class="info">交通違規行為</h3>
         <span class="danger">法條依據（道路交通管理處罰條例）<p class="text-danger">法定罰鍰額度（新臺幣：元）或其他處罰</p></span></li>
@@ -121,9 +121,11 @@
         <li><h3 class="condition">在無看守人員管理或無遮斷器、警鈴及閃光號誌設備之鐵路平交道，設有警告標誌或跳動路面，不依規定暫停，逕行通過者。</h3>
         <span class="violation">第五十四條第二款<p class="text-danger">6000~12000 元</p></span></li>
     </table -->
-    <table class="table table-striped" style="margin-bottom: 0; text-align: center">
-        <tr><th class="info" style="text-align: center"><h3>交通違規行為</h3></th></tr>
-        <tr><td class="danger">法條依據（道路交通管理處罰條例）<p class="text-danger">法定罰鍰額度（新臺幣：元）或其他處罰</p></td></tr>
+    <table class="table table-bordered" style="margin-bottom: 0; text-align: center">
+        <tr class="info"><td>
+                <h3>交通違規行為</h3>
+                法條依據（道路交通管理處罰條例）<p class="text-danger">法定罰鍰額度（新臺幣：元）或其他處罰</p>
+        </td></tr>
     </table>
     <ul class="list" style="margin-top: 0; padding-top: 0">
         <li><h3 class="condition">未領用牌照行駛者。</h3>
@@ -630,9 +632,13 @@
         <span class="violation">第九十條之一<p class="text-danger">600~1200 元</p></span></li>
     </ul>
 </div>
+<br>
 <script src="http://listjs.com/no-cdn/list.js"></script>
 <script type="text/javascript">
     var options = { valueNames: ['condition', 'violation'] };
     var userList = new List('law', options);
+    $('#search').click(function(){
+        userList.search($(text).val());
+    });
 </script>
 <% include _footer %>

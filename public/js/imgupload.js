@@ -2,31 +2,25 @@ var reader;
 var imgdata;
 var sent_parts = 0;
 
-$("#loadfile").on('click', function(){
+var video_preview = '<video controls style="width: 100%">您的瀏覽器不支援 HTML5 影片播放標籤 &lt;video&gt; 格式。<br>Your browser doesn\'t support the &lt;video&gt; tag.</video>';
+var image_preview = '<img class="img-responsive">';
+
+$("#loadfile").click(function(){
     $("#upload").fadeOut();
+    $('#preview').fadeOut();
 });
 
 $("[name=file]").change(function(){
     var file = this.files[0];
-    //var img = $(this).siblings('img');
     reader = new FileReader();
     reader.onload = function (e){
-        //img.attr('src', e.target.result);
         imgdata = e.target.result;
         //$("#submit").fadeIn();
         $("#upload").fadeIn().button('reset');
-        if (imgdata.slice(5,10) === "video")
-        {
-            $("#previewImg").hide();
-            $("#movie").attr('src', e.target.result);
-            $("#movie").show();
+        if (imgdata.slice(5,10) === "image") {
+            $("#preview").html($(image_preview).attr('src', e.target.result));
         }
-        else if (imgdata.slice(5,10) === "image")
-        {
-            $("#movie").hide();
-            $("#previewImg").attr('src', e.target.result);
-            $("#previewImg").show();
-        }
+        $('#preview').fadeIn();
     }
     reader.readAsDataURL(file);
 });

@@ -8,7 +8,6 @@ function isValid(id){
 }
 
 function validateForm(){
-
     if (!isValid('country')) return false;
     if (!isValid('location')) return false;
     if (!isValid('carNum')) return false;
@@ -18,28 +17,19 @@ function validateForm(){
     return true;
 }
 
-$('#now').on('click', function(event){
-    var d = new Date();
-    $('input[name="date"]').attr('value', d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate());
-    $('input[name="time"]').attr('value', d.getHours() + ':' + d.getMinutes());
-    /*
-    var mailLink = $('<a class="btn">寄出信件</a>').attr('href', 'mailto:b99902067@ntu.edu.tw?subject=' + encodeURIComponent('交通違規檢舉')+ '&body=' + encodeURIComponent(mailBody));
-    // + '&body=' + encodeURIComponent(mailBody)
-    // + '&attachment=' + '/reportBadDriver.html'
-    $('#mail').html(mailLink).append(mailBody);
-    */
-    return false;
+$('.eg').click(function(event){
+    var des = $("#description");
+    console.log(des.val() + $(event.target).text());
+    des.val(des.val() + $(event.target).text() + ', ');
+    $('#tryitForm').data('bootstrapValidator').updateStatus('description', 'VALID');
 });
 
-$("#backto").on('click', function(event){
-            console.log("123");            
-            $('#helloModal').modal('hide');
+$("#backto").click(function(event){
+    $('#helloModal').modal('hide');
 });
 
-$("#check").on('click', function(event){
-
-    if(validateForm())
-    {
+$("#check").click(function(event){
+    if (validateForm()){
         $('#helloModal')
             .find('.modal-title').html('請確認案件資料').end()
             .find('.modal-country').html('縣市：'+document.getElementById("country").value).end()
@@ -51,8 +41,6 @@ $("#check").on('click', function(event){
             .modal();
     }
 })
-
-
 
 $(document).ready(function() {
     $('#tryitForm').bootstrapValidator({

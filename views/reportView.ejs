@@ -15,10 +15,12 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>備註</th>
-            <% if (user && user.id === reportInfo.user_id){ %>
-            <a class="btn btn-default" href="/userRecords/<%= reportInfo._id %>/upload">重新上傳檔案</a>
-            <% } %>
+            <th style="vertical-align: middle">
+                備註
+                <% if (user && user.id === reportInfo.user_id){ %>
+                <a class="btn btn-default" style="float: right" href="/userRecords/<%= reportInfo._id %>/upload">重新上傳檔案</a>
+                <% } %>
+            </th>
         </tr>
         <tr>
             <td style="text-align: center; width: 90%">
