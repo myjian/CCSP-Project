@@ -186,21 +186,20 @@ exports.fileAccept = function(req, res){
         else {
             var newPart = new Img({id: driverRecord._id, part: partInfo.part, data: partInfo.data});
             newPart.save(function(err, newPart){
-                if (err) return res.send(err);
+                if (err) console.error(err);
                 console.log(newPart.part);
                 if (newPart.part === 0){
                     var ext = newPart.data.slice(5,10);
                     ext = (ext === 'video' || ext === 'image')? ext: 'link';
                     console.log('ext: ' + ext);
                     DriverRecord.findById(newPart.id, function(err, theDriverRecord){
-                        if (err) return res.send(err);
+                        if (err) console.error(err);
                         theDriverRecord.ext = ext;
                         theDriverRecord.url = '/driverRecords/' + theDriverRecord._id + '/file';
                         theDriverRecord.save(function(err, theDriverRecord){
-                            if (err) return res.send(err);
+                            if (err) console.error(err);
                             console.log(theDriverRecord.ext);
                             console.log(theDriverRecord.url);
-                            return res.send('/userRecords/' + theDriverRecord._id + '/success');
                         });
                     });
                 }
@@ -233,8 +232,9 @@ exports.getFile = function(req, res){
         var fileName = req.params.id + '.' + extension;
         console.log('fileName: ' + fileName);
         fs.writeFileSync(fileName, fileContent, 'base64', function(err){ console.log(err); });
-        res.sendfile(fileName);
+        return res.sendfile(fileName);
     });
+    return;
 };
 
 function compareFunction(a, b){
