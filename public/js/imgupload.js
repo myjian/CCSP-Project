@@ -67,14 +67,14 @@ function uploadimg(i, num_parts){
             if (sent_parts >= num_parts){
                 window.location.assign(response);
             }
+            else
+            {
+                uploadimg(i, num_parts);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.warning('part ' + i + ' of ' + num_parts + 'failed');
         }
     });
     i++;
-    if(i < num_parts)
-    {
-        setTimeout(uploadimg(i, num_parts), 1000);
-    }
 }
