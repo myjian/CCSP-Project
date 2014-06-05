@@ -180,7 +180,7 @@ exports.fileAccept = function(req, res){
                         if (err) console.error(err);
                     });
                 });
-                return res.send('delete old file');
+                res.send('delete old file');
             });
         }
         else {
