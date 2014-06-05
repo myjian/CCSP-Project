@@ -180,7 +180,7 @@ exports.fileAccept = function(req, res){
                         if (err) console.error(err);
                     });
                 });
-                res.end('delete old file');
+                res.send('delete old file');
             });
         }
         else {
@@ -203,7 +203,7 @@ exports.fileAccept = function(req, res){
                         });
                     });
                 }
-                return res.end('/userRecords/' + newPart.id + '/success');
+                return res.send('/userRecords/' + newPart.id + '/success');
             });
         }
     });
