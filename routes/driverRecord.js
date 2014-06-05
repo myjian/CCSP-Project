@@ -159,15 +159,15 @@ exports.fileUpload = function(req, res){
 // POST '/userRecords/:id/upload'
 exports.fileAccept = function(req, res){
     if (!req.user){
-        return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
+        return res.send('尚未登入');
     }
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
-            return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
+            return res.send(err + '（無此記錄？）');
         }
         if (driverRecord.user_id !== req.user.id){
-            return res.render('messages', {user: req.user, title: '上傳檔案', messages: ['權限不符，這是你的檢舉記錄嗎？']});
+            return res.send('權限不符，這是你的檢舉記錄嗎？');
         }
 
         var partInfo = req.body;
@@ -180,7 +180,7 @@ exports.fileAccept = function(req, res){
                         if (err) console.error(err);
                     });
                 });
-                res.send('delete old file');
+                return res.send('delete old file');
             });
         }
         else {
@@ -200,7 +200,7 @@ exports.fileAccept = function(req, res){
                             if (err) return res.send(err);
                             console.log(theDriverRecord.type);
                             console.log(theDriverRecord.url);
-                            res.send('/userRecords/' + theDriverRecord._id + '/success');
+                            return res.send('/userRecords/' + theDriverRecord._id + '/success');
                         });
                     });
                 }

@@ -16,6 +16,9 @@
     <table class="table table-bordered">
         <tr>
             <th>備註</th>
+            <% if (user && user.id === reportInfo.user_id){ %>
+            <a class="btn btn-default" href="/userRecords/<%= reportInfo._id %>/upload">重新上傳檔案</a>
+            <% } %>
         </tr>
         <tr>
             <td style="text-align: center; width: 90%">
@@ -34,9 +37,6 @@
                 <a class="btn btn-default" href="<%= reportInfo.url %>" target="_blank">附件</a>
                 <% } else { %>
                 <p style="text-align: left;">沒有附檔</p>
-                <% } %>
-                <% if (user && user.id === reportInfo.user_id){ %>
-                <a class="btn btn-default" href="/userRecords/<%= reportInfo._id %>/upload">重新上傳檔案</a>
                 <% } %>
             </td>
         </tr>
