@@ -6,8 +6,8 @@ var video_preview = '<video controls style="width: 100%">您的瀏覽器不支�
 var image_preview = '<img class="img-responsive">';
 
 $("#loadfile").click(function(){
-    $("#upload").slideUp();
-    $('#preview').slideUp();
+    $("#upload").fadeOut();
+    $('#preview').fadeOut();
 });
 
 $("[name=file]").change(function(){
@@ -15,11 +15,11 @@ $("[name=file]").change(function(){
     reader = new FileReader();
     reader.onload = function (e){
         imgdata = e.target.result;
-        //$("#submit").slideDown();
-        $("#upload").slideDown().button('reset');
+        //$("#submit").fadeIn();
+        $("#upload").fadeIn().button('reset');
         if (imgdata.slice(5,10) === "image") {
             $("#preview").html($(image_preview).attr('src', e.target.result));
-            $('#preview').slideDown();
+            $('#preview').fadeIn();
         }
     }
     reader.readAsDataURL(file);
