@@ -1,19 +1,29 @@
 var mongoose = require('mongoose');
+var Grid = require('gridfs-stream');
 
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/test';
-mongoose.connect(mongoURI);
+exports.init = function(app) {
+    var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/test';
 
-// Error handler
-mongoose.connection.on('error', function(err){
-    console.log(err);
-});
+    // Prevent false-positive deprecation message
+    // See https://github.com/Automattic/mongoose/issues/4291 for more details
+    mongoose.Promise = global.Promise;
 
-// Connection established
-mongoose.connection.once('open', function(){
-    console.log('database connection established at ' + mongoURI);
-});
+    mongoose.connect(mongoURI);
 
-// Require schema
-require('./models/driverRecord');
-require('./models/userInfo');
-require('./models/imgsave');
+    var conn = mongoose.connection;
+    // Error handler
+    conn.on('error', function(err){
+        console.error(err);
+    });
+
+    // Connection established
+    conn.once('open', function(){
+        var gridfs = Grid(conn.db, mongoose.mongo);
+        app.set('gridfs', gridfs);
+        console.info('MongoDB connection established at ' + mongoURI);
+    });
+
+    // Require schema
+    require('./models/driverRecord');
+    require('./models/userInfo');
+};

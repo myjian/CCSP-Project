@@ -3,18 +3,16 @@ var UserInfo = mongoose.model('UserInfo');
 
 // POST '/newuser'
 exports.newuserinfo = function(req,res){
-
     var userInfo = req.user._json;
-    var reportInfo = req.body;
     // Fill User Data
     var newUser = {
         id: userInfo.id,
-        name: reportInfo.name,
-        address: reportInfo.address,
-        phone: reportInfo.phone,
-        email: reportInfo.email,
-        gender: reportInfo.gender,
-        ssn: reportInfo.ssn
+        name: req.body.name,
+        address: req.body.address,
+        phone: req.body.phone,
+        email: req.body.email,
+        gender: req.body.gender,
+        ssn: req.body.ssn
     };
 
     var newUserInfo = new UserInfo(newUser);
@@ -41,8 +39,6 @@ exports.userpage = function(req, res){
             return res.render('userinfo', {user: req.user, title: '初次登入', userInfo: req.user._json});
         } 
         var userInfo = userInfos[0];
-        console.log(userInfo);
-
         return res.render('changeuserinfo', {user: req.user, title: '修改資料', userInfo: userInfo});
     });
 };
@@ -50,22 +46,16 @@ exports.userpage = function(req, res){
 // POST '/userinfo'
 exports.changeuserinfo = function(req,res){
     var userInfo = req.user._json;
-    var reportInfo = req.body;
-
     var newUser = {
         id: userInfo.id,
-        name: reportInfo.name,
-        address: reportInfo.address,
-        phone: reportInfo.phone,
-        email: reportInfo.email,
-        gender: reportInfo.gender,
-        ssn: reportInfo.ssn
+        name: req.body.name,
+        address: req.body.address,
+        phone: req.body.phone,
+        email: req.body.email,
+        gender: req.body.gender,
+        ssn: req.body.ssn
     };
-
-    var newUserInfo = new UserInfo(newUser);
-
     UserInfo.find({id: req.user.id}, function(err, userInfos){
-        console.log(userInfos);
         UserInfo.update({_id: userInfos[0]._id}, newUser, function(err, user){
             if (err){
                 console.error(err);

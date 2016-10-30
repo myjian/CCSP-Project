@@ -1,4 +1,3 @@
-require('./db');
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
@@ -6,42 +5,51 @@ var path = require('path');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
-var methodOverride = require('method-override');
 var session = require('express-session');
 var favicon = require('serve-favicon');
-
-var routes = require('./routes');
-var userInfo = require('./routes/userInfo');
-var driverRecord = require('./routes/driverRecord');
-var facebook = require('./routes/facebook');
+var randomstring = require('randomstring');
 
 var passport = require('passport');
 var util = require('util');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var FACEBOOK_APP_ID = "273057782873545";
-var FACEBOOK_APP_SECRET = "3d8a24ec3de700c9a0c5f20b21158ca0";
+var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
+if (!FACEBOOK_APP_SECRET) {
+  console.error("Fatal: FACEBOOK_APP_SECRET env not found");
+  process.exit(1);
+}
+var SESSION_SECRET = process.env.SESSION_SECRET || randomstring.generate(40);
 
 var app = express();
+
+// Init DB connection
+require('./db').init(app);
+
+var routes = require('./routes');
+var userInfo = require('./routes/userInfo');
+var driverRecord = require('./routes/driverRecord');
+var facebook = require('./routes/facebook');
 
 // all environments
 app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(logger('dev'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(bodyParser());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cookieParser());
-app.use(methodOverride());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({secret: SESSION_SECRET, resave: false, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // development only
-if ('development' == app.get('env')) {
+if (process.env.NODE_ENV === 'development') {
+    console.log('using errorHandler and logger');
     app.use(errorHandler());
+    app.use(logger('dev'));
 }
 
 app.listen(app.get('port'), function(){

@@ -1,10 +1,7 @@
-var mongoose = require('mongoose');
-var DriverRecord = mongoose.model('DriverRecord');
-var UserInfo = mongoose.model('UserInfo');
-var Img = mongoose.model('Img');
-var fs = require("fs");
-var multiparty = require('multiparty');
-var util = require('util');
+const mongoose = require('mongoose');
+const DriverRecord = mongoose.model('DriverRecord');
+const UserInfo = mongoose.model('UserInfo');
+const Busboy = require('busboy');
 
 // GET '/userRecords'
 exports.listUserRecords = function(req, res){
@@ -51,15 +48,14 @@ exports.create = function(req, res){
             return res.render('messages', {user: req.user, title: '新檢舉案件', messages: ['請先填寫個人檔案']});
         }
         userInfo = userInfo[0];
-        console.log(userInfo);
 
         // Fill User Data
         var newRecord = {
             user_id: userInfo.id,
-        user_name: userInfo.name,
-        user_email: userInfo.email,
-        user_phone: userInfo.phone,
-        user_address: userInfo.address
+            user_name: userInfo.name,
+            user_email: userInfo.email,
+            user_phone: userInfo.phone,
+            user_address: userInfo.address
         };
 
         // Fill Driver Data
@@ -86,8 +82,8 @@ exports.create = function(req, res){
 exports.show = function(req, res){
     req.session.recordid = req.params.id;
     DriverRecord.findById(req.params.id, function(err, driverRecord){
-        if (err){
-            console.error(err);
+        if (err || !driverRecord){
+            if (err) console.error(err);
             return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
         return res.render('reportView', {user: req.user, title: '檢舉檔案', reportInfo: driverRecord});
@@ -104,11 +100,9 @@ exports.update = function(req, res){
         if (driverRecord.user_id !== req.user.id){
             return res.render('messages', {user: req.user, title: '檢舉進度修改', messages: ['權限不符，這是你的檢舉記錄嗎？']});
         }
-        console.log(driverRecord);
 
         driverRecord.status = req.body.status;
         driverRecord.updated = Date.now();
-        console.log(driverRecord)
         driverRecord.save(function(err, updatedDriverRecord){
             if (err){
                 console.error(err);
@@ -121,21 +115,13 @@ exports.update = function(req, res){
 
 // GET '/userRecords/:id/success'
 exports.success = function(req, res){
-    if(req.session.first)
-    {
+    if (req.session.first) {
         res.render('successmessages', {user: req.user, title: '檢舉完成', recordid: req.params.id});
         delete req.session.first;
-    }
-    else
-    {
-        if(req.session.allRecord)
-        {
-            res.redirect('/driverRecords/'+req.params.id);
-        }
-        else
-        {
-            res.redirect('/userRecords/'+req.params.id);
-        }
+    } else if (req.session.allRecord) {
+        res.redirect('/driverRecords/' + req.params.id);
+    } else {
+        res.redirect('/userRecords/' + req.params.id);
     }
 };
 
@@ -144,9 +130,9 @@ exports.fileUpload = function(req, res){
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
-    DriverRecord.findById(req.params.id, function(err, driverRecord){
-        if (err){
-            console.error(err);
+    DriverRecord.findById(req.params.id, function(err, driverRecord) {
+        if (err || !driverRecord){
+            if (err) console.error(err);
             return res.render('messages', {user: req.user, title: '檢舉檔案', messages: [err, '（無此記錄？）']});
         }
         if (driverRecord.user_id !== req.user.id){
@@ -157,92 +143,72 @@ exports.fileUpload = function(req, res){
 };
 
 // POST '/userRecords/:id/upload'
-exports.fileAccept = function(req, res){
-    if (!req.user){
-        return res.send('尚未登入');
+exports.fileAccept = function(req, res) {
+    if (!req.user) {
+        return res.status(401).send('Please log in first!');
     }
     DriverRecord.findById(req.params.id, function(err, driverRecord){
-        if (err){
-            console.error(err);
-            return res.send(err + '（無此記錄？）');
+        if (err || !driverRecord) {
+            if (err) console.error(err);
+            return res.status(404).send(err + '（無此記錄？）');
         }
         if (driverRecord.user_id !== req.user.id){
             return res.send('權限不符，這是你的檢舉記錄嗎？');
         }
-
-        var partInfo = req.body;
-        if (partInfo.part === '-1') {
-            console.log('delete old file');
-            Img.find({id: req.params.id}, function(err, parts){
-                if (err) console.error(err);
-                parts.forEach(function(part, idx, array){
-                    part.remove(function(err, removedPart){
-                        if (err) console.error(err);
+        var filename = 'file-' + driverRecord._id;
+        var gridfs = req.app.get('gridfs');
+        var uploadFile = function() {
+            var busboy = new Busboy({ headers: req.headers });
+            busboy.on('file', function(fieldname, stream, originalFilename, encoding, mimetype) {
+                //console.log(`DriverRecord ${req.params.id} File [${fieldname}]: originalFilename: ${originalFilename}, encoding: ${encoding}, mimetype: ${mimetype}`);
+                var writeStream = gridfs.createWriteStream({
+                    'content_type': mimetype,
+                    'filename': filename
+                });
+                stream.pipe(writeStream);
+                writeStream.on('close', (file) => {
+                    //console.log(`File stored as ${file.filename}`);
+                    var ext = mimetype.substring(0, mimetype.indexOf('/'));
+                    driverRecord.ext = ext;
+                    driverRecord.url = '/driverRecords/' + driverRecord._id + '/file';
+                    driverRecord.save((err, theDriverRecord) => {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).send(err);
+                        }
+                        res.status(204).end();
                     });
                 });
-                res.send('delete old file');
             });
-        }
-        else {
-            var newPart = new Img({id: driverRecord._id, part: partInfo.part, data: partInfo.data});
-            newPart.save(function(err, newPart){
-                if (err) console.error(err);
-                console.log(newPart.part);
-                if (newPart.part === 0){
-                    var ext = newPart.data.slice(5,10);
-                    ext = (ext === 'video' || ext === 'image')? ext: 'link';
-                    console.log('ext: ' + ext);
-                    DriverRecord.findById(newPart.id, function(err, theDriverRecord){
-                        if (err) console.error(err);
-                        theDriverRecord.ext = ext;
-                        theDriverRecord.url = '/driverRecords/' + theDriverRecord._id + '/file';
-                        theDriverRecord.save(function(err, theDriverRecord){
-                            if (err) console.error(err);
-                            console.log(theDriverRecord.ext);
-                            console.log(theDriverRecord.url);
-                        });
-                    });
-                }
-                return res.send('/userRecords/' + newPart.id + '/success');
-            });
-        }
+            busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {});
+            busboy.on('finish', () => {});
+            req.pipe(busboy);
+        };
+        // Remove old file
+        gridfs.remove({'filename': filename}, function (err) {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Unable to remove old file.');
+                return;
+            }
+            uploadFile();
+        });
     });
 };
 
 // GET '/driverRecords/:id/file'
-exports.getFile = function(req, res){
-    Img.find({id: req.params.id}, function(err, parts){
-        if (parts.length === 0) return '';
-        var file = '';
-        console.log('parts.length: ' + parts.length);
-        parts.sort(compareFunction);
-        parts.forEach(function(part, idx, array){
-            file += part.data;
-        });
-        console.log('file.length: ' + file.length);
-
-        var extStart = file.indexOf('/') + 1;
-        var extEnd = file.indexOf(';');
-        console.log(extStart, extEnd);
-        var extension = file.substring(extStart, extEnd);
-        console.log('extension: ' + extension);
-
-        var fileStart = file.indexOf(',') + 1;
-        var fileContent = file.slice(fileStart);
-        var fileName = req.params.id + '.' + extension;
-        console.log('fileName: ' + fileName);
-        fs.writeFileSync(fileName, fileContent, 'base64', function(err){ console.log(err); });
-        return res.sendfile(fileName);
+exports.getFile = function(req, res) {
+    var filename = 'file-' + req.params.id;
+    var gridfs = req.app.get('gridfs');
+    gridfs.findOne({'filename': filename}, function (err, file) {
+        if (err || !file) {
+            if (err) console.error(err);
+            res.status(404).send('File Not Found');
+            return;
+        }
+        res.type(file.contentType);
+        res.set('Content-Length', file.length);
+        var readStream = gridfs.createReadStream({'filename': filename});
+        readStream.pipe(res);
     });
-    return;
 };
-
-function compareFunction(a, b){
-    if (a.part < b.part){
-        return -1;
-    }
-    if (a.part > b.part){
-        return 1;
-    }
-    return 0;
-}
