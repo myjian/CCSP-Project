@@ -1,7 +1,7 @@
 {
   "name": "BadDriver",
-  "description": "Nationwide Driving Violation Reporting Site",
-  "version": "0.2.0",
+  "description": "Nationwide Driving Violation Reporting App",
+  "version": "0.2.1",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -34,8 +34,5 @@
   "bugs": {
     "url": "https://github.com/myjian/CCSP-Project/issues"
   },
-  "homepage": "https://github.com/myjian/CCSP-Project",
-  "engines": {
-    "node": "4.x"
-  }
+  "homepage": "https://github.com/myjian/CCSP-Project"
 }
