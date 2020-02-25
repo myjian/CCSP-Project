@@ -1,12 +1,14 @@
-CCSP-Project
+安心上路
 ============
+Cloud Computing-Based Services Design and Programming Final Project
 
 Members
 ----
+National Taiwan University
 
- - NTU B99902067 Ming-Yuan Jian
- - NTU B00303093 Natasha Pan
- - NTU B99611042 Mitch Tseng
+ - Ming-Yuan Jian
+ - Natasha Pan
+ - Mitch Tseng
 
 Environment variables
 ----
