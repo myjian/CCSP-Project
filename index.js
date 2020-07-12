@@ -5,7 +5,7 @@ var path = require('path');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var session = require('cookie-session');
 var favicon = require('serve-favicon');
 var randomstring = require('randomstring');
 
@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({secret: SESSION_SECRET, resave: false, saveUninitialized: false}));
+app.use(session({secret: SESSION_SECRET}));
 app.use(passport.initialize());
 app.use(passport.session());
 

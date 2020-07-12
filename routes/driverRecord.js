@@ -4,7 +4,7 @@ const UserInfo = mongoose.model('UserInfo');
 const Busboy = require('busboy');
 
 // GET '/userRecords'
-exports.listUserRecords = function(req, res){
+exports.listUserRecords = (req, res) => {
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '我的檢舉記錄', messages: ['尚未登入']});
     }
@@ -19,7 +19,7 @@ exports.listUserRecords = function(req, res){
 };
 
 // GET '/driverRecords'
-exports.list = function(req, res){
+exports.list = (req, res) => {
     DriverRecord.find({}, function(err, driverRecords){
         if (err){
             console.error(err);
@@ -31,7 +31,7 @@ exports.list = function(req, res){
 };
 
 // POST '/userRecords'
-exports.create = function(req, res){
+exports.create = (req, res) => {
     if (!req.user){
         return res.render('notlogin', {user: req.user, title: '新檢舉案件', messages: ['尚未登入']});
     }
@@ -79,7 +79,7 @@ exports.create = function(req, res){
 };
 
 // GET '/driverRecords/:id'
-exports.show = function(req, res){
+exports.show = (req, res) => {
     req.session.recordid = req.params.id;
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err || !driverRecord){
@@ -91,7 +91,7 @@ exports.show = function(req, res){
 };
 
 // POST '/userRecords/:id'
-exports.update = function(req, res){
+exports.update = (req, res) => {
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err){
             console.error(err);
@@ -114,7 +114,7 @@ exports.update = function(req, res){
 };
 
 // GET '/userRecords/:id/success'
-exports.success = function(req, res){
+exports.success = (req, res) => {
     if (req.session.first) {
         res.render('successmessages', {user: req.user, title: '檢舉完成', recordid: req.params.id});
         delete req.session.first;
@@ -126,9 +126,9 @@ exports.success = function(req, res){
 };
 
 // GET '/userRecords/:id/upload'
-exports.fileUpload = function(req, res){
+exports.fileUpload = (req, res) => {
     if (!req.user){
-        return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
+       return res.render('notlogin', {user: req.user, title: '上傳檔案', messages: ['尚未登入']});
     }
     DriverRecord.findById(req.params.id, function(err, driverRecord) {
         if (err || !driverRecord){
@@ -143,9 +143,9 @@ exports.fileUpload = function(req, res){
 };
 
 // POST '/userRecords/:id/upload'
-exports.fileAccept = function(req, res) {
+exports.fileAccept = (req, res) => {
     if (!req.user) {
-        return res.status(401).send('Please log in first!');
+       return res.status(401).send('Please log in first!');
     }
     DriverRecord.findById(req.params.id, function(err, driverRecord){
         if (err || !driverRecord) {
@@ -161,17 +161,14 @@ exports.fileAccept = function(req, res) {
             var busboy = new Busboy({ headers: req.headers });
             busboy.on('file', function(fieldname, stream, originalFilename, encoding, mimetype) {
                 //console.log(`DriverRecord ${req.params.id} File [${fieldname}]: originalFilename: ${originalFilename}, encoding: ${encoding}, mimetype: ${mimetype}`);
-                var writeStream = gridfs.createWriteStream({
-                    'content_type': mimetype,
-                    'filename': filename
-                });
+                const writeStream = gridfs.openUploadStream(filename, {contentType: mimetype});
                 stream.pipe(writeStream);
-                writeStream.on('close', (file) => {
+                writeStream.on('finish', (file) => {
                     //console.log(`File stored as ${file.filename}`);
                     var ext = mimetype.substring(0, mimetype.indexOf('/'));
                     driverRecord.ext = ext;
                     driverRecord.url = '/driverRecords/' + driverRecord._id + '/file';
-                    driverRecord.save((err, theDriverRecord) => {
+                    driverRecord.save((err) => {
                         if (err) {
                             console.error(err);
                             return res.status(500).send(err);
@@ -185,11 +182,14 @@ exports.fileAccept = function(req, res) {
             req.pipe(busboy);
         };
         // Remove old file
-        gridfs.remove({'filename': filename}, function (err) {
+        gridfs.find({filename: filename}).next(function (err, result) {
             if (err) {
                 console.error(err);
-                res.status(500).send('Unable to remove old file.');
+                res.status(500).send('Unable to find old file.');
                 return;
+            }
+            if (result) {
+                gridfs.delete(result._id);
             }
             uploadFile();
         });
@@ -197,18 +197,16 @@ exports.fileAccept = function(req, res) {
 };
 
 // GET '/driverRecords/:id/file'
-exports.getFile = function(req, res) {
+exports.getFile = (req, res) => {
     var filename = 'file-' + req.params.id;
     var gridfs = req.app.get('gridfs');
-    gridfs.findOne({'filename': filename}, function (err, file) {
+    gridfs.find({filename: filename}).next((err, file) => {
         if (err || !file) {
             if (err) console.error(err);
             res.status(404).send('File Not Found');
             return;
         }
-        res.type(file.contentType);
-        res.set('Content-Length', file.length);
-        var readStream = gridfs.createReadStream({'filename': filename});
+        const readStream = gridfs.openDownloadStream(file._id);
         readStream.pipe(res);
     });
 };

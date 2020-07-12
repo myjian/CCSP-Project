@@ -23,6 +23,9 @@ table.table {
     margin: 0;
     border: none;
 }
+#head {
+    margin-top: 10px;
+}
 #back {
     width: 50px;
 }
@@ -31,6 +34,9 @@ table.table {
 }
 #fbArea {
     width: 70px;
+}
+.subtitle {
+    font-size: 16px;
 }
 
 /* footer */
