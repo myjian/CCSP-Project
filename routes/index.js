@@ -14,7 +14,7 @@ exports.trafficLaws = function(req, res){
 };
 
 exports.contactUs = function(req, res){
-    res.render('contactUs', {user: req.user, title: '聯絡我們'});
+    res.render('contactUs', {user: req.user, title: '製作團隊'});
 };
 
 exports.report = function(req, res){
