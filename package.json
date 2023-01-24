@@ -32,7 +32,7 @@
     "Driving"
   ],
   "author": "Ming-Yuan Jian, Natasha Pan, Mitch Tseng",
-  "license": "MIT",
+  "license": "GPLv3",
   "engines": {
     "node": "14.x"
   },
