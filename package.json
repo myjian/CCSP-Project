@@ -14,8 +14,6 @@
     "method-override": "^2.3.10",
     "mongoose": "^5.9.2",
     "morgan": "^1.10.0",
-    "passport": "^0.3.2",
-    "passport-facebook": "^1.0.3",
     "randomstring": "^1.1.5",
     "serve-favicon": "^2.5.0"
   },

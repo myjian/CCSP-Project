@@ -21,6 +21,5 @@ Environment variables
 
  - `PORT`
  - `MONGOLAB_URI`
- - `FACEBOOK_APP_SECRET`
  - `SESSION_SECRET`
  - `NODE_ENV`
