@@ -2,6 +2,12 @@
 ============
 Cloud Computing-Based Services Design and Programming Final Project
 
+Development
+----
+
+    npm install
+    npm start
+
 Members
 ----
 National Taiwan University
