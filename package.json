@@ -23,6 +23,9 @@
     "type": "git",
     "url": "https://github.com/myjian/CCSP-Project"
   },
+  "scripts": {
+    "start": "node --trace-warnings --unhandled-rejections=strict index.js"
+  },
   "keywords": [
     "CCSP",
     "Taiwan",
