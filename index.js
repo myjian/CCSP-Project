@@ -32,7 +32,7 @@ var driverRecord = require('./routes/driverRecord');
 var facebook = require('./routes/facebook');
 
 // all environments
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/favicon.ico'));
