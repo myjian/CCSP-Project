@@ -1,0 +1,154 @@
+body {
+  text-align: center;
+}
+div.row {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+table.table {
+  text-align: left;
+}
+
+/* header */
+#head td {
+  vertical-align: middle;
+}
+#head h1 {
+  text-align: center;
+  margin: 0;
+}
+#head,
+#head tr,
+#head td {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+#head {
+  margin-top: 10px;
+}
+#back {
+  width: 50px;
+}
+#back img {
+  width: 100%;
+}
+#fbArea {
+  width: 50px;
+}
+.subtitle {
+  font-size: 16px;
+}
+
+/* footer */
+footer {
+  background-color: #d8f2f6;
+  padding: 10px;
+  margin-top: 20px;
+}
+footer div:first-of-type {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}
+img.logo {
+  max-width: 200px;
+  max-height: 60px;
+}
+img.copyleft {
+  width: 15px;
+  height: 15px;
+}
+
+/* tips */
+#qna {
+  text-align: left;
+}
+#qna > a {
+  margin-top: 4px;
+}
+h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+a:link,
+a:hover,
+a:active,
+a:visited {
+  text-decoration: none;
+}
+
+blockquote {
+  font-family: '標楷體', Sans-Serif;
+  font-size: 14px;
+}
+
+/* Hexagonal buttons */
+.hex {
+  float: left;
+  margin-right: -26px;
+  margin-bottom: -50px;
+}
+.hex:hover {
+  opacity: 0.8;
+}
+.hex .left {
+  float: left;
+  width: 0;
+  border-right: 30px solid transparent;
+  border-top: 52px solid transparent;
+  border-bottom: 52px solid transparent;
+  opacity: 0.3;
+}
+img.function {
+  float: left;
+  width: 110px;
+  height: 104px;
+  margin-left: -26px;
+  margin-right: -26px;
+}
+.hex .middle {
+  float: left;
+  width: 58px;
+  height: 104px;
+  background: transparent;
+  opacity: 0.3;
+}
+.hex .right {
+  float: left;
+  width: 0;
+  border-left: 30px solid transparent;
+  border-top: 52px solid transparent;
+  border-bottom: 52px solid transparent;
+  opacity: 0.3;
+}
+.hex-row {
+  clear: left;
+  margin-left: -26px;
+}
+.hex.even {
+  margin-top: 53px;
+}
+
+/* contactUs */
+img.photo {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+h2 {
+  margin-top: 0;
+}
+#congrats {
+  color: #00bb00;
+  font-family: '標楷體', Sans-Serif;
+  font-size: 20px;
+}
+
+/* report */
+progress {
+  width: 100%;
+  margin-top: 6px;
+}
