@@ -1,5 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
+import {RootComponent} from './components/RootComponent';
+
 const root = createRoot(document.getElementById('root')!);
-root.render(<div>Hello World!</div>);
+root.render(<RootComponent />);

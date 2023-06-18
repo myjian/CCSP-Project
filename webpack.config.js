@@ -1,30 +1,36 @@
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => ({
-  mode: env.development ? "development" : "production",
-  entry: {
-    "index-page": "./src/index-page/main.tsx",
-  },
+  mode: env.development ? 'development' : 'production',
+  entry: './src/main.tsx',
   output: {
     path: `${__dirname}/build`,
-    filename: (pathData) => pathData.chunk.name + "/main.bundle.js",
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: "ts-loader",
+        use: 'ts-loader',
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          // Where to store these files
+          outputPath: 'assets/',
+          // Where to load these files
+          publicPath: 'assets/',
+        },
       },
     ],
   },
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jpg', '.png'],
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: "public/", to: "./" }],
+      patterns: [{from: 'public/', to: './'}],
     }),
   ],
 });

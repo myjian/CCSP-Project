@@ -10,14 +10,15 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --env development --watch",
-    "start": "serve build -l 8080",
+    "start": "serve build -l 5000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ming-Yuan Jian, Natasha Pan, Mitch Tseng",
   "license": "GPLv3",
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.13.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.12",
