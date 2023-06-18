@@ -23,6 +23,10 @@ export function DriverRecordDetail() {
       return;
     }
     const path = `recordMedia/${recordId}`;
+    if (store.isFetching[path]) {
+      return;
+    }
+    store.isFetching[path] = true;
     fetch(path)
       .then(async (result) => {
         if (!result.ok) {
@@ -34,6 +38,9 @@ export function DriverRecordDetail() {
       })
       .catch((err) => {
         store.setError(err instanceof Error ? err.message : String(err));
+      })
+      .finally(() => {
+        delete store.isFetching[path];
       });
   }, [recordId, decryptKey]);
 

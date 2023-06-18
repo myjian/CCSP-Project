@@ -63,6 +63,7 @@ export function RootComponent() {
     setRecords,
     error: '',
     setError,
+    isFetching: {},
   };
 
   const [store, setStore] = useState(initStoreState);
