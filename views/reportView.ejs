@@ -1,47 +1,81 @@
-<% include _header %>
+<%- include('_header') %>
 <div id="body" class="container-fluid">
-    <% if (user && user.id === reportInfo.user_id){ %>
-    <table class="table table-bordered">
-        <tr><th>檢舉人姓名</th><th>通訊地址</th><th colspan=2>連絡電話</th><th colspan=2>e-mail</th></tr>
-        <tr><td rowspan=2><%= reportInfo.user_name %></td><td rowspan=2><%= reportInfo.user_address %></td><th>O</th><td><%= reportInfo.user_phone %></td><td colspan=2><%= reportInfo.user_email %></td></tr>
-        <tr><th>H</th><td>&nbsp;</td><th>檢舉日期</th><td><%= reportInfo.created %></td></tr>
-    </table>
-    <% } %>
+  <% if (user && user.id === reportInfo.user_id){ %>
+  <table class="table table-bordered">
+    <tr>
+      <th>檢舉人姓名</th>
+      <th>通訊地址</th>
+      <th colspan="2">連絡電話</th>
+      <th colspan="2">e-mail</th>
+    </tr>
+    <tr>
+      <td rowspan="2"><%= reportInfo.user_name %></td>
+      <td rowspan="2"><%= reportInfo.user_address %></td>
+      <th>O</th>
+      <td><%= reportInfo.user_phone %></td>
+      <td colspan="2"><%= reportInfo.user_email %></td>
+    </tr>
+    <tr>
+      <th>H</th>
+      <td>&nbsp;</td>
+      <th>檢舉日期</th>
+      <td><%= reportInfo.created %></td>
+    </tr>
+  </table>
+  <% } %>
 
-    <table class="table table-bordered">
-        <tr><th>牌照號碼</th><th>違規發生地點</th><th>日期</th><th>時間</th><th>違規事實內容</th></tr>
-        <tr><td><%= reportInfo.carNum %></td><td><%= reportInfo.country %><%= reportInfo.location %></td><td><%= reportInfo.happenedDate %></td><td><%= reportInfo.happenedTime %></td><td><%= reportInfo.description %></td></tr>
-    </table>
+  <table class="table table-bordered">
+    <tr>
+      <th>牌照號碼</th>
+      <th>違規發生地點</th>
+      <th>日期</th>
+      <th>時間</th>
+      <th>違規事實內容</th>
+    </tr>
+    <tr>
+      <td><%= reportInfo.carNum %></td>
+      <td><%= reportInfo.country %><%= reportInfo.location %></td>
+      <td><%= reportInfo.happenedDate %></td>
+      <td><%= reportInfo.happenedTime %></td>
+      <td><%= reportInfo.description %></td>
+    </tr>
+  </table>
 
-    <table class="table table-bordered">
-        <tr>
-            <th style="vertical-align: middle">
-                備註
-                <% if (user && user.id === reportInfo.user_id){ %>
-                <a class="btn btn-default" style="float: right" href="/userRecords/<%= reportInfo._id %>/upload">重新上傳檔案</a>
-                <% } %>
-            </th>
-        </tr>
-        <tr>
-            <td style="text-align: center">
-                <% if (reportInfo.ext === 'image'){ %>
-                <img style="width: 100%;" src="<%= reportInfo.url %>">
-                <% } else if (reportInfo.ext === 'video'){ %>
-                <!--[if lt IE 9]>
-                <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-                <![endif]-->
-                <video id="movie" preload controls width="100%">
-                    <source src="<%= reportInfo.url %>">
-                    您的瀏覽器不支援 HTML5 影片播放標籤 &lt;video&gt; 格式。
-                    Your browser doesn't support the &lt;video&gt; tag.
-                </video>
-                <% } else if (reportInfo.url) {%>
-                <a class="btn btn-default" href="<%= reportInfo.url %>" target="_blank">附件</a>
-                <% } else { %>
-                <p style="text-align: left;">沒有附檔</p>
-                <% } %>
-            </td>
-        </tr>
-    </table>
+  <table class="table table-bordered">
+    <tr>
+      <th style="vertical-align: middle">
+        備註 <% if (user && user.id === reportInfo.user_id){ %>
+        <a
+          class="btn btn-default"
+          style="float: right"
+          href="/userRecords/<%= reportInfo._id %>/upload"
+          >重新上傳檔案</a
+        >
+        <% } %>
+      </th>
+    </tr>
+    <tr>
+      <td style="text-align: center">
+        <% if (reportInfo.ext === 'image'){ %>
+        <img style="width: 100%" src="<%= reportInfo.url %>" />
+        <% } else if (reportInfo.ext === 'video'){ %>
+        <!--[if lt IE 9]>
+          <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <video id="movie" preload controls width="100%">
+          <source src="<%= reportInfo.url %>" />
+          您的瀏覽器不支援 HTML5 影片播放標籤 &lt;video&gt; 格式。 Your browser
+          doesn't support the &lt;video&gt; tag.
+        </video>
+        <% } else if (reportInfo.url) {%>
+        <a class="btn btn-default" href="<%= reportInfo.url %>" target="_blank"
+          >附件</a
+        >
+        <% } else { %>
+        <p style="text-align: left">沒有附檔</p>
+        <% } %>
+      </td>
+    </tr>
+  </table>
 </div>
-<% include _footer %>
+<%- include('_footer') %>

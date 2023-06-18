@@ -1,27 +1,26 @@
-<% include _header %>
+<%- include('_header') %>
 <div id="body" class="container-fluid">
-    <div id="congrats">
-		<br>【恭喜你完成一筆檢舉，請記得到email信箱收<b>"確認信"</b>，以確保檢舉成功】<br><br>
-		<a class="btn btn-success" href="/userRecords/<%= recordid %>">檢視案件</a><br><br>
+  <div id="congrats">
+    <br />【恭喜你完成一筆檢舉，請記得到email信箱收<b>"確認信"</b>，以確保檢舉成功】<br /><br />
+    <a class="btn btn-success" href="/userRecords/<%= recordid %>">檢視案件</a
+    ><br /><br />
 
-		<table class="table table-striped" style="text-align: center;">
-	    <tr>
-	        <th style="text-align: center;">
-	            安心上路還有許多實用的功能:
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	        	<br>
-	           	<a class="btn btn-default" href="/tips">達人推薦:檢舉撇步</a><br><br>
-	           	<a class="btn btn-default" href="/userRecords">管理我檢舉過的案件</a><br><br>
-	           	<a class="btn btn-default" href="/trafficLaws">違規罰鍰金額查詢</a><br><br>
-	        </td>
-	    </tr>
-
-
-
-	</table>
-	
+    <table class="table table-striped" style="text-align: center">
+      <tr>
+        <th style="text-align: center">安心上路還有許多實用的功能:</th>
+      </tr>
+      <tr>
+        <td>
+          <br />
+          <a class="btn btn-default" href="/tips">達人推薦:檢舉撇步</a
+          ><br /><br />
+          <a class="btn btn-default" href="/userRecords">管理我檢舉過的案件</a
+          ><br /><br />
+          <a class="btn btn-default" href="/trafficLaws">違規罰鍰金額查詢</a
+          ><br /><br />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <%- include('_footer') %>
 </div>
-<% include _footer %>

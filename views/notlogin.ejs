@@ -1,16 +1,14 @@
-<% include _header %>
+<%- include('_header') %>
 <div id="body" class="container-fluid">
-    <% if (messages.length) { %>
-    <p class="text-info">
-    <%- messages.join('<br>') %>
-    </p>
-    <% } %>
-    <p>利用FB登入，</p>
-    <p>系統會自動填入您的email等冗長資料，</p>
-    <p>協助您更快速的填寫檢舉表單。</p>
-    <p>同時您也能管理自己檢舉過的案件紀錄。</p>
-    <br>
-    <p>【請點選右上角的FB登入以繼續】</p>
+  <% if (messages.length) { %>
+  <p class="text-info"><%- messages.join('<br />') %></p>
+  <% } %>
+  <p>利用FB登入，</p>
+  <p>系統會自動填入您的email等冗長資料，</p>
+  <p>協助您更快速的填寫檢舉表單。</p>
+  <p>同時您也能管理自己檢舉過的案件紀錄。</p>
+  <br />
+  <p>【請點選右上角的FB登入以繼續】</p>
 </div>
-<br>
-<% include _footer %>
+<br />
+<%- include('_footer') %>

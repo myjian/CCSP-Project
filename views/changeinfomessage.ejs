@@ -1,78 +1,49 @@
-<% include _header %>
+<%- include('_header') %>
 <div id="body" class="container-fluid">
-    <% if (messages.length) { %>
-    <p class="text-info">
-    <%- messages.join('<br>') %>
-    </p>
-    <% } %>
-    <a class="btn btn-default" href="/">回首頁</a>
-    <br>
-    <br>
+  <% if (messages.length) { %>
+  <p class="text-info"><%- messages.join('<br />') %></p>
+  <% } %>
+  <a class="btn btn-default" href="/">回首頁</a>
+  <br />
+  <br />
 
-    <table class="table table-striped">
-	    <tr>
-	        <th>
-	            使用者姓名：
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	           	<%= userInfo.name %>
-	        </td>
-	    </tr>
-	    <tr>
-	        <th>
-	            電子郵件地址：
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	           	<%= userInfo.email %>
-	        </td>
-	    </tr>
-	    <tr>
-	        <th>
-	            電話：
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	           	<%= userInfo.phone %>
-	        </td>
-	    </tr>
-	    <tr>
-	        <th>
-	            地址：
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	           	<%= userInfo.address %>
-	        </td>
-	    </tr>
-	    <tr>
-	        <th>
-	            性別：
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	           	<%= userInfo.gender %>
-	        </td>
-	    </tr>
-	    <tr>
-	        <th>
-	            身分證字號：
-	        </th>
-	    </tr>
-	    <tr>
-	        <td>
-	           	<%= userInfo.ssn %>
-	        </td>
-	    </tr>
-
-
-
-	</table>
+  <table class="table table-striped">
+    <tr>
+      <th>使用者姓名：</th>
+    </tr>
+    <tr>
+      <td><%= userInfo.name %></td>
+    </tr>
+    <tr>
+      <th>電子郵件地址：</th>
+    </tr>
+    <tr>
+      <td><%= userInfo.email %></td>
+    </tr>
+    <tr>
+      <th>電話：</th>
+    </tr>
+    <tr>
+      <td><%= userInfo.phone %></td>
+    </tr>
+    <tr>
+      <th>地址：</th>
+    </tr>
+    <tr>
+      <td><%= userInfo.address %></td>
+    </tr>
+    <tr>
+      <th>性別：</th>
+    </tr>
+    <tr>
+      <td><%= userInfo.gender %></td>
+    </tr>
+    <tr>
+      <th>身分證字號：</th>
+    </tr>
+    <tr>
+      <td><%= userInfo.ssn %></td>
+    </tr>
+  </table>
 </div>
-<% include _footer %>
+<%- include('_footer') %>

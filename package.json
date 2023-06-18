@@ -5,10 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "busboy": "^0.2.13",
+    "busboy": "^1.6.0",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^1.4.0",
-    "ejs": "^2.5.5",
+    "ejs": "^3.1.9",
     "errorhandler": "^1.4.3",
     "express": "^4.17.1",
     "method-override": "^2.3.10",
@@ -32,7 +32,7 @@
   "author": "Ming-Yuan Jian, Natasha Pan, Mitch Tseng",
   "license": "GPLv3",
   "engines": {
-    "node": "14.x"
+    "node": "20.x"
   },
   "bugs": {
     "url": "https://github.com/myjian/CCSP-Project/issues"

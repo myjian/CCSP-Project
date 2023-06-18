@@ -1,9 +1,7 @@
-<% include _header %>
+<%- include('_header') %>
 <div id="body" class="container-fluid">
-    <% if (messages.length) { %>
-    <p class="text-info">
-    <%- messages.join('<br>') %>
-    </p>
-    <% } %>
+  <% if (messages.length) { %>
+  <p class="text-info"><%- messages.join('<br />') %></p>
+  <% } %>
 </div>
-<% include _footer %>
+<%- include('_footer') %>

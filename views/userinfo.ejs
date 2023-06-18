@@ -1,41 +1,96 @@
-<% include _header %>
+<%- include('_header') %>
 <div class="container-fluid">
-    <p class="text-danger" style="text-align: left;">有*的欄位為必填</p>
-    <form action="/newuser" method="post" onsubmit="return validateForm()" id="tryitForm" class="container-fluid form-horizontal">
-        <div id="reportInfo">
-            <div class="form-group">
-                <label class="control-label">*真實姓名（真實姓名可提高檢舉成功機率）</label>
-                <input class="form-control" type="text" name="name" id="name" value="<%= userInfo.name %>" placeholder="姓名">
-            </div>
-            <div class="form-group">
-                <label class="control-label">*電話（電話真實性會影響檢舉是否成功）</label>
-                <input class="form-control" type="text" name="phone" id="phone" placeholder="電話">
-            </div>
-            <div class="form-group">
-                <label class="control-label">*地址（地址真實性會影響檢舉是否成功）</label>
-                <input class="form-control" type="text" name="address" id="address" placeholder="地址">
-            </div>
-            <div class="form-group">
-                <label class="control-label">*電子郵件信箱（期望收到回信的信箱）</label>
-                <input class="form-control" type="text" name="email" id="email" value="<%= userInfo.email %>" placeholder="電子郵件信箱">
-            </div>
-            <div class="form-group">
-                <label class="control-label">性別</label>
-                <input class="form-control" type="text" name="gender" value="<%= userInfo.gender %>" placeholder="性別">
-            </div>
-            <div class="form-group">
-                <label class="control-label">身分證字號（檢舉發生在新竹市的案件需要身分證字號）</label>
-                <input class="form-control" type="text" name="ssn" placeholder="身分證字號（可填可不填）">
-            </div>
-            <div class="form-group">
-                <input class="form-control btn-success" type="submit" value="確認送出">
-            </div>
-        </div>
-    </form>
-    <a class="btn btn-default btn-block" href="/logout">取消</a>
+  <p class="text-danger" style="text-align: left">有*的欄位為必填</p>
+  <form
+    action="/newuser"
+    method="post"
+    onsubmit="return validateForm()"
+    id="tryitForm"
+    class="container-fluid form-horizontal"
+  >
+    <div id="reportInfo">
+      <div class="form-group">
+        <label class="control-label"
+          >*真實姓名（真實姓名可提高檢舉成功機率）</label
+        >
+        <input
+          class="form-control"
+          type="text"
+          name="name"
+          id="name"
+          value="<%= userInfo.name %>"
+          placeholder="姓名"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label"
+          >*電話（電話真實性會影響檢舉是否成功）</label
+        >
+        <input
+          class="form-control"
+          type="text"
+          name="phone"
+          id="phone"
+          placeholder="電話"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label"
+          >*地址（地址真實性會影響檢舉是否成功）</label
+        >
+        <input
+          class="form-control"
+          type="text"
+          name="address"
+          id="address"
+          placeholder="地址"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">*電子郵件信箱（期望收到回信的信箱）</label>
+        <input
+          class="form-control"
+          type="text"
+          name="email"
+          id="email"
+          value="<%= userInfo.email %>"
+          placeholder="電子郵件信箱"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">性別</label>
+        <input
+          class="form-control"
+          type="text"
+          name="gender"
+          value="<%= userInfo.gender %>"
+          placeholder="性別"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label"
+          >身分證字號（檢舉發生在新竹市的案件需要身分證字號）</label
+        >
+        <input
+          class="form-control"
+          type="text"
+          name="ssn"
+          placeholder="身分證字號（可填可不填）"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control btn-success"
+          type="submit"
+          value="確認送出"
+        />
+      </div>
+    </div>
+  </form>
+  <a class="btn btn-default btn-block" href="/logout">取消</a>
 </div>
-<br><br>
+<br /><br />
 
 <script type="text/javascript" src="/js/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="/js/userinfo.js"></script>
-<% include _footer %>
+<%- include('_footer') %>

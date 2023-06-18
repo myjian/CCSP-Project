@@ -1,14 +1,31 @@
-<% include _header %>
+<%- include('_header') %>
 <form enctype="multipart/form-data" method="post" class="container-fluid">
-    <input class="form-control" id="loadfile" type="file" name='file' accept="image/*,video/*">
-    <div id="preview" class="container-fluid" style="display: none; margin-top: 6px;"></div>
-    <button id="upload" type="button" class="btn btn-primary btn-block"
-      data-loading-text="上傳中..." style="margin-top: 6px; display: none">確認送出</button>
-    <% if (!first){ %>
-    <a class="btn btn-danger btn-block" href=".">取消</a>
-    <% } %>
-    <progress id="progress" value="0" max="100" style="display: none;"></progress>
+  <input
+    class="form-control"
+    id="loadfile"
+    type="file"
+    name="file"
+    accept="image/*,video/*"
+  />
+  <div
+    id="preview"
+    class="container-fluid"
+    style="display: none; margin-top: 6px"
+  ></div>
+  <button
+    id="upload"
+    type="button"
+    class="btn btn-primary btn-block"
+    data-loading-text="上傳中..."
+    style="margin-top: 6px; display: none"
+  >
+    確認送出
+  </button>
+  <% if (!first){ %>
+  <a class="btn btn-danger btn-block" href=".">取消</a>
+  <% } %>
+  <progress id="progress" value="0" max="100" style="display: none"></progress>
 </form>
 
 <script type="text/javascript" src="/js/imgupload.js"></script>
-<% include _footer %>
+<%- include('_footer') %>

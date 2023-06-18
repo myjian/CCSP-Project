@@ -1,87 +1,143 @@
-<% include _header %>
+<%- include('_header') %>
 <div id="body" class="container-fluid">
-    <form action="/userRecords" method="post" onsubmit="return validateForm()"  id="tryitForm" class="container-fluid form-horizontal">
-        <div class="form-group">
-            <select class="form-control" name="country" id="country">
-                <option value="">請選擇縣市</option>
-                <option value="基隆市">基隆市</option>
-                <option value="台北市">台北市</option>
-                <option value="新北市">新北市</option>
-                <option value="桃園縣">桃園縣</option>
-                <option value="新竹縣">新竹縣</option>
-                <option value="新竹市">新竹市</option>
-                <option value="苗栗縣">苗栗縣</option>
-                <option value="台中市">台中市</option>
-                <option value="彰化縣">彰化縣</option>
-                <option value="南投縣">南投縣</option>
-                <option value="雲林縣">雲林縣</option>
-                <option value="嘉義縣">嘉義縣</option>
-                <option value="嘉義市">嘉義市</option>
-                <option value="台南市">台南市</option>
-                <option value="高雄市">高雄市</option>
-                <option value="屏東縣">屏東縣</option>
-                <option value="宜蘭縣">宜蘭縣</option>
-                <option value="花蓮縣">花蓮縣</option>
-                <option value="台東縣">台東縣</option>
-                <option value="金門縣">金門縣</option>
-                <option value="連江縣">連江縣</option>
-                <option value="澎湖縣">澎湖縣</option>
-                <option value="國道">國道</option>
-            </select>
+  <form
+    action="/userRecords"
+    method="post"
+    onsubmit="return validateForm()"
+    id="tryitForm"
+    class="container-fluid form-horizontal"
+  >
+    <div class="form-group">
+      <select class="form-control" name="country" id="country">
+        <option value="">請選擇縣市</option>
+        <option value="基隆市">基隆市</option>
+        <option value="台北市">台北市</option>
+        <option value="新北市">新北市</option>
+        <option value="桃園縣">桃園縣</option>
+        <option value="新竹縣">新竹縣</option>
+        <option value="新竹市">新竹市</option>
+        <option value="苗栗縣">苗栗縣</option>
+        <option value="台中市">台中市</option>
+        <option value="彰化縣">彰化縣</option>
+        <option value="南投縣">南投縣</option>
+        <option value="雲林縣">雲林縣</option>
+        <option value="嘉義縣">嘉義縣</option>
+        <option value="嘉義市">嘉義市</option>
+        <option value="台南市">台南市</option>
+        <option value="高雄市">高雄市</option>
+        <option value="屏東縣">屏東縣</option>
+        <option value="宜蘭縣">宜蘭縣</option>
+        <option value="花蓮縣">花蓮縣</option>
+        <option value="台東縣">台東縣</option>
+        <option value="金門縣">金門縣</option>
+        <option value="連江縣">連江縣</option>
+        <option value="澎湖縣">澎湖縣</option>
+        <option value="國道">國道</option>
+      </select>
+    </div>
+    <div id="reportInfo">
+      <div class="form-group">
+        <label class="control-label">違規發生地點（區域、路段）</label>
+        <input
+          class="form-control"
+          type="text"
+          name="location"
+          id="location"
+          placeholder="詳細地點（區域、路段）"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">車牌</label>
+        <input
+          class="form-control"
+          type="text"
+          name="carNum"
+          id="carNum"
+          placeholder="車牌（常見格式：汽車AA-0000、機車AAA-000）"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">發生日期</label>
+        <input
+          class="form-control"
+          type="date"
+          name="date"
+          id="date"
+          placeholder="發生日期（例：2014/6/4）"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">發生時間</label>
+        <input
+          class="form-control"
+          type="time"
+          name="time"
+          id="time"
+          placeholder="發生時間（例：下午 1:00）"
+        />
+      </div>
+      <div class="form-group">
+        <label class="control-label">違規事實內容</label>
+        <input
+          class="form-control"
+          type="text"
+          name="description"
+          id="description"
+          placeholder="情況簡述"
+        />
+      </div>
+      範例：
+      <button class="eg btn btn-default" type="button" id=".eg">
+        違規停車
+      </button>
+      <button class="eg btn btn-default" type="button" id=".eg">
+        逆向行駛
+      </button>
+      <button class="eg btn btn-default" type="button" id=".eg">闖紅燈</button>
+    </div>
+    <br />
+    <div
+      class="modal fade"
+      id="helloModal"
+      aria-hidden="true"
+      style="display: none"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <p class="modal-country"></p>
+            <p class="modal-location"></p>
+            <p class="modal-carNum"></p>
+            <p class="modal-date"></p>
+            <p class="modal-time"></p>
+            <p class="modal-description"></p>
+            <br />
+            <div class="form-group">
+              <input
+                class="form-control btn-success btn-block"
+                type="submit"
+                value="確認"
+              />
+              <a
+                href="javascript: void(0)"
+                id="backto"
+                class="btn btn-default btn-block"
+                >返回</a
+              >
+            </div>
+          </div>
         </div>
-        <div id="reportInfo">
-            <div class="form-group">
-                <label class="control-label">違規發生地點（區域、路段）</label>
-                <input class="form-control" type="text" name="location" id="location" placeholder="詳細地點（區域、路段）">
-            </div>
-            <div class="form-group">
-                <label class="control-label">車牌</label>
-                <input class="form-control" type="text" name="carNum" id="carNum" placeholder="車牌（常見格式：汽車AA-0000、機車AAA-000）">
-            </div>
-            <div class="form-group">
-                <label class="control-label">發生日期</label>
-                <input class="form-control" type="date" name="date" id="date" placeholder="發生日期（例：2014/6/4）">
-            </div>
-            <div class="form-group">
-                <label class="control-label">發生時間</label>
-                <input class="form-control" type="time" name="time" id="time" placeholder="發生時間（例：下午 1:00）">
-            </div>
-            <div class="form-group">
-                <label class="control-label">違規事實內容</label>
-                <input class="form-control" type="text" name="description" id="description" placeholder="情況簡述">
-            </div>
-            範例：
-            <button class="eg btn btn-default" type="button" id=".eg">違規停車</button>
-            <button class="eg btn btn-default" type="button" id=".eg">逆向行駛</button>
-            <button class="eg btn btn-default" type="button" id=".eg">闖紅燈</button>
-        </div>
-        <br>
-        <div class="modal fade" id="helloModal" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p class="modal-country"></p>
-                        <p class="modal-location"></p>
-                        <p class="modal-carNum"></p>
-                        <p class="modal-date"></p>
-                        <p class="modal-time"></p>
-                        <p class="modal-description"></p>
-                        <br>
-                        <div class="form-group">
-                            <input class="form-control btn-success btn-block" type="submit" value="確認">
-                            <a href="javascript: void(0)" id="backto" class="btn btn-default btn-block">返回</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <a href="javascript: void(0)" id="check" class="btn btn-success btn-block">送出</a>
+      </div>
+    </div>
+  </form>
+  <a href="javascript: void(0)" id="check" class="btn btn-success btn-block"
+    >送出</a
+  >
 </div>
-<br>
+<br />
 <script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="js/baddriver.js"></script>
-<% include _footer %>
+<%- include('_footer') %>
