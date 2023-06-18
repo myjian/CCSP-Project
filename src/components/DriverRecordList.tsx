@@ -1,49 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 
 import {formatTimestamp} from '../datetime';
 import {loadDecryptKey} from '../decrypt_key';
-import {decrypt} from '../decryptor';
-import {DriverRecord} from '../record';
+import {useError, useRecords} from '../store';
 import {DecryptKeyInput} from './DecryptKeyInput';
 import {PageFoot} from './PageFoot';
 import {PageHead} from './PageHead';
 
-function compareRecords(r1: DriverRecord, r2: DriverRecord) {
-  if (r1.created > r2.created) return -1;
-  if (r1.created < r2.created) return 1;
-  return 0;
-}
-
 export function DriverRecordList() {
-  const [failure, setFailure] = useState<string>('');
-
   const decryptKey = loadDecryptKey();
-  if (!decryptKey || failure) {
-    return <DecryptKeyInput errorMessage={failure} />;
-  }
-  const [records, setRecords] = useState<ReadonlyArray<DriverRecord>>([]);
+  const records = useRecords();
+  const error = useError();
 
-  useEffect(() => {
-    const path = 'database/driverRecords';
-    fetch(path)
-      .then(async (result) => {
-        if (!result.ok) {
-          throw new Error(`Failed to load ${path}`);
-        }
-        const decrypted = await decrypt(await result.arrayBuffer(), 'ccsp-baddriver');
-        const parsed = JSON.parse(await decrypted.text()) as DriverRecord[];
-        parsed.sort(compareRecords);
-        setRecords(parsed);
-      })
-      .catch((err) => {
-        setFailure(err instanceof Error ? err.message : String(err));
-      });
-  }, []);
+  if (!decryptKey || error) {
+    return <DecryptKeyInput errorMessage={error} />;
+  }
 
   return (
     <>
-      <PageHead title="影像資料庫" />
+      <PageHead title="檢舉資料庫" />
       {records.length ? (
         <table className="table table-striped">
           <tbody>

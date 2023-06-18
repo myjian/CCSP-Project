@@ -23,7 +23,7 @@ export function IndexPage() {
               <div className="middle"></div>
               <div className="right"></div>
             </div>
-            <Link className="hex even" to="/driverRecords/">
+            <Link className="hex even" to="/driverRecords">
               <div className="left"></div>
               <img className="function" src={MenuDriverRecords} alt="影像資料庫" />
               <div className="right"></div>

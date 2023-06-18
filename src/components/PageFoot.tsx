@@ -9,11 +9,11 @@ export function PageFoot() {
       <a href="/">
         <img src={Logo} className="logo img-rounded" alt="安心上路" />
       </a>
-      <div style={{marginLeft: '6px'}}>
+      <div style={{marginLeft: '10px'}}>
         <a target="_blank" href="http://zh.m.wikipedia.org/wiki/Copyleft">
           <img src={CopyLeft} className="copyleft" alt="" />
         </a>
-        CCSP 2014
+        &nbsp; CCSP 2014
         <br />
         Citizens on The Road.
       </div>

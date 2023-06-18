@@ -1,5 +1,5 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {Link, useLocation} from 'react-router-dom';
 
 import BackImg from '../img/back.png';
 import LogoNoBlueSmall from '../img/LogoNoBlue-small.png';
@@ -9,7 +9,21 @@ interface Props {
   title: string;
 }
 
+function getBackUrl() {
+  const {pathname} = useLocation();
+  const parts = pathname.split('/');
+  if (pathname.endsWith('/')) {
+    parts.pop();
+  }
+  parts.pop();
+  return parts.length === 1 ? '/' : parts.join('/');
+}
+
 export function PageHead({isIndex, title}: Props) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+  const backUrl = getBackUrl();
   return (
     <>
       <table id="head" className="table">
@@ -28,7 +42,7 @@ export function PageHead({isIndex, title}: Props) {
             ) : (
               <>
                 <td id="back">
-                  <Link to="..">
+                  <Link to={backUrl}>
                     <img src={BackImg} alt="Back" />
                   </Link>
                 </td>

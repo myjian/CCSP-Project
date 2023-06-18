@@ -22,7 +22,10 @@ export function DecryptKeyInput(props: Props) {
   }, []);
   return (
     <>
-      <code style={{color: 'red'}}>{props.errorMessage}</code>
+      <br />
+      {props.errorMessage && <code style={{color: 'red'}}>{props.errorMessage}</code>}
+      <br />
+      <br />
       <form onSubmit={handleFormSubmit}>
         <label>
           Decrypt key: <input name="key"></input>
