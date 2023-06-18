@@ -22,7 +22,7 @@ export function DriverRecordDetail() {
     if (!recordId || !decryptKey) {
       return;
     }
-    const path = `../recordMedia/${recordId}`;
+    const path = `recordMedia/${recordId}`;
     fetch(path)
       .then(async (result) => {
         if (!result.ok) {
