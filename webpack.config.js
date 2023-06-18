@@ -14,7 +14,7 @@ module.exports = (env) => ({
         use: 'ts-loader',
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg)$/i,
         type: 'asset/resource',
         generator: {
           // Where to store these files
