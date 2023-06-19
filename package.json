@@ -10,7 +10,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --env development --watch",
-    "start": "serve build -l 5000",
+    "start": "serve build -l 5656",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ming-Yuan Jian, Natasha Pan, Mitch Tseng",

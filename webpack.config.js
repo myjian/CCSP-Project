@@ -26,7 +26,7 @@ module.exports = (env) => ({
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.jpg', '.png'],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new CopyPlugin({

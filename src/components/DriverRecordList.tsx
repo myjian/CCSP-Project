@@ -52,26 +52,24 @@ export function DriverRecordList() {
                 <tr>
                   <th>
                     <Link to={`/driverRecords/${rec._id}`}>第 {arr.length - i} 筆</Link>
-                    &nbsp;({rec.ext})
+                    &nbsp;({rec.carNum})
                     <br />
                     檢舉時間：{formatTimestamp(rec.created)}
                   </th>
-                </tr>
-                <tr>
-                  <td>
-                    <Link className="btn btn-default" to={`/driverRecords/${rec._id}`}>
+                  <th style={{verticalAlign: 'middle', textAlign: 'right'}}>
+                    <Link className="btn btn-primary" to={`/driverRecords/${rec._id}`}>
                       詳細資料
                     </Link>
-                    <br />
-                    縣市：{rec.country}
-                    <br />
-                    地點：{rec.location}
-                    <br />
-                    車牌：{rec.carNum}
+                  </th>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    地點：{rec.country}&nbsp;{rec.location}
                     <br />
                     事發時間：{rec.happenedDate}&nbsp;{rec.happenedTime}
                     <br />
-                    <blockquote>簡述：{rec.description}</blockquote>
+                    附件類型：{rec.ext}
+                    <br />
                   </td>
                 </tr>
               </React.Fragment>

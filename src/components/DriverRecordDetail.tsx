@@ -99,7 +99,7 @@ export function DriverRecordDetail() {
                     support the &lt;video&gt; tag.
                   </video>
                 ) : (
-                  <a className="btn btn-default" href={mediaSrc} target="_blank">
+                  <a className="btn btn-info" href={mediaSrc} target="_blank">
                     附件
                   </a>
                 )}
