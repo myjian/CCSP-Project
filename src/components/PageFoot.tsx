@@ -14,7 +14,7 @@ export function PageFoot() {
         <a target="_blank" href="http://zh.m.wikipedia.org/wiki/Copyleft">
           <img src={CopyLeft} className="copyleft" alt="" />
         </a>
-        &nbsp; CCSP 2014
+        &nbsp;CCSP 2014
         <br />
         Citizens on The Road.
       </div>
