@@ -4,3 +4,6 @@
 # vim undo file & editing swap file
 *.un~
 *.swp
+
+# macOS metadata
+.DS_Store
