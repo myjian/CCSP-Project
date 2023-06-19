@@ -13,6 +13,7 @@ export function PageContainer({children, isIndex, title}: Props) {
   return (
     <div id="body" className="container">
       <PageHead title={title} isIndex={isIndex} />
+      <hr />
       {children}
       <PageFoot />
     </div>

@@ -84,7 +84,7 @@ export function DriverRecordDetail() {
         <table className="table table-bordered">
           <tbody>
             <tr>
-              <th style={{verticalAlign: 'middle'}}>影像附件</th>
+              <th style={{verticalAlign: 'middle'}}>附件</th>
             </tr>
             <tr>
               <td style={{textAlign: 'center'}} key={mediaSrc}>

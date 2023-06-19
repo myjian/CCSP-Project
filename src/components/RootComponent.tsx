@@ -5,6 +5,7 @@ import {DriverRecordDetail} from './DriverRecordDetail';
 import {DriverRecordList} from './DriverRecordList';
 import {IndexPage} from './IndexPage';
 import {LoginRequired} from './LoginRequired';
+import {NotFound} from './NotFound';
 import {UnderConstruction} from './UnderConstruction';
 
 const router = createHashRouter([
@@ -44,6 +45,10 @@ const router = createHashRouter([
     path: '/',
     element: <IndexPage />,
     index: true,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 

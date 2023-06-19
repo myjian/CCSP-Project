@@ -25,37 +25,33 @@ export function PageHead({isIndex, title}: Props) {
   }, [title]);
   const backUrl = getBackUrl();
   return (
-    <>
-      <table id="head" className="table">
-        <tbody>
-          <tr>
+    <table id="head" className="table">
+      <tbody>
+        <tr>
+          <td id="back">
+            {isIndex ? (
+              ' '
+            ) : (
+              <Link to={backUrl}>
+                <img src={BackImg} alt="Back" />
+              </Link>
+            )}
+          </td>
+          <td>
             {isIndex ? (
               <>
-                <td id="back">&nbsp;</td>
-                <td>
-                  <h1>
-                    <img className="logo" src={LogoNoBlueSmall} alt="安心上路" />
-                  </h1>
-                  <div className="text-info subtitle">全國通用交通違規檢舉網站</div>
-                </td>
+                <h1>
+                  <img className="logo" src={LogoNoBlueSmall} alt="安心上路" />
+                </h1>
+                <div className="text-info subtitle">全國通用交通違規檢舉網站</div>
               </>
             ) : (
-              <>
-                <td id="back">
-                  <Link to={backUrl}>
-                    <img src={BackImg} alt="Back" />
-                  </Link>
-                </td>
-                <td>
-                  <h1>{title}</h1>
-                </td>
-              </>
+              <h1>{title}</h1>
             )}
-            <td id="fbArea" />
-          </tr>
-        </tbody>
-      </table>
-      <hr />
-    </>
+          </td>
+          <td id="fbArea" />
+        </tr>
+      </tbody>
+    </table>
   );
 }

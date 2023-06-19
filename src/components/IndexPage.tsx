@@ -32,34 +32,34 @@ export function IndexPage() {
           </div>
         </div>
         <div className="hex-row">
-          <Link className="hex" to="/tips/">
+          <Link className="hex" to="/tips">
             <div className="left"></div>
             <img className="function" src={MenuQA} alt="檢舉撇步、Q &amp; A" />
             <div className="right"></div>
           </Link>
-          <Link className="hex even" to="/report/">
+          <Link className="hex even" to="/report">
             <div className="left"></div>
             <img className="function" src={MenuReport} alt="我要檢舉！" />
             <div className="right"></div>
           </Link>
-          <Link className="hex" to="/userRecords/">
+          <Link className="hex" to="/userRecords">
             <div className="left"></div>
             <img className="function" src={MenuUserRecords} alt="管理案件" />
             <div className="right"></div>
           </Link>
         </div>
         <div className="hex-row">
-          <Link className="hex" to="/trafficLaws/">
+          <Link className="hex" to="/trafficLaws">
             <div className="left"></div>
             <img className="function" src={MenuTrafficLaws} alt="交通法規" />
             <div className="right"></div>
           </Link>
-          <Link className="hex even" to="/contactUs/">
+          <Link className="hex even" to="/contactUs">
             <div className="left"></div>
             <img className="function" src={MenuContactUs} alt="聯絡我們" />
             <div className="right"></div>
           </Link>
-          <Link className="hex" to="/userInfo/">
+          <Link className="hex" to="/userInfo">
             <div className="left"></div>
             <img className="function" src={MenuUserInfo} alt="個人資料" />
             <div className="right"></div>
