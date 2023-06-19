@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {createHashRouter, RouterProvider} from 'react-router-dom';
 
-import {DriverRecord} from '../record';
-import {Store, StoreContext} from '../store';
 import {DriverRecordDetail} from './DriverRecordDetail';
 import {DriverRecordList} from './DriverRecordList';
 import {IndexPage} from './IndexPage';
@@ -50,28 +48,9 @@ const router = createHashRouter([
 ]);
 
 export function RootComponent() {
-  const setRecords = (records: DriverRecord[]) => {
-    setStore({...store, records});
-  };
-
-  const setError = (error: string) => {
-    setStore({...store, error});
-  };
-
-  const initStoreState: Store = {
-    records: [],
-    setRecords,
-    error: '',
-    setError,
-    isFetching: {},
-  };
-
-  const [store, setStore] = useState(initStoreState);
   return (
     <React.StrictMode>
-      <StoreContext.Provider value={store}>
-        <RouterProvider router={router} />
-      </StoreContext.Provider>
+      <RouterProvider router={router} />
     </React.StrictMode>
   );
 }

@@ -1,61 +1,61 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
-import {loadDecryptKey} from '../decrypt_key';
-import {decrypt} from '../decryptor';
-import {useError, useRecords, useStore} from '../store';
-import {DecryptKeyInput} from './DecryptKeyInput';
-import {PageFoot} from './PageFoot';
-import {PageHead} from './PageHead';
+import {getDownloadUrl, query} from '../firebase';
+import {DriverRecord} from '../record';
+import {ErrorPage} from './ErrorPage';
+import {PageContainer} from './PageContainer';
 
 export function DriverRecordDetail() {
   const {recordId} = useParams();
-  const records = useRecords();
+  const [loadingRecord, setLoadingRecord] = useState<string | null>(null);
+  const [record, setRecord] = useState<DriverRecord | null>(null);
+  const [loadingMedia, setLoadingMedia] = useState<string | null>(null);
   const [mediaSrc, setMediaSrc] = useState('');
-  const record = records.find((r) => r._id === recordId);
-
-  const decryptKey = loadDecryptKey();
-  const store = useStore();
-  const error = useError();
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
-    if (!recordId || !decryptKey) {
+    if (!recordId || loadingRecord === recordId) {
       return;
     }
-    const path = `recordMedia/${recordId}`;
-    if (store.isFetching[path]) {
-      return;
-    }
-    store.isFetching[path] = true;
-    fetch(path)
-      .then(async (result) => {
-        if (!result.ok) {
-          return;
+    setLoadingRecord(recordId);
+    query(`/driverRecords/${recordId}`)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setRecord(snapshot.val() as DriverRecord);
+        } else {
+          console.log('No data available');
         }
-        console.log(`Decrypting ${path}`);
-        const decrypted = await decrypt(await result.arrayBuffer(), decryptKey);
-        setMediaSrc(URL.createObjectURL(decrypted));
       })
       .catch((err) => {
-        store.setError(err instanceof Error ? err.message : String(err));
-      })
-      .finally(() => {
-        delete store.isFetching[path];
+        console.error(err);
+        setError(err instanceof Error ? err.message : String(err));
       });
-  }, [recordId, decryptKey]);
+  }, [loadingRecord, recordId]);
 
-  if (!decryptKey || error) {
-    return <DecryptKeyInput errorMessage={error} />;
-  }
+  useEffect(() => {
+    if (!recordId || loadingMedia === recordId) {
+      return;
+    }
+    setLoadingMedia(recordId);
+    const path = `public/${recordId}`;
+    getDownloadUrl(path)
+      .then((url) => {
+        setMediaSrc(url);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err instanceof Error ? err.message : String(err));
+      });
+  }, [loadingMedia, recordId]);
 
-  if (!recordId || !record) {
-    return null;
+  if (error) {
+    return <ErrorPage errorMessage={error} />;
   }
 
   return (
-    <div>
-      <PageHead title="檢舉檔案" />
-      <div id="body" className="container-fluid">
+    <PageContainer title="檢舉檔案">
+      {record ? (
         <table className="table table-bordered">
           <tbody>
             <tr>
@@ -77,16 +77,19 @@ export function DriverRecordDetail() {
             </tr>
           </tbody>
         </table>
-
+      ) : (
+        <p>Loading...</p>
+      )}
+      {record && mediaSrc ? (
         <table className="table table-bordered">
           <tbody>
             <tr>
-              <th style={{verticalAlign: 'middle'}}>備註</th>
+              <th style={{verticalAlign: 'middle'}}>影像附件</th>
             </tr>
             <tr>
-              <td style={{textAlign: 'center'}}>
+              <td style={{textAlign: 'center'}} key={mediaSrc}>
                 {!mediaSrc ? (
-                  <p style={{textAlign: 'left'}}>沒有附檔</p>
+                  <p style={{textAlign: 'left'}}>沒有附件</p>
                 ) : record.ext === 'image' ? (
                   <img style={{width: '100%'}} src={mediaSrc} />
                 ) : record.ext === 'video' ? (
@@ -104,8 +107,7 @@ export function DriverRecordDetail() {
             </tr>
           </tbody>
         </table>
-      </div>
-      <PageFoot />
-    </div>
+      ) : null}
+    </PageContainer>
   );
 }
