@@ -1,3 +1,4 @@
+const {webcrypto} = require('node:crypto');
 const fs = require('fs').promises;
 
 const PBKDF2_SALT = new Uint8Array([
@@ -16,14 +17,14 @@ if (process.argv.length < 5) {
 /** Given some password, derive an AES-GCM key using PBKDF2. */
 async function getKey(password) {
   const enc = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
+  const keyMaterial = await webcrypto.subtle.importKey(
     'raw',
     enc.encode(password),
     {name: 'PBKDF2'},
     false,
     ['deriveBits', 'deriveKey']
   );
-  return crypto.subtle.deriveKey(
+  return webcrypto.subtle.deriveKey(
     {
       name: 'PBKDF2',
       salt: PBKDF2_SALT,
@@ -47,7 +48,7 @@ async function decrypt() {
   const key = await getKey(password);
 
   try {
-    const decrypted = await crypto.subtle.decrypt(
+    const decrypted = await webcrypto.subtle.decrypt(
       {name: 'AES-GCM', iv: AES_GCM_IV},
       key,
       input.buffer
