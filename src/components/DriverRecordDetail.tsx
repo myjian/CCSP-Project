@@ -59,20 +59,26 @@ export function DriverRecordDetail() {
         <table className="table table-bordered">
           <tbody>
             <tr>
-              <th>牌照號碼</th>
-              <th>違規發生地點</th>
               <th>日期</th>
-              <th>時間</th>
-              <th>違規事實內容</th>
+              <td>{record.happenedDate}</td>
             </tr>
             <tr>
+              <th>時間</th>
+              <td>{record.happenedTime}</td>
+            </tr>
+            <tr>
+              <th>牌照號碼</th>
               <td>{record.carNum}</td>
+            </tr>
+            <tr>
+              <th>違規發生地點</th>
               <td>
                 {record.country}
                 {record.location}
               </td>
-              <td>{record.happenedDate}</td>
-              <td>{record.happenedTime}</td>
+            </tr>
+            <tr>
+              <th>違規事實內容</th>
               <td>{record.description}</td>
             </tr>
           </tbody>
