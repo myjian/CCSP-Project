@@ -29,13 +29,16 @@ table.table {
   margin-top: 10px;
 }
 #back {
-  width: 50px;
+  width: 60px;
 }
 #back img {
   width: 100%;
 }
 #fbArea {
-  width: 50px;
+  width: 60px;
+}
+.profilePicture {
+  width: 100%;
 }
 .subtitle {
   font-size: 16px;

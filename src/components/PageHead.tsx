@@ -3,6 +3,7 @@ import {Link, useLocation} from 'react-router-dom';
 
 import BackImg from '../img/back.png';
 import LogoNoBlueSmall from '../img/LogoNoBlue-small.png';
+import {ProfileMenu} from './ProfileMenu';
 
 interface Props {
   isIndex?: boolean;
@@ -49,7 +50,9 @@ export function PageHead({isIndex, title}: Props) {
               <h1>{title}</h1>
             )}
           </td>
-          <td id="fbArea" />
+          <td id="fbArea">
+            <ProfileMenu />
+          </td>
         </tr>
       </tbody>
     </table>
